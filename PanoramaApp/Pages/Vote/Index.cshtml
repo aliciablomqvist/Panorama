@@ -1,0 +1,31 @@
+@page
+@model VoteModel
+@{
+    ViewData["Title"] = "Vote for a Movie";
+}
+
+<h2>Vote for a Movie</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Votes</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model.Movies)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.Votes</td>
+                <td>
+                    <form method="post" asp-page-handler="Vote" asp-route-id="@movie.Id">
+                        <button type="submit" class="btn btn-primary">Vote</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
