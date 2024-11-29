@@ -1,0 +1,25 @@
+@page
+@model CreateGroupModel
+@{
+    ViewData["Title"] = "Create Group";
+}
+
+<h2>Create Group</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Name">Group Name</label>
+        <input id="Name" name="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Members">Select Members</label>
+        @foreach (var user in Model.Users)
+        {
+            <div>
+                <input type="checkbox" name="SelectedUsers" value="@user.Id" />
+                @user.UserName
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Create Group</button>
+</form>

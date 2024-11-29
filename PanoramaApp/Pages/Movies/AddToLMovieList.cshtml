@@ -1,0 +1,30 @@
+@page
+@model PanoramaApp.Pages.Movies.AddToMovieListModel
+@{
+    ViewData["Title"] = "Add Movies to List";
+}
+
+<h2>Add Movies to List</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="MovieList">Select a Movie List</label>
+        <select id="MovieList" name="MovieListId" class="form-control">
+            @foreach (var list in Model.MovieLists)
+            {
+                <option value="@list.Id">@list.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="Movies">Movies</label>
+        @foreach (var movie in Model.Movies)
+        {
+            <div>
+                <input type="checkbox" name="SelectedMovies" value="@movie.Id" />
+                @movie.Title
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>

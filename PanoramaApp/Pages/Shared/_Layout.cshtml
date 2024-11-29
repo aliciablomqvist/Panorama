@@ -12,12 +12,24 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" asp-area="" asp-page="/Index">MyRazorApp</a>
+        <a class="navbar-brand" asp-area="" asp-page="/Index">Panorama</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
+                    <a class="nav-link" asp-area="" asp-page="/Groups/ViewGroups">My groups</a>
                 </li>
+                                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-page="/Groups/Invitations">Manage groups</a>
+                </li>
+                                                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-page="/Groups/Create">Create groups</a>
+                </li>
+                 <li class="nav-item">
+            <a class="nav-link" asp-page="/Movies/MovieListDetails">My Movie Lists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Movies/CreateMovieList">Create Movie List</a>
+        </li>
             </ul>
             <ul class="navbar-nav">
                 @if (User.Identity != null && User.Identity.IsAuthenticated)

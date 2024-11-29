@@ -1,0 +1,18 @@
+@page
+@model ViewMovieListsModel
+@{
+    ViewData["Title"] = "Movie Lists";
+}
+
+<h2>Movie Lists</h2>
+
+<ul>
+    @foreach (var list in Model.MovieLists)
+    {
+        <li>
+            <a asp-page="/Movies/MovieDetails" asp-route-id="@list.Id">@list.Name</a>
+        </li>
+    }
+</ul>
+
+<a asp-page="/Movies/CreateMovieList" class="btn btn-primary">Create New List</a>

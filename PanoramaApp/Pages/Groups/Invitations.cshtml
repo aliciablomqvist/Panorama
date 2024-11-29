@@ -1,0 +1,66 @@
+@page
+@model PanoramaApp.Pages.Groups.InvitationsModel
+@using PanoramaApp.Data
+@{
+    ViewData["Title"] = "Gruppinbjudningar";
+}
+
+<h2>Gruppinbjudningar</h2>
+
+@if (Model.Invitations.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Grupp</th>
+                <th>Inbjudare</th>
+                <th>Åtgärd</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invitation in Model.Invitations)
+            {
+                var group = Model.Groups.FirstOrDefault(g => g.Id == invitation.GroupId);
+                var inviter = Model.Users.FirstOrDefault(u => u.Id == invitation.InvitedByUserId);
+
+                <tr>
+                    <td>@group?.Name</td>
+                    <td>@inviter?.UserName</td>
+                    <td>
+                        <form method="post" asp-page-handler="Accept">
+                            <input type="hidden" name="invitationId" value="@invitation.Id" />
+                            <button type="submit" class="btn btn-success">Acceptera</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Du har inga nya inbjudningar.</p>
+}
+
+<h3>Bjud in användare</h3>
+<form method="post" asp-page-handler="Invite">
+    <div>
+        <label for="group">Välj grupp:</label>
+        <select id="group" name="groupId" class="form-select">
+            @foreach (var group in Model.Groups)
+            {
+                <option value="@group.Id">@group.Name</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="user">Välj användare:</label>
+        <select id="user" name="invitedUserId" class="form-select">
+            @foreach (var user in Model.Users)
+            {
+                <option value="@user.Id">@user.UserName</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Bjud in</button>
+</form>

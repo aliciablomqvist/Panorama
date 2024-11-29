@@ -237,6 +237,7 @@ C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\PanoramaA
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\PanoramaApp.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\PanoramaApp.RazorAssemblyInfo.cache
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\PanoramaApp.RazorAssemblyInfo.cs
+C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\PanoramaApp.sourcelink.json
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\staticwebassets\msbuild.PanoramaApp.Microsoft.AspNetCore.StaticWebAssets.props

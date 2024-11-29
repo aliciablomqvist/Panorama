@@ -1,0 +1,17 @@
+@model AddMoviesModel
+
+<h3>Add Movies to @Model.Group.Name</h3>
+
+<form method="post" asp-page-handler="AddMovies">
+    <input type="hidden" name="GroupId" value="@Model.Group.Id" />
+    <div class="form-group">
+        @foreach (var movie in Model.AvailableMovies)
+        {
+            <div>
+                <input type="checkbox" name="SelectedMovies" value="@movie.Id" />
+                @movie.Title
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Add Movies</button>
+</form>

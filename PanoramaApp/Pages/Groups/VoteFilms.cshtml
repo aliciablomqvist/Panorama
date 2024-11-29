@@ -1,0 +1,38 @@
+@page "{groupId:int}"
+@model PanoramaApp.Pages.Groups.VoteFilmsModel
+@{
+    ViewData["Title"] = "Vote for a Movie";
+}
+
+<h2>Vote for Movies in @Model.Group.Name</h2>
+
+@if (Model.Group.Movies.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Movie</th>
+                <th>Votes</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model.Group.Movies)
+            {
+                <tr>
+                    <td>@movie.Title</td>
+                    <td>@await Model.GetVotesForMovieAsync(movie.Id)</td>
+                    <td>
+                        <form method="post" asp-page-handler="Vote" asp-route-groupId="@Model.Group.Id" asp-route-movieId="@movie.Id">
+                            <button type="submit" class="btn btn-primary">Vote</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No movies available for voting in this group.</p>
+}

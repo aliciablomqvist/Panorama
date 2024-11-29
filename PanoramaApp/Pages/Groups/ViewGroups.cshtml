@@ -1,0 +1,59 @@
+@page
+@model PanoramaApp.Pages.Groups.ViewGroupsModel
+@{
+    ViewData["Title"] = "My Groups";
+}
+
+<h2>My Groups</h2>
+
+@if (Model.Groups.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Group Name</th>
+                <th>Movies</th>
+                <th>Members</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var group in Model.Groups)
+            {
+                <tr>
+                    <td>@group.Name</td>
+                    <td>
+                        @foreach (var movie in group.Movies)
+                        {
+                            <div>@movie.Title</div>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var member in group.Members)
+                        {
+                            <div>@member.User.UserName</div>
+                        }
+                    </td>
+<td>
+    <a class="btn btn-primary" asp-page="/Groups/VoteFilms" asp-route-groupId="@group.Id">Vote on a movie</a>
+    <a class="btn btn-primary" asp-page="/Groups/ViewWinner" asp-route-id="@group.Id">View Winner</a>
+    <a class="btn btn-primary" asp-page="/Groups/Invitations" asp-route-id="@group.Id">Invite</a>
+    <a class="btn btn-primary" asp-page="/Groups/AddMoviesPartial" asp-route-groupId="@group.Id">Add Movies</a>
+</td>
+
+<td>
+    <a class="btn btn-primary" asp-page="/MovieLists/Index" asp-route-groupId="@group.Id">View Movie Lists</a>
+    <a class="btn btn-secondary" asp-page="/MovieLists/Share" asp-route-groupId="@group.Id">Share a List</a>
+</td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>You have no groups yet. Create one!</p>
+    <a asp-page="/Groups/Create" class="btn btn-success">Create Group</a>
+}

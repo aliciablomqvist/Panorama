@@ -1,0 +1,18 @@
+@page "{id:int}"
+@model PanoramaApp.Pages.Groups.ViewWinnerModel
+@{
+    ViewData["Title"] = "Winning Movie";
+}
+
+<h2>Winning Movie</h2>
+
+@if (Model.WinningMovie != null)
+{
+    <p>The winning movie in the group <strong>@Model.Group.Name</strong> is:</p>
+    <h3>@Model.WinningMovie.Title</h3>
+    <p>With <strong>@Model.WinningMovieVoteCount</strong> votes!</p>
+}
+else
+{
+    <p>No votes have been cast in this group yet.</p>
+}

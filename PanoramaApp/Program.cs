@@ -5,7 +5,6 @@ using PanoramaApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Lägg till tjänster till DI-kontainern
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -17,7 +16,6 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Konfigurera HTTP-pipelinen
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");

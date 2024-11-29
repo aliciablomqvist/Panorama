@@ -1,0 +1,47 @@
+@page "{id:int}"
+@model PanoramaApp.Pages.Movies.MovieDetailsModel
+
+@{
+    if (Model.MovieList != null)
+    {
+        ViewData["Title"] = $"Details for {Model.MovieList.Name}";
+    }
+    else
+    {
+        ViewData["Title"] = "Movie List Details";
+    }
+}
+
+@if (Model.MovieList != null)
+{
+    <h2>@Model.MovieList.Name</h2>
+
+    <p>
+        <strong>Description:</strong> @Model.MovieList.Description
+    </p>
+
+    <h3>Movies in this List</h3>
+    @if (Model.MovieList.Movies.Any())
+    {
+        <ul>
+            @foreach (var movie in Model.MovieList.Movies)
+            {
+                <li>@movie.Title</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No movies have been added to this list yet.</p>
+    }
+
+    <h3>Actions</h3>
+    <a class="btn btn-primary" asp-page="/MovieLists/AddMovie" asp-route-listId="@Model.MovieList.Id">Add Movies</a>
+    <a class="btn btn-secondary" asp-page="/MovieLists/Share" asp-route-listId="@Model.MovieList.Id">Share this List</a>
+    <a class="btn btn-danger" asp-page="/MovieLists/Delete" asp-route-id="@Model.MovieList.Id">Delete List</a>
+}
+else
+{
+    <h2>Movie List Not Found</h2>
+    <p>The requested movie list does not exist.</p>
+}
