@@ -17,7 +17,7 @@ namespace PanoramaApp.Tests.Pages.Groups
 
         public CreateGroupTests()
         {
-            // in-memory-databas för test
+            // In-memory-databas för test
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("TestDatabase")
                 .Options;
@@ -51,25 +51,31 @@ namespace PanoramaApp.Tests.Pages.Groups
         [Fact]
         public async Task OnPostAsync_AddMembersToGroup()
         {
-        
-            var user1 = new IdentityUser { Id = "user1", UserName = "User 1" };
-            var user2 = new IdentityUser { Id = "user2", UserName = "User 2" };
-            await _context.Users.AddRangeAsync(user1, user2);
-            await _context.SaveChangesAsync();
+            // Arrange
+            var testUsers = new List<string> { "user1", "user2" };
+            var mockUser1 = new IdentityUser { Id = "user1" };
+            var mockUser2 = new IdentityUser { Id = "user2" };
+
+            _mockUserManager.Setup(u => u.FindByIdAsync("user1")).ReturnsAsync(mockUser1);
+            _mockUserManager.Setup(u => u.FindByIdAsync("user2")).ReturnsAsync(mockUser2);
 
             var pageModel = new CreateGroupModel(_context, _mockUserManager.Object)
             {
                 Name = "Test Group",
-                SelectedUsers = new List<string> { "user1", "user2" }
+                SelectedUsers = testUsers
             };
 
-            _mockUserManager.Setup(u => u.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync((string id) => _context.Users.Find(id));
-                
+            // Act
             var result = await pageModel.OnPostAsync();
-            var group = await _context.Groups.Include(g => g.Members).FirstOrDefaultAsync(g => g.Name == "Test Group");
+
+            // Assert
+            var group = await _context.Groups.FirstOrDefaultAsync(g => g.Name == "Test Group");
             Assert.NotNull(group);
-            Assert.Equal(2, group.Members.Count);
+
+            var groupMembers = await _context.GroupMembers.ToListAsync();
+            Assert.Equal(2, groupMembers.Count);
+            Assert.Contains(groupMembers, gm => gm.UserId == "user1");
+            Assert.Contains(groupMembers, gm => gm.UserId == "user2");
         }
     }
 }
