@@ -1,0 +1,39 @@
+name: CI Pipeline
+
+# Workflow runs on push/PR to the main branch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# The workflow consists of 5 steps
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Clone the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Install the specified .NET SDK version
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0'
+
+    # Step 3: Restore dependencies
+    - name: Install dependencies
+      run: dotnet restore
+
+    # Step 4: Build the solution
+    - name: Build solution
+      run: dotnet build --no-restore --configuration Release
+
+    # Step 5: Run unit tests and collect code coverage
+    - name: Run tests
+      run: dotnet test --no-restore --configuration Release --collect:"Code coverage"
+
