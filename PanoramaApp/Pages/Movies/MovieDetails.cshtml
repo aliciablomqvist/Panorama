@@ -24,10 +24,10 @@
     @if (Model.MovieList.Movies.Any())
     {
         <ul>
-            @foreach (var movie in Model.MovieList.Movies)
-            {
-                <li>@movie.Title</li>
-            }
+@foreach (var movieListItem in Model.MovieList.Movies)
+{
+    <li>@movieListItem.Movie.Title</li>
+}
         </ul>
     }
     else

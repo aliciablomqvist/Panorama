@@ -30,9 +30,10 @@ namespace PanoramaApp.Pages.Movies
                 return RedirectToPage("/Error");
             }
 
-            MovieList = await _context.MovieLists
-                .Include(ml => ml.Movies)
-                .FirstOrDefaultAsync(ml => ml.Movies.Any(m => m.Id == id));
+MovieList = await _context.MovieLists
+    .Include(ml => ml.Movies)
+        .ThenInclude(mli => mli.Movie)
+    .FirstOrDefaultAsync(ml => ml.Id == id);
 
             return Page();
         }

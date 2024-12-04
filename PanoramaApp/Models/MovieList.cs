@@ -7,8 +7,7 @@ namespace PanoramaApp.Models
     public string Name { get; set; } = string.Empty;
     public string OwnerId { get; set; } 
     public IdentityUser? Owner { get; set; }
-
-        public string Description { get; set; } = string.Empty; 
+    public string Description { get; set; } = string.Empty; 
     public bool IsShared { get; set; } = false; 
 
     public ICollection<MovieListItem> Movies { get; set; } = new List<MovieListItem>();
@@ -17,11 +16,9 @@ namespace PanoramaApp.Models
 
 public class MovieListItem
 {
-    public int Id { get; set; }
     public int MovieId { get; set; }
     public Movie? Movie { get; set; }
 
-    public string Title { get; set; } = string.Empty; 
 
     public int MovieListId { get; set; }
     public MovieList? MovieList { get; set; }

@@ -10,7 +10,10 @@
     @foreach (var list in Model.MovieLists)
     {
         <li>
-            <a asp-page="/Movies/MovieDetails" asp-route-id="@list.Id">@list.Name</a>
+<a asp-page="/Movies/MovieListDetails" asp-route-id="@list.Id">@list.Name</a>
+
+<a href="/Movies/MovieListDetails/1">My Movie List</a>
+
         </li>
     }
 </ul>

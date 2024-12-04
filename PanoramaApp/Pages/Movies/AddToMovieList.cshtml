@@ -1,0 +1,18 @@
+@page "{listId:int}"
+@model PanoramaApp.Pages.Movies.AddMovieModel
+@{
+    ViewData["Title"] = "Add Movies to List";
+}
+
+<h2>Add Movies to @Model.MovieList.Name</h2>
+
+<form method="post">
+    <div>
+        <label>Select Movies to Add:</label>
+        <select asp-for="SelectedMovieIds" asp-items="Model.MovieOptions" multiple class="form-control">
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Add Selected Movies</button>
+</form>
+
+<a class="btn btn-secondary mt-2" asp-page="/Movies/MovieListDetails" asp-route-id="@Model.MovieList.Id">Back to Movie List Details</a>

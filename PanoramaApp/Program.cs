@@ -14,6 +14,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 builder.Services.AddRazorPages();
 
+//Loggning
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

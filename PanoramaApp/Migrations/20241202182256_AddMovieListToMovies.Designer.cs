@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PanoramaApp.Data;
 
@@ -11,9 +12,11 @@ using PanoramaApp.Data;
 namespace PanoramaApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241202182256_AddMovieListToMovies")]
+    partial class AddMovieListToMovies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -372,22 +375,27 @@ namespace PanoramaApp.Migrations
 
             modelBuilder.Entity("PanoramaApp.Models.MovieListItem", b =>
                 {
-                    b.Property<int>("MovieListId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieListId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MovieListId", "MovieId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MovieId");
+
+                    b.HasIndex("MovieListId");
 
                     b.ToTable("MovieListItems");
                 });
@@ -530,7 +538,7 @@ namespace PanoramaApp.Migrations
             modelBuilder.Entity("PanoramaApp.Models.MovieListItem", b =>
                 {
                     b.HasOne("PanoramaApp.Models.Movie", "Movie")
-                        .WithMany("MovieListItems")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -576,8 +584,6 @@ namespace PanoramaApp.Migrations
 
             modelBuilder.Entity("PanoramaApp.Models.Movie", b =>
                 {
-                    b.Navigation("MovieListItems");
-
                     b.Navigation("MovieLists");
                 });
 
