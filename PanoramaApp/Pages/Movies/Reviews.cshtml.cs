@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using System.ComponentModel.DataAnnotations;
 
 namespace PanoramaApp.Pages.Movies
 {
@@ -16,9 +18,12 @@ namespace PanoramaApp.Pages.Movies
         }
 
         [BindProperty]
+        [Required(ErrorMessage = "Review content is required.")]
+        [MaxLength(1000, ErrorMessage = "Review content cannot exceed 1000 characters.")]
         public string ReviewContent { get; set; }
 
         [BindProperty]
+        [Range(1, 5, ErrorMessage = "Rating must be between number 1 and 5.")]
         public int Rating { get; set; }
 
         public Movie Movie { get; set; }
@@ -50,18 +55,32 @@ namespace PanoramaApp.Pages.Movies
                 return Page();
             }
 
-            var userId = User.Identity.Name;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToPage("/Account/Login");
+            }
 
             var review = new Review
             {
                 MovieId = movieId,
                 UserId = userId,
                 Content = ReviewContent,
-                Rating = Rating
+                Rating = Rating,
+                CreatedAt = DateTime.UtcNow
             };
 
-            _context.Reviews.Add(review);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Reviews.Add(review);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving review: {ex.Message}");
+                ModelState.AddModelError("", "An error occurred while saving your review. Please try again later.");
+                return Page();
+            }
 
             return RedirectToPage(new { movieId = movieId });
         }

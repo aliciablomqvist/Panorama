@@ -29,6 +29,8 @@ else
     <button type="submit" class="btn btn-success">Mark as Watched</button>
 </form>
 
-
+<a class="btn btn-secondary" asp-page="/Movies/Reviews" asp-route-movieId="@Model.Movie.Id">
+    View Reviews
+</a>
     <a class="btn btn-secondary" asp-page="/Movies/Index">Back to Movies</a>
 }

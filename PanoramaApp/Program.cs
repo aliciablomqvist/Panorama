@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
-
+using PanoramaApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +13,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<ReviewService>(); //For reviews
 
 //Loggning
 builder.Logging.ClearProviders();
