@@ -22,6 +22,9 @@ namespace PanoramaApp.Data
 
    public DbSet<GroupMember> GroupMembers { get; set; }
 
+   public DbSet<Review> Reviews { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -57,6 +60,19 @@ namespace PanoramaApp.Data
     modelBuilder.Entity<MovieList>()
         .HasMany(ml => ml.SharedWithGroups)
         .WithMany(g => g.MovieLists);
+
+    modelBuilder.Entity<MovieListItem>()
+        .HasKey(mli => new { mli.MovieListId, mli.MovieId });
+
+    modelBuilder.Entity<MovieListItem>()
+        .HasOne(mli => mli.MovieList)
+        .WithMany(ml => ml.Movies)
+        .HasForeignKey(mli => mli.MovieListId);
+
+    modelBuilder.Entity<MovieListItem>()
+        .HasOne(mli => mli.Movie)
+        .WithMany(m => m.MovieListItems)
+        .HasForeignKey(mli => mli.MovieId);
 }
 
     }

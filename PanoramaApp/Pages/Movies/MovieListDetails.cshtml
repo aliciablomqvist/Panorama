@@ -1,27 +1,39 @@
 @page "{id:int}"
-@model PanoramaApp.Pages.Movies.MovieDetailsModel
+@model PanoramaApp.Pages.Movies.MovieListDetailsModel
 @{
-    ViewData["Title"] = $"Details for {Model.Movie.Title}";
+    ViewData["Title"] = Model.MovieList != null ? $"Details for {Model.MovieList.Name}" : "Movie List Details";
 }
 
-<h2>@Model.Movie.Title</h2>
+@if (Model.MovieList == null)
+{
+    <h2>Movie List Not Found</h2>
+    <p>The requested movie list could not be found.</p>
+    <a class="btn btn-primary" asp-page="/Movies/ViewMovieLists">Back to Movie Lists</a>
+}
+else
+{
+    <h2>@Model.MovieList.Name</h2>
 
-<p>
-    <strong>Votes:</strong> @Model.Movie.Votes
-</p>
+    <h3>Movies in this List:</h3>
+    <ul>
+        @foreach(var movieListItem in Model.MovieList.Movies)
+        {
+            <li>
+                @if (movieListItem.Movie != null)
+                {
+                    @movieListItem.Movie.Title
+                }
+                else
+                {
+                    <em>Movie not found</em>
+                }
+            </li>
+        }
+    </ul>
 
-<p>
-    <strong>Associated Group:</strong>
-    @if (Model.Movie.Group != null)
-    {
-        @Model.Movie.Group.Name
-    }
-    else
-    {
-        <em>No associated group</em>
-    }
-</p>
-
-<h3>Actions</h3>
-<a class="btn btn-primary" asp-page="/MovieLists/AddToMovieList" asp-route-movieId="@Model.Movie.Id">Add to a Movie List</a>
-<a class="btn btn-danger" asp-page="/Movies/Delete" asp-route-id="@Model.Movie.Id">Delete Movie</a>
+    <h3>Actions</h3>
+    <a class="btn btn-primary" asp-page="/Movies/AddToMovieList" asp-route-listId="@Model.MovieList.Id">Add Movies</a>
+    <a class="btn btn-secondary" asp-page="/Movies/ShareList" asp-route-listId="@Model.MovieList.Id">Share this List</a>
+    <a class="btn btn-danger" asp-page="/Movies/DeleteList" asp-route-id="@Model.MovieList.Id">Delete List</a>
+    <a class="btn btn-secondary" asp-page="/Movies/ViewMovieLists">Back to Movie Lists</a>
+}

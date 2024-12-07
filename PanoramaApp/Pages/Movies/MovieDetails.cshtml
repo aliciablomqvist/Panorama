@@ -1,47 +1,36 @@
 @page "{id:int}"
 @model PanoramaApp.Pages.Movies.MovieDetailsModel
-
 @{
-    if (Model.MovieList != null)
-    {
-        ViewData["Title"] = $"Details for {Model.MovieList.Name}";
-    }
-    else
-    {
-        ViewData["Title"] = "Movie List Details";
-    }
+    ViewData["Title"] = Model.Movie != null ? $"Details for {Model.Movie.Title}" : "Movie Details";
 }
 
-@if (Model.MovieList != null)
+@if (Model.Movie == null)
 {
-    <h2>@Model.MovieList.Name</h2>
-
-    <p>
-        <strong>Description:</strong> @Model.MovieList.Description
-    </p>
-
-    <h3>Movies in this List</h3>
-    @if (Model.MovieList.Movies.Any())
-    {
-        <ul>
-            @foreach (var movie in Model.MovieList.Movies)
-            {
-                <li>@movie.Title</li>
-            }
-        </ul>
-    }
-    else
-    {
-        <p>No movies have been added to this list yet.</p>
-    }
-
-    <h3>Actions</h3>
-    <a class="btn btn-primary" asp-page="/MovieLists/AddMovie" asp-route-listId="@Model.MovieList.Id">Add Movies</a>
-    <a class="btn btn-secondary" asp-page="/MovieLists/Share" asp-route-listId="@Model.MovieList.Id">Share this List</a>
-    <a class="btn btn-danger" asp-page="/MovieLists/Delete" asp-route-id="@Model.MovieList.Id">Delete List</a>
+    <h2>Movie Not Found</h2>
+    <p>The requested movie could not be found. Please go back and try again.</p>
+    <a class="btn btn-primary" asp-page="/Movies/Index">Back to Movies</a>
 }
 else
 {
-    <h2>Movie List Not Found</h2>
-    <p>The requested movie list does not exist.</p>
+    <h2>@Model.Movie.Title</h2>
+
+<p><strong>Genre:</strong> @Model.Movie.Genre</p>
+<p><strong>Beskrivning:</strong> @Model.Movie.Description</p>
+<p><strong>Utgivningsdatum:</strong> @Model.Movie.ReleaseDate.ToString("yyyy-MM-dd")</p>
+<p><strong>Röster:</strong> @Model.Movie.Votes</p>
+
+    <form method="post" asp-page-handler="AddToFavorites">
+        <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+        <button type="submit" class="btn btn-primary">Add to Favorites</button>
+    </form>
+
+    <form method="post" asp-page-handler="MarkAsWatched">
+    <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+    <button type="submit" class="btn btn-success">Mark as Watched</button>
+</form>
+
+<a class="btn btn-secondary" asp-page="/Movies/Reviews" asp-route-movieId="@Model.Movie.Id">
+    View Reviews
+</a>
+    <a class="btn btn-secondary" asp-page="/Movies/Index">Back to Movies</a>
 }

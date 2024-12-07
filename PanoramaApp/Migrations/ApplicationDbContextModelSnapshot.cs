@@ -251,6 +251,10 @@ namespace PanoramaApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
@@ -318,8 +322,19 @@ namespace PanoramaApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -350,6 +365,9 @@ namespace PanoramaApp.Migrations
                     b.Property<bool>("IsShared")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -360,6 +378,8 @@ namespace PanoramaApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MovieId");
+
                     b.HasIndex("OwnerId");
 
                     b.ToTable("MovieLists");
@@ -367,29 +387,54 @@ namespace PanoramaApp.Migrations
 
             modelBuilder.Entity("PanoramaApp.Models.MovieListItem", b =>
                 {
+                    b.Property<int>("MovieListId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieListId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("MovieListItems");
+                });
+
+            modelBuilder.Entity("PanoramaApp.Models.Review", b =>
+                {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieListId")
+                    b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
 
-                    b.HasIndex("MovieListId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("MovieListItems");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("PanoramaApp.Models.Vote", b =>
@@ -514,6 +559,10 @@ namespace PanoramaApp.Migrations
 
             modelBuilder.Entity("PanoramaApp.Models.MovieList", b =>
                 {
+                    b.HasOne("PanoramaApp.Models.Movie", null)
+                        .WithMany("MovieLists")
+                        .HasForeignKey("MovieId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
@@ -526,7 +575,7 @@ namespace PanoramaApp.Migrations
             modelBuilder.Entity("PanoramaApp.Models.MovieListItem", b =>
                 {
                     b.HasOne("PanoramaApp.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("MovieListItems")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -540,6 +589,25 @@ namespace PanoramaApp.Migrations
                     b.Navigation("Movie");
 
                     b.Navigation("MovieList");
+                });
+
+            modelBuilder.Entity("PanoramaApp.Models.Review", b =>
+                {
+                    b.HasOne("PanoramaApp.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PanoramaApp.Models.Vote", b =>
@@ -568,6 +636,13 @@ namespace PanoramaApp.Migrations
                     b.Navigation("Movies");
 
                     b.Navigation("Votes");
+                });
+
+            modelBuilder.Entity("PanoramaApp.Models.Movie", b =>
+                {
+                    b.Navigation("MovieListItems");
+
+                    b.Navigation("MovieLists");
                 });
 
             modelBuilder.Entity("PanoramaApp.Models.MovieList", b =>

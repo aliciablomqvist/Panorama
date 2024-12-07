@@ -1,0 +1,53 @@
+@page
+@model PanoramaApp.Pages.Movies.ExploreMoviesModel
+@{
+    ViewData["Title"] = "Utforska Filmer";
+}
+
+<h1>Utforska Filmer</h1>
+
+<div>
+    <input type="text" id="searchBox" placeholder="Sök efter titel eller genre..." />
+    <button type="button" onclick="filterMovies()">Sök</button>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Titel</th>
+            <th>Genre</th>
+            <th>Beskrivning</th>
+            <th>Utgivningsdatum</th>
+            <th>Röster</th>
+        </tr>
+    </thead>
+    <tbody id="movieTable">
+        @foreach (var movie in Model.Movies)
+        {
+            <tr>
+                <td>
+                    <a asp-page="/Movies/MovieDetails" asp-route-id="@movie.Id">
+                        @movie.Title
+                    </a>
+                </td>
+                <td>@movie.Genre</td>
+                <td>@movie.Description</td>
+                <td>@movie.ReleaseDate.ToString("yyyy-MM-dd")</td>
+                <td>@movie.Votes</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    function filterMovies() {
+        const searchText = document.getElementById('searchBox').value.toLowerCase();
+        const rows = document.querySelectorAll('#movieTable tr');
+        rows.forEach(row => {
+            const title = row.cells[0].innerText.toLowerCase();
+            const genre = row.cells[1].innerText.toLowerCase();
+            row.style.display = title.includes(searchText) || genre.includes(searchText) ? '' : 'none';
+        });
+    }
+</script>

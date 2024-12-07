@@ -1,0 +1,32 @@
+@page "{movieId:int}"
+@model PanoramaApp.Pages.Movies.ReviewsModel
+
+<h2>@Model.Movie.Title - Reviews</h2>
+
+<h3>Leave a Review</h3>
+<form method="post">
+    <textarea asp-for="ReviewContent" class="form-control"></textarea>
+    <label for="Rating">Rating (1-5):</label>
+    <input asp-for="Rating" type="number" min="1" max="5" class="form-control" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<h3>Existing Reviews</h3>
+@if (Model.Reviews != null && Model.Reviews.Any())
+{
+    <ul>
+        @foreach (var review in Model.Reviews)
+        {
+            <li>
+                <strong>@review.User.UserName:</strong> @review.Content
+                <br />
+                Rating: @review.Rating/5
+                <small>@review.CreatedAt.ToString("g")</small>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No reviews yet. Be the first to leave one!</p>
+}

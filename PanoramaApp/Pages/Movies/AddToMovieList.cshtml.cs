@@ -1,58 +1,102 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PanoramaApp.Pages.Movies
 {
-    public class AddToMovieListModel : PageModel
+    public class AddMovieModel : PageModel
+    {
+        private readonly ApplicationDbContext _context;
+
+        public AddMovieModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public MovieList MovieList { get; set; }
+
+        [BindProperty]
+        public List<int> SelectedMovieIds { get; set; } = new List<int>();
+
+        public List<SelectListItem> MovieOptions { get; set; }
+
+public async Task<IActionResult> OnGetAsync(int listId)
 {
-    private readonly ApplicationDbContext _context;
-
-    public AddToMovieListModel(ApplicationDbContext context)
+    Console.WriteLine($"OnGetAsync called with ID: {listId}");
+    
+    try
     {
-        _context = context;
-    }
+        MovieList = await _context.MovieLists
+            .Include(ml => ml.Movies)
+                .ThenInclude(mli => mli.Movie)
+            .FirstOrDefaultAsync(ml => ml.Id == listId);
 
-    public List<MovieList> MovieLists { get; set; } = new List<MovieList>();
-    public List<Movie> Movies { get; set; } = new List<Movie>();
+        if (MovieList == null)
+        {
+            Console.WriteLine($"MovieList not found for ID: {listId}");
+            return RedirectToPage("/Error");
+        }
 
-    [BindProperty]
-    public int MovieListId { get; set; }
 
-    [BindProperty]
-    public List<int> SelectedMovies { get; set; } = new List<int>();
+        var existingMovieIds = MovieList.Movies.Select(mlm => mlm.MovieId).ToList();
 
-    public async Task OnGetAsync()
-    {
-        var userId = User.Identity?.Name; 
-        MovieLists = await _context.MovieLists
-            .Where(ml => ml.OwnerId == userId || ml.IsShared)
+        var movies = await _context.Movies
+            .Where(m => !existingMovieIds.Contains(m.Id))
             .ToListAsync();
-        Movies = await _context.Movies.ToListAsync();
+
+        MovieOptions = movies.Select(m => new SelectListItem
+        {
+            Value = m.Id.ToString(),
+            Text = m.Title
+        }).ToList();
+
+        Console.WriteLine($"Fetched MovieList: {MovieList.Name} with {MovieList.Movies.Count} movies.");
+        return Page();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Exception in OnGetAsync: {ex.Message}");
+        return RedirectToPage("/Error");
+    }
+}
+
+public async Task<IActionResult> OnPostAsync(int listId)
+{
+    MovieList = await _context.MovieLists
+        .Include(ml => ml.Movies)
+        .FirstOrDefaultAsync(ml => ml.Id == listId);
+
+    if (MovieList == null)
+    {
+        return NotFound();
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    if (SelectedMovieIds != null && SelectedMovieIds.Any())
     {
-        foreach (var movieId in SelectedMovies)
+        foreach (var movieId in SelectedMovieIds)
         {
             var movie = await _context.Movies.FindAsync(movieId);
-            if (movie != null)
+
+            var movieListItem = new MovieListItem
             {
-                var movieListItem = new MovieListItem
-                {
-                    MovieListId = MovieListId,
-                    MovieId = movie.Id
-                };
-                _context.MovieListItems.Add(movieListItem);
-            }
+                MovieListId = listId,
+                MovieList = MovieList,
+                MovieId = movieId,
+                Movie = movie
+            };
+            MovieList.Movies.Add(movieListItem);
         }
 
         await _context.SaveChangesAsync();
-
-        return RedirectToPage("/MovieLists/Details", new { id = MovieListId });
     }
+
+    return RedirectToPage("/Movies/MovieListDetails", new { id = listId });
 }
+    }
 }
