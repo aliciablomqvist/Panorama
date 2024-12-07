@@ -1,0 +1,21 @@
+@page
+@model PanoramaApp.Pages.MovieLists.MyFavoritesModel
+@{
+    ViewData["Title"] = "My Favorites";
+}
+
+<h2>My Favorites</h2>
+
+@if (Model.MovieList == null || !Model.MovieList.Movies.Any())
+{
+    <p>You have not added any movies to your favorites yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (var movieListItem in Model.MovieList.Movies)
+        {
+            <li>@movieListItem.Movie.Title</li>
+        }
+    </ul>
+}

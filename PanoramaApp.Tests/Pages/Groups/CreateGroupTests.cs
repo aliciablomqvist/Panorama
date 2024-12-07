@@ -1,33 +1,20 @@
-using Xunit;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Moq;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using PanoramaApp.Pages.Groups;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PanoramaApp.Tests.Pages.Groups
 {
     public class CreateGroupTests
     {
-        private readonly ApplicationDbContext _context;
-        private readonly Mock<UserManager<IdentityUser>> _mockUserManager;
+            private readonly string userId = "test-user-id";
+    private readonly ApplicationDbContext _context;
+    private readonly Mock<UserManager<IdentityUser>> _mockUserManager;
 
-        public CreateGroupTests()
-        {
-            // In-memory-databas för test
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("TestDatabase")
-                .Options;
+    private readonly HttpContext _httpContext;
 
-            _context = new ApplicationDbContext(options);
-
-            var userStore = new Mock<IUserStore<IdentityUser>>();
-            _mockUserManager = new Mock<UserManager<IdentityUser>>(
-                userStore.Object, null, null, null, null, null, null, null, null);
-        }
+    public CreateGroupTests()
+    {
+        _context = TestHelpers.GetInMemoryDbContext();
+        _mockUserManager = TestHelpers.GetMockUserManager();
+          _httpContext = TestHelpers.GetMockHttpContext(userId);
+    }
 
         [Fact]
         public async Task OnPostAsync_ValidData_ShouldCreateGroup()
@@ -76,6 +63,31 @@ namespace PanoramaApp.Tests.Pages.Groups
             Assert.Equal(2, groupMembers.Count);
             Assert.Contains(groupMembers, gm => gm.UserId == "user1");
             Assert.Contains(groupMembers, gm => gm.UserId == "user2");
+        }
+        [Fact]
+        public async Task CreateGroup_ShouldSetOwnerAndDefaultSettings()
+        {
+            // Arrange
+            var dbContext = GetInMemoryDbContext();
+            var ownerId = "owner-id";
+            var userManager = GetMockUserManager();
+            var httpContext = GetMockHttpContext(ownerId);
+            var pageModel = new CreateGroupModel(dbContext, userManager)
+            {
+                PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
+                {
+                    HttpContext = httpContext
+                },
+                Name = "New Group"
+            };
+
+            // Act
+            var result = await pageModel.OnPostAsync();
+
+            // Assert
+            var group = await dbContext.Groups.FirstOrDefaultAsync(g => g.Name == "New Group");
+            Assert.NotNull(group);
+            Assert.Equal(ownerId, group.OwnerId);
         }
     }
 }

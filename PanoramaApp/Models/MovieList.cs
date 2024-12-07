@@ -16,9 +16,9 @@ namespace PanoramaApp.Models
 
 public class MovieListItem
 {
+    public int Id { get; set; }
     public int MovieId { get; set; }
     public Movie? Movie { get; set; }
-
 
     public int MovieListId { get; set; }
     public MovieList? MovieList { get; set; }

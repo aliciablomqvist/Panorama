@@ -28,7 +28,7 @@ namespace PanoramaApp.Pages.Movies
                 return NotFound();
             }
 
-            // Generera en delbar länk
+            //Delbar länk
             ShareableLink = Url.Page("/Movies/MovieListDetails", null, new { id = listId }, Request.Scheme);
 
             return Page();

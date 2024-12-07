@@ -30,6 +30,14 @@
         <li class="nav-item">
             <a class="nav-link" asp-page="/Movies/CreateMovieList">Create Movie List</a>
         </li>
+                <li class="nav-item">
+<a asp-page="/MovieLists/MyFavorites">My Favorites</a>
+
+        </li>
+                       <li class="nav-item">
+ <a href="/Movies/ExploreMovies">Utforska Filmer</a>
+
+        </li>
             </ul>
             <ul class="navbar-nav">
                 @if (User.Identity != null && User.Identity.IsAuthenticated)

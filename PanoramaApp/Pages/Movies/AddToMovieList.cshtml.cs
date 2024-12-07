@@ -43,10 +43,9 @@ public async Task<IActionResult> OnGetAsync(int listId)
             return RedirectToPage("/Error");
         }
 
-        // Hämta ID:n för filmer som redan finns i listan
+
         var existingMovieIds = MovieList.Movies.Select(mlm => mlm.MovieId).ToList();
 
-        // Hämta filmer som inte redan finns i listan
         var movies = await _context.Movies
             .Where(m => !existingMovieIds.Contains(m.Id))
             .ToListAsync();

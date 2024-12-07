@@ -23,7 +23,7 @@ namespace PanoramaApp.Pages.Movies
 
 public async Task<IActionResult> OnGetAsync(int id)
 {
-    _logger.LogInformation($"OnGetAsync called with ID: {id}");
+    Console.WriteLine($"OnGetAsync called with ID: {id}");
     
     try
     {
@@ -34,16 +34,16 @@ public async Task<IActionResult> OnGetAsync(int id)
 
         if (MovieList == null)
         {
-            _logger.LogWarning($"MovieList not found for ID: {id}");
+            Console.WriteLine($"MovieList not found for ID: {id}");
             return RedirectToPage("/Error");
         }
 
-        _logger.LogInformation($"Fetched MovieList: {MovieList.Name} with {MovieList.Movies.Count} movies.");
+        Console.WriteLine($"Fetched MovieList: {MovieList.Name} with {MovieList.Movies.Count} movies.");
         return Page();
     }
     catch (Exception ex)
     {
-        _logger.LogError(ex, "Exception in OnGetAsync");
+        Console.WriteLine($"Exception in OnGetAsync: {ex.Message}");
         return RedirectToPage("/Error");
     }
 }

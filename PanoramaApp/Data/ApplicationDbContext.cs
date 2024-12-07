@@ -58,7 +58,6 @@ namespace PanoramaApp.Data
         .HasMany(ml => ml.SharedWithGroups)
         .WithMany(g => g.MovieLists);
 
-    // Konfigurera många-till-många-relation mellan Movie och MovieList via MovieListItem
     modelBuilder.Entity<MovieListItem>()
         .HasKey(mli => new { mli.MovieListId, mli.MovieId });
 
