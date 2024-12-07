@@ -38,6 +38,8 @@
  <a href="/Movies/ExploreMovies">Utforska Filmer</a>
 
         </li>
+        <a asp-page="/MovieLists/WatchedMovies" class="nav-link">Watched Movies</a>
+
             </ul>
             <ul class="navbar-nav">
                 @if (User.Identity != null && User.Identity.IsAuthenticated)

@@ -1,0 +1,23 @@
+@page
+@model PanoramaApp.Pages.MovieLists.WatchedModel
+@{
+    ViewData["Title"] = "Watched Movies";
+}
+
+<h2>Watched Movies</h2>
+
+@if (Model.WatchedMovies.Count == 0)
+{
+    <p>You have not marked any movies as watched yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (var movie in Model.WatchedMovies)
+        {
+            <li>
+                <a asp-page="/Movies/MovieDetails" asp-route-id="@movie.Id">@movie.Title</a>
+            </li>
+        }
+    </ul>
+}
