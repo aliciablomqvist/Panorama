@@ -22,6 +22,9 @@ namespace PanoramaApp.Data
 
    public DbSet<GroupMember> GroupMembers { get; set; }
 
+   public DbSet<Review> Reviews { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 {

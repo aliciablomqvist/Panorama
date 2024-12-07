@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Models;
 using PanoramaApp.Data;
-
+using PanoramaApp.Services;
 namespace PanoramaApp.Pages.Movies
 {
     public class ExploreMoviesModel : PageModel
@@ -15,7 +15,6 @@ namespace PanoramaApp.Pages.Movies
         }
 
         public List<Movie> Movies { get; set; } = new List<Movie>();
-
         public async Task OnGetAsync()
         {
  

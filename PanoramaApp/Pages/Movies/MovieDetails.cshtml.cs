@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
+using PanoramaApp.Services;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace PanoramaApp.Pages.Movies
 {
@@ -13,10 +15,13 @@ namespace PanoramaApp.Pages.Movies
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public MovieDetailsModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+          private readonly ReviewService _reviewService;
+
+        public MovieDetailsModel(ApplicationDbContext context, UserManager<IdentityUser> userManager, ReviewService reviewService)
         {
             _context = context;
             _userManager = userManager;
+            _reviewService = reviewService;
         }
 
         public Movie Movie { get; set; }
@@ -118,5 +123,17 @@ public async Task<IActionResult> OnPostMarkAsWatchedAsync(int movieId)
 
     return RedirectToPage("/Movies/MovieDetails", new { id = movieId });
 }
+public async Task<IActionResult> OnPostAddReviewAsync(int movieId, string content, int rating)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return RedirectToPage("/Account/Login");
+        }
+
+        await _reviewService.AddReviewAsync(movieId, userId, content, rating);
+        return RedirectToPage("/Movies/MovieDetails", new { id = movieId });
+    }
 }
 }
