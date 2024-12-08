@@ -7,7 +7,8 @@ using PanoramaApp.Models;
 using PanoramaApp.Services;
 using Xunit;
 
-namespace PanoramaApp.Tests
+
+namespace PanoramaApp.Tests.UnitTests.Pages.Movies
 {
     public class ReviewTests
     {

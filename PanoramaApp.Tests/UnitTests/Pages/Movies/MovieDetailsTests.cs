@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace PanoramaApp.Tests.Pages.Movies
+
+namespace PanoramaApp.Tests.UnitTests.Pages.Movies
 {
     public class MovieDetailsTests
     {

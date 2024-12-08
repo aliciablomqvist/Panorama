@@ -1,5 +1,5 @@
 
-namespace PanoramaApp.Tests.Pages.Groups
+namespace PanoramaApp.Tests.UnitTests.Pages.Groups
 {
     public class CreateGroupTests
     {
