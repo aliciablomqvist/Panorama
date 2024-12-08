@@ -157,7 +157,6 @@ public async Task OnPostMarkAsWatchedAsync_LoggedInUser_AddsMovieToWatched()
 
     var pageModel = new MovieDetailsModel(context, userManager.Object, null);
 
-    // Använd hjälpmetoden
     TestHelper.SetUserAndHttpContext(pageModel, user.Id, user.UserName);
 
     // Act
@@ -172,45 +171,39 @@ public async Task OnPostMarkAsWatchedAsync_LoggedInUser_AddsMovieToWatched()
     Assert.Single(watchedList.Movies);
     Assert.Equal(movie.Id, watchedList.Movies.First().MovieId);
 }
+[Fact]
+public async Task OnPostAddReviewAsync_LoggedInUser_AddsReview()
+{
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase("AddReviewDb")
+        .Options;
 
+    using var context = new ApplicationDbContext(options);
 
-    [Fact]
-    public async Task OnPostAddReviewAsync_LoggedInUser_AddsReview()
-    {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("AddReviewDb")
-            .Options;
+    var user = new IdentityUser { Id = "user3", UserName = "testuser@example.com" };
+    var movie = new Movie { Title = "Reviewable Movie" };
+    context.Users.Add(user);
+    context.Movies.Add(movie);
+    await context.SaveChangesAsync();
 
-        using var context = new ApplicationDbContext(options);
+    var userStore = new Mock<IUserStore<IdentityUser>>();
+    var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object, null, null, null, null, null, null, null, null);
+    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user);
 
-        var userId = "user3";
-        var movie = new Movie { Title = "ReviewMovie" };
-        context.Movies.Add(movie);
-        await context.SaveChangesAsync();
+    var reviewService = new Mock<ReviewService>(null);
+    reviewService.Setup(rs => rs.AddReviewAsync(movie.Id, user.Id, "Great movie", 5))
+                 .Returns(Task.CompletedTask);
 
-        // Mock ReviewService
-        var reviewService = new Mock<ReviewService>(null);
-        reviewService.Setup(rs => rs.AddReviewAsync(movie.Id, userId, "Great movie", 5))
-            .Returns(Task.CompletedTask);
+    var pageModel = new MovieDetailsModel(context, userManager.Object, reviewService.Object);
 
-        var userStore = new Mock<IUserStore<IdentityUser>>();
-        var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object,null,null,null,null,null,null,null,null);
+    TestHelper.SetUserAndHttpContext(pageModel, user.Id, user.UserName);
 
-        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, userId)
-        }, "TestAuth"));
+    var result = await pageModel.OnPostAddReviewAsync(movie.Id, "Great movie", 5);
 
-        var pageModel = new MovieDetailsModel(context, userManager.Object, reviewService.Object)
-        {
-            User = claimsPrincipal
-        };
+    Assert.IsType<RedirectToPageResult>(result);
+    reviewService.Verify(rs => rs.AddReviewAsync(movie.Id, user.Id, "Great movie", 5), Times.Once);
+}
 
-        var result = await pageModel.OnPostAddReviewAsync(movie.Id, "Great movie", 5);
-
-        Assert.IsType<RedirectToPageResult>(result);
-        reviewService.Verify(rs => rs.AddReviewAsync(movie.Id, userId, "Great movie", 5), Times.Once);
-    }
 
     [Fact]
     public async Task OnPostAddReviewAsync_NotLoggedIn_RedirectsToLogin()

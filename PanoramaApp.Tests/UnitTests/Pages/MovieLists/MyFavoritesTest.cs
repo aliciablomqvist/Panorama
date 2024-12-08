@@ -23,7 +23,6 @@ public class MyFavoritesModelTests
 
         using var context = new ApplicationDbContext(options);
 
-        // Skapa användare och favoritlista
         var user = new IdentityUser { Id = "user1", UserName = "user1@example.com" };
         var movie = new Movie { Title = "FavoriteMovie" };
         context.Users.Add(user);
@@ -42,23 +41,21 @@ public class MyFavoritesModelTests
         var userManager = new Mock<UserManager<IdentityUser>>(
             userStore.Object, null, null, null, null, null, null, null, null);
 
-        // Setup GetUserId
         userManager.Setup(um => um.GetUserId(It.IsAny<ClaimsPrincipal>())).Returns(user.Id);
 
         var pageModel = new MyFavoritesModel(context, userManager.Object);
-// Skapa en test-användare
+
 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
 {
     new Claim(ClaimTypes.NameIdentifier, user.Id)
 }, "TestAuth"));
 
-// Skapa en HttpContext med användaren
 var httpContext = new DefaultHttpContext
 {
     User = claimsPrincipal
 };
 
-// Tilldela PageContext med HttpContext till din PageModel
+
 pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
 {
     HttpContext = httpContext

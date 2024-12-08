@@ -64,14 +64,14 @@ public class ReviewsModelTests
 
         var pageModel = new ReviewsModel(context)
         {
-            Rating = 6, // Ogiltig rating
+            Rating = 6, // Detta är en ogiltig rating
             ReviewContent = "Too long"
         };
 
         pageModel.ModelState.AddModelError("Rating", "Out of range");
         var result = await pageModel.OnPostAsync(movie.Id);
 
-        Assert.IsType<PageResult>(result); // Stannar på samma sida
+        Assert.IsType<PageResult>(result); 
     }
 
     [Fact]
@@ -119,7 +119,6 @@ public async Task OnPostAsync_LoggedInUser_AddsReviewSuccessfully()
         Rating = 5
     };
 
-    // Sätt HttpContext.User
     var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
     {
         new Claim(ClaimTypes.NameIdentifier, user.Id)

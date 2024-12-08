@@ -20,7 +20,6 @@ public class ViewGroupsModelTests
 
         using var context = new ApplicationDbContext(options);
 
-        // Skapa testdata
         var group = new Group { Name = "TestGroup" };
         var member = new GroupMember { Group = group, UserId = "user1" };
         var movie = new Movie { Title = "TestMovie", Group = group };

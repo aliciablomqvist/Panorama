@@ -41,7 +41,6 @@ public async Task OnGetAsync_UserWithWatchedMovies_LoadsCorrectMovies()
 
     var pageModel = new WatchedModel(context, userManager.Object);
 
-    // Sätt HttpContext.User
     var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
     {
         new Claim(ClaimTypes.NameIdentifier, user.Id)

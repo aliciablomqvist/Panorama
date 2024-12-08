@@ -23,7 +23,7 @@ public class ShareModelTests
         await context.SaveChangesAsync();
 
         var pageModel = new ShareModel(context);
-        // Simulera en request för att generera länk
+
         pageModel.PageContext.HttpContext = new DefaultHttpContext();
         pageModel.PageContext.HttpContext.Request.Scheme = "https";
 

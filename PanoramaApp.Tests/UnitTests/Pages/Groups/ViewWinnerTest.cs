@@ -26,7 +26,6 @@ public class ViewWinnerModelTests
         context.Movies.AddRange(movie1, movie2);
         await context.SaveChangesAsync();
 
-        // Lägg till röster: Movie1 får 2 röster, Movie2 får 1 röst
         var votes = new List<Vote>
         {
             new Vote { GroupId = group.Id, MovieId = movie1.Id, UserId = "userA" },

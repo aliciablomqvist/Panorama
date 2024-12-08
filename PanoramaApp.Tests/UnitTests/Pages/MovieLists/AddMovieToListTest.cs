@@ -28,7 +28,7 @@ public class AddMovieModelTests
         context.MovieLists.Add(list);
         await context.SaveChangesAsync();
 
-        // En film i listan och en film utanför listan
+
         var movieInList = new Movie { Title = "InList" };
         var movieOutside = new Movie { Title = "Outside" };
         context.Movies.AddRange(movieInList, movieOutside);
@@ -51,7 +51,7 @@ public class AddMovieModelTests
         Assert.IsType<PageResult>(result);
         Assert.NotNull(pageModel.MovieList);
         Assert.Single(pageModel.MovieList.Movies);
-        Assert.Single(pageModel.MovieOptions); // Bara "Outside" ska vara valbar
+        Assert.Single(pageModel.MovieOptions); // Bara "Outside" 
         Assert.Equal("Outside", pageModel.MovieOptions.First().Text);
     }
 

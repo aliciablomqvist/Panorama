@@ -43,7 +43,7 @@ public class InvitationsModelTests
 
         // Assert (Then)
         var redirectResult = Assert.IsType<RedirectToPageResult>(result);
-        Assert.Null(redirectResult.PageName); // Redirectar till samma sida
+        Assert.Null(redirectResult.PageName);
 
         var updatedInvitation = await context.GroupInvitations.FindAsync(invitation.Id);
         Assert.True(updatedInvitation.IsAccepted);
