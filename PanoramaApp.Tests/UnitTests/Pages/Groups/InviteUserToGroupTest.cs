@@ -1,5 +1,5 @@
 
-namespace PanoramaApp.Tests.Pages.Movies
+namespace PanoramaApp.Tests.UnitTests.Pages.Groups
 {
     public class InviteUserToGroupTests
     {
@@ -36,7 +36,7 @@ public async Task InviteUserToGroup_ShouldAddUserToGroupMembers()
     var userManager = GetMockUserManager();
     var httpContext = GetMockHttpContext(ownerId);
 
-    var pageModel = new InviteToGroupModel(dbContext, userManager)
+    var pageModel = new InvitationsModel(dbContext, userManager)
     {
         PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
         {

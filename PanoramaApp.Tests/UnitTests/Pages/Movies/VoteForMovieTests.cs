@@ -1,6 +1,7 @@
 using PanoramaApp.Tests.Helpers;
 
-namespace PanoramaApp.Tests.Pages.Movies
+
+namespace PanoramaApp.Tests.UnitTests.Pages.Movies
 {
     public class VoteForMovieTests
     {
@@ -10,7 +11,6 @@ namespace PanoramaApp.Tests.Pages.Movies
     private readonly Mock<UserManager<IdentityUser>> _mockUserManager;
 
        private readonly HttpContext _httpContext;
-
 
     public VoteForMovieTests()
     {
@@ -29,7 +29,7 @@ _httpContext = TestHelpers.GetMockHttpContext(userId);
 
             var userManager = _mockUserManager.Object;
 
-            var pageModel = new VoteForMovieModel(_context, userManager)
+            var pageModel = new VoteFilmsModel(_context, userManager)
             {
                 PageContext = new PageContext
                 {

@@ -13,6 +13,7 @@ namespace PanoramaApp.Pages.Movies
     public class AddMovieModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        
 
         public AddMovieModel(ApplicationDbContext context)
         {

@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace PanoramaApp.Tests.Pages.Movies
+
+namespace PanoramaApp.Tests.UnitTests.Pages.Movies
 {
     public class ShareListsTests
     {
@@ -45,7 +46,7 @@ public async Task ShareMovieList_ShouldAddUserToSharedList()
     var userManager = GetMockUserManager();
     var httpContext = GetMockHttpContext(ownerId);
 
-    var pageModel = new ShareMovieListModel(dbContext, userManager)
+    var pageModel = new ShareModel(dbContext, userManager)
     {
         PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
         {
