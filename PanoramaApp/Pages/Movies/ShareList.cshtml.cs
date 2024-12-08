@@ -19,6 +19,9 @@ namespace PanoramaApp.Pages.Movies
 
         public string ShareableLink { get; set; }
 
+        public int ListId { get; set; }
+    public string RecipientUserName { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int listId)
         {
             MovieList = await _context.MovieLists.FindAsync(listId);

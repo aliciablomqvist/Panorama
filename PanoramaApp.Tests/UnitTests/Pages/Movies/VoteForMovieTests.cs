@@ -8,6 +8,7 @@ using Moq;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.Groups;
+using PanoramaApp.Tests.Helpers;
 using Xunit;
 
 public class VoteFilmsModelTests
@@ -66,41 +67,38 @@ public class VoteFilmsModelTests
         var redirect = Assert.IsType<RedirectToPageResult>(result);
         Assert.Equal("/Error", redirect.PageName);
     }
-[Fact]
+    
+ [Fact]
 public async Task OnPostVoteAsync_ValidVote_AddsVote()
 {
+    // Arrange
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("VoteForMovieTestDb")
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
-    var user = new IdentityUser { Id = "user1", UserName = "test@example.com" };
+    var user1 = new IdentityUser { Id = "user1", UserName = "test@example.com" };
     var movie = new Movie { Title = "Votable Movie" };
-    context.Users.Add(user);
+    context.Users.Add(user1);
     context.Movies.Add(movie);
     await context.SaveChangesAsync();
 
     var userStore = new Mock<IUserStore<IdentityUser>>();
     var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object, null, null, null, null, null, null, null, null);
-    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user);
+    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user1);
 
     var pageModel = new VoteFilmsModel(context, userManager.Object);
 
-    var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id)
-    }, "TestAuth"));
-    var httpContext = new DefaultHttpContext { User = claimsPrincipal };
-    pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
-    {
-        HttpContext = httpContext
-    };
+    // Använd hjälpmetoden
+    TestHelper.SetUserAndHttpContext(pageModel, user1.Id, user1.UserName);
 
+    // Act
     var result = await pageModel.OnPostVoteAsync(1, movie.Id);
 
+    // Assert
     Assert.IsType<RedirectToPageResult>(result);
-    var vote = await context.Votes.FirstOrDefaultAsync(v => v.MovieId == movie.Id && v.UserId == user.Id);
+    var vote = await context.Votes.FirstOrDefaultAsync(v => v.MovieId == movie.Id && v.UserId == user1.Id);
     Assert.NotNull(vote);
 }
 
@@ -120,10 +118,7 @@ public async Task OnPostVoteAsync_ValidVote_AddsVote()
 
         var pageModel = new VoteFilmsModel(context, userManager.Object);
 
-        pageModel.User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-        {
-            new Claim(ClaimTypes.Name, "testuser@example.com")
-        }, "TestAuth"));
+TestHelper.SetUserAndHttpContext(pageModel, "user1", "test@example.com");
 
         // Act
         var result = await pageModel.OnPostVoteAsync(999, 1); // ogiltig grupp

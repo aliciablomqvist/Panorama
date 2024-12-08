@@ -7,32 +7,23 @@ using System.Security.Claims;
 
 namespace PanoramaApp.Tests.Helpers
 {
-public static class TestHelpers
+public static class TestHelper
 {
-public static ApplicationDbContext GetInMemoryDbContext()
-{
-    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .UseInMemoryDatabase(Guid.NewGuid().ToString())
-        .Options;
-
-    return new ApplicationDbContext(options);
-}
-
-public static Mock<UserManager<IdentityUser>> GetMockUserManager()
-{
-    var store = new Mock<IUserStore<IdentityUser>>();
-    var userManager = new Mock<UserManager<IdentityUser>>(store.Object, null, null, null, null, null, null, null, null);
-    return userManager;
-}
-
-
-
-    public static HttpContext GetMockHttpContext(string userId)
+    public static void SetUserAndHttpContext<TPageModel>(TPageModel pageModel, string userId, string userName)
+        where TPageModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
-        var context = new DefaultHttpContext();
-        var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, userId) };
-        context.User = new ClaimsPrincipal(new ClaimsIdentity(claims, "TestAuthType"));
-        return context;
+        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, userId),
+            new Claim(ClaimTypes.Name, userName)
+        }, "TestAuth"));
+
+        var httpContext = new DefaultHttpContext { User = claimsPrincipal };
+
+        pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
+        {
+            HttpContext = httpContext
+        };
     }
 }
 }

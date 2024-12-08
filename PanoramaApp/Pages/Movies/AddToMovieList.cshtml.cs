@@ -4,21 +4,21 @@ using PanoramaApp.Data;
 using PanoramaApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace PanoramaApp.Pages.Movies
 {
     public class AddMovieModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        
+          private readonly UserManager<IdentityUser> _userManager;
 
-        public AddMovieModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+public AddMovieModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+    {
+        _context = context;
+        _userManager = userManager;
+    }
 
         public MovieList MovieList { get; set; }
 

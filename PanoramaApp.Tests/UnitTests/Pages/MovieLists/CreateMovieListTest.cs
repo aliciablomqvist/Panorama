@@ -54,38 +54,37 @@ public async Task OnPostAsync_LoggedInUser_CreatesMovieList()
     Assert.True(createdList.IsShared);
 }
 
-    [Fact]
-    public async Task OnPostAsync_UserNotLoggedIn_Challenge()
+[Fact]
+public async Task OnPostAsync_UserNotLoggedIn_Challenge()
+{
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase("CreateMovieListNoUserDb")
+        .Options;
+
+    using var context = new ApplicationDbContext(options);
+
+    var userStore = new Mock<IUserStore<IdentityUser>>();
+    var userManager = new Mock<UserManager<IdentityUser>>(
+        userStore.Object, null, null, null, null, null, null, null, null);
+
+    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync((IdentityUser)null);
+
+    var pageModel = new CreateMovieListModel(context, userManager.Object)
     {
-        // Arrange
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("CreateMovieListNoUserDb")
-            .Options;
+        Name = "ShouldNotCreate",
+        IsShared = false
+    };
 
-        using var context = new ApplicationDbContext(options);
+    var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity()); // Ingen inloggad användare
+    var httpContext = new DefaultHttpContext { User = claimsPrincipal };
+    pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
+    {
+        HttpContext = httpContext
+    };
 
-        var userStore = new Mock<IUserStore<IdentityUser>>();
-        var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+    var result = await pageModel.OnPostAsync();
 
-        // Ingen användare returneras
-        userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync((IdentityUser)null);
-
-        var pageModel = new CreateMovieListModel(context, userManager.Object)
-        {
-            Name = "ShouldNotCreate",
-            IsShared = false
-        };
-
-        // Ingen inloggad user
-        pageModel.User = new ClaimsPrincipal(new ClaimsIdentity());
-
-        // Act
-        var result = await pageModel.OnPostAsync();
-
-        // Assert
-        // ChallengeResult används för att be användaren logga in
-        Assert.IsType<ChallengeResult>(result);
-        Assert.Empty(context.MovieLists); 
-    }
+    Assert.IsType<ChallengeResult>(result);
+    Assert.Empty(context.MovieLists);
+}
 }

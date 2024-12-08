@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PanoramaApp.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5abccda4c554a6c4303e0b9ea1db7114bc3e768a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+855dbbfa2a15d60e608b659a11c5a48150e98093")]
 [assembly: System.Reflection.AssemblyProductAttribute("PanoramaApp.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PanoramaApp.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
