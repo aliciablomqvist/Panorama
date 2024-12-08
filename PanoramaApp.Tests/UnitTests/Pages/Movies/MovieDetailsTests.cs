@@ -1,250 +1,232 @@
-using Xunit;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Moq;
+using PanoramaApp.Data;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.Movies;
 using PanoramaApp.Tests.Helpers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+using PanoramaApp.Services;
+using Xunit;
+using System.Collections.Generic;
 
-
-namespace PanoramaApp.Tests.UnitTests.Pages.Movies
+public class MovieDetailsModelTests
 {
-    public class MovieDetailsTests
+[Fact]
+public async Task OnGetAsync_ValidMovie_LoadsDetails()
+{
+    // Arrange
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase("MovieDetailsTestDb")
+        .Options;
+
+    using var context = new ApplicationDbContext(options);
+
+    var user = new IdentityUser { Id = "user1", UserName = "test@example.com" };
+    var movie = new Movie { Title = "Test Movie" };
+    context.Users.Add(user);
+    context.Movies.Add(movie);
+    await context.SaveChangesAsync();
+
+    var userStore = new Mock<IUserStore<IdentityUser>>();
+    var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object, null, null, null, null, null, null, null, null);
+    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user);
+
+    var pageModel = new MovieDetailsModel(context, userManager.Object, null);
+
+  TestHelper.SetUserAndHttpContext(pageModel, user.Id, user.UserName);
+
+
+    // Act
+    var result = await pageModel.OnGetAsync(movie.Id);
+
+    // Assert
+    Assert.IsType<PageResult>(result);
+    Assert.NotNull(pageModel.Movie);
+    Assert.Equal("Test Movie", pageModel.Movie.Title);
+}
+
+
+    [Fact]
+    public async Task OnGetAsync_InvalidMovieId_ReturnsNotFound()
     {
-        private readonly string _userId = "test-user-id";
-        private readonly ApplicationDbContext _context;
-        private readonly Mock<UserManager<IdentityUser>> _mockUserManager;
-        private readonly HttpContext _httpContext;
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("MovieDetailsNotFoundDb")
+            .Options;
 
-        public MovieDetailsTests()
-        {
-            _context = TestHelpers.GetInMemoryDbContext();
-            _mockUserManager = TestHelpers.GetMockUserManager();
-            _httpContext = TestHelpers.GetMockHttpContext(_userId);
-        }
+        using var context = new ApplicationDbContext(options);
 
-        [Fact]
-        public async Task OnPostAddToFavoritesAsync_CreatesFavoritesListAndAddsMovie()
-        {
-            // Arrange
-            _mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .ReturnsAsync(new IdentityUser { Id = _userId });
+        var reviewService = new Mock<ReviewService>(null);
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object,null,null,null,null,null,null,null,null);
 
-            var userManager = _mockUserManager.Object;
+        var pageModel = new MovieDetailsModel(context, userManager.Object, reviewService.Object);
 
-            var movie = new Movie { Id = 1, Title = "Test Movie" };
-            _context.Movies.Add(movie);
-            await _context.SaveChangesAsync();
+        var result = await pageModel.OnGetAsync(999);
 
-            var pageModel = new MovieDetailsModel(_context, userManager)
-            {
-                PageContext = new PageContext
-                {
-                    HttpContext = _httpContext
-                }
-            };
+        Assert.IsType<NotFoundResult>(result);
+    }
+ 
+[Fact]
+public async Task OnPostAddToFavoritesAsync_LoggedInUser_AddsMovieToFavorites()
+{
+    // Arrange
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase("AddToFavoritesDb")
+        .Options;
 
-            // Act
-            var result = await pageModel.OnPostAddToFavoritesAsync(movie.Id);
+    using var context = new ApplicationDbContext(options);
 
-            // Assert
-            var favoritesList = await _context.MovieLists
-                .Include(ml => ml.Movies)
-                .FirstOrDefaultAsync(ml => ml.Name == "My Favorites" && ml.OwnerId == _userId);
+    var user = new IdentityUser { Id = "user1", UserName = "test@example.com" };
+    var movie = new Movie { Title = "FavMovie" };
+    context.Users.Add(user);
+    context.Movies.Add(movie);
+    await context.SaveChangesAsync();
 
-            Assert.NotNull(favoritesList);
-            Assert.Single(favoritesList.Movies);
-            Assert.Equal(movie.Id, favoritesList.Movies.First().MovieId);
-        }
+    var userStore = new Mock<IUserStore<IdentityUser>>();
+    var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object, null, null, null, null, null, null, null, null);
+    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user);
+
+    var pageModel = new MovieDetailsModel(context, userManager.Object, null);
+
+   TestHelper.SetUserAndHttpContext(pageModel, user.Id, user.UserName);
 
 
+    // Act
+    var result = await pageModel.OnPostAddToFavoritesAsync(movie.Id);
 
-        [Fact]
-        public async Task OnPostAddToFavoritesAsync_AddsMovieToExistingFavoritesList()
-        {
-            // Arrange
-            var dbContext = GetInMemoryDbContext();
+    // Assert
+    Assert.IsType<RedirectToPageResult>(result);
+    var favoritesList = await context.MovieLists
+        .Include(ml => ml.Movies)
+        .FirstOrDefaultAsync(ml => ml.OwnerId == user.Id && ml.Name == "My Favorites");
+    Assert.NotNull(favoritesList);
+    Assert.Single(favoritesList.Movies);
+    Assert.Equal(movie.Id, favoritesList.Movies.First().MovieId);
+}
 
-            var movie = new Movie { Id = 1, Title = "Test Movie" };
-            var userId = "test-user-id";
-            var favoritesList = new MovieList { Id = 1, Name = "My Favorites", OwnerId = userId };
-            dbContext.Movies.Add(movie);
-            dbContext.MovieLists.Add(favoritesList);
-            await dbContext.SaveChangesAsync();
+    [Fact]
+    public async Task OnPostAddToFavoritesAsync_NotLoggedIn_RedirectsToLogin()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("AddToFavNoUserDb")
+            .Options;
 
-            var userManager = GetMockUserManager();
+        using var context = new ApplicationDbContext(options);
 
-            var httpContext = new DefaultHttpContext();
-            var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, userId),
-            }, "TestAuthentication"));
+        var movie = new Movie { Title = "NoUserMovie" };
+        context.Movies.Add(movie);
+        await context.SaveChangesAsync();
 
-            httpContext.User = claimsPrincipal;
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object,null,null,null,null,null,null,null,null);
+        userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync((IdentityUser)null);
 
-            var pageModel = new MovieDetailsModel(dbContext, userManager)
-            {
-                PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
-                {
-                    HttpContext = httpContext
-                }
-            };
+        var reviewService = new Mock<ReviewService>(null);
+        var pageModel = new MovieDetailsModel(context, userManager.Object, reviewService.Object);
 
-            // Act
-            var result = await pageModel.OnPostAddToFavoritesAsync(movie.Id);
+        var result = await pageModel.OnPostAddToFavoritesAsync(movie.Id);
 
-            // Assert
-            favoritesList = await dbContext.MovieLists
-                .Include(ml => ml.Movies)
-                .FirstOrDefaultAsync(ml => ml.Name == "My Favorites" && ml.OwnerId == userId);
+        var redirect = Assert.IsType<RedirectToPageResult>(result);
+        Assert.Equal("/Account/Login", redirect.PageName);
+    }
 
-            Assert.NotNull(favoritesList);
-            Assert.Single(favoritesList.Movies);
-            Assert.Equal(movie.Id, favoritesList.Movies.First().MovieId);
-        }
+[Fact]
+public async Task OnPostMarkAsWatchedAsync_LoggedInUser_AddsMovieToWatched()
+{
+    // Arrange
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase("MarkAsWatchedDb")
+        .Options;
 
-        [Fact]
-        public async Task OnPostAddToFavoritesAsync_DoesNotDuplicateMovieInFavorites()
-        {
-            // Arrange
-            var dbContext = GetInMemoryDbContext();
+    using var context = new ApplicationDbContext(options);
 
-            var movie = new Movie { Id = 1, Title = "Test Movie" };
-            var userId = "test-user-id";
-            var favoritesList = new MovieList
-            {
-                Id = 1,
-                Name = "My Favorites",
-                OwnerId = userId,
-                Movies = new List<MovieListItem>
-                {
-                    new MovieListItem { MovieId = movie.Id, MovieListId = 1 }
-                }
-            };
-            dbContext.Movies.Add(movie);
-            dbContext.MovieLists.Add(favoritesList);
-            await dbContext.SaveChangesAsync();
+    var user = new IdentityUser { Id = "userId", UserName = "test@example.com" };
+    var movie = new Movie { Title = "WatchedMovie" };
+    context.Users.Add(user);
+    context.Movies.Add(movie);
+    await context.SaveChangesAsync();
 
-            var userManager = GetMockUserManager();
+    var userStore = new Mock<IUserStore<IdentityUser>>();
+    var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object, null, null, null, null, null, null, null, null);
+    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user);
 
-            var httpContext = new DefaultHttpContext();
-            var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, userId),
-            }, "TestAuthentication"));
+    var pageModel = new MovieDetailsModel(context, userManager.Object, null);
 
-            httpContext.User = claimsPrincipal;
+    TestHelper.SetUserAndHttpContext(pageModel, user.Id, user.UserName);
 
-            var pageModel = new MovieDetailsModel(dbContext, userManager)
-            {
-                PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
-                {
-                    HttpContext = httpContext
-                }
-            };
+    // Act
+    var result = await pageModel.OnPostMarkAsWatchedAsync(movie.Id);
 
-            // Act
-            var result = await pageModel.OnPostAddToFavoritesAsync(movie.Id);
+    // Assert
+    Assert.IsType<RedirectToPageResult>(result);
+    var watchedList = await context.MovieLists
+        .Include(ml => ml.Movies)
+        .FirstOrDefaultAsync(ml => ml.OwnerId == user.Id && ml.Name == "Watched");
+    Assert.NotNull(watchedList);
+    Assert.Single(watchedList.Movies);
+    Assert.Equal(movie.Id, watchedList.Movies.First().MovieId);
+}
+[Fact]
+public async Task OnPostAddReviewAsync_LoggedInUser_AddsReview()
+{
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase("AddReviewDb")
+        .Options;
 
-            // Assert
-            favoritesList = await dbContext.MovieLists
-                .Include(ml => ml.Movies)
-                .FirstOrDefaultAsync(ml => ml.Name == "My Favorites" && ml.OwnerId == userId);
+    using var context = new ApplicationDbContext(options);
 
-            Assert.NotNull(favoritesList);
-            Assert.Single(favoritesList.Movies); 
-        }
+    var user = new IdentityUser { Id = "user3", UserName = "testuser@example.com" };
+    var movie = new Movie { Title = "Reviewable Movie" };
+    context.Users.Add(user);
+    context.Movies.Add(movie);
+    await context.SaveChangesAsync();
 
-        [Fact]
-        public async Task OnGetAsync_ReturnsPageWithMovieDetails()
-        {
-            // Arrange
-            var dbContext = GetInMemoryDbContext();
+    var userStore = new Mock<IUserStore<IdentityUser>>();
+    var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object, null, null, null, null, null, null, null, null);
+    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user);
 
-            var movie = new Movie { Id = 1, Title = "Test Movie", Description = "Test Description" };
-            dbContext.Movies.Add(movie);
-            await dbContext.SaveChangesAsync();
+    var reviewService = new Mock<ReviewService>(null);
+    reviewService.Setup(rs => rs.AddReviewAsync(movie.Id, user.Id, "Great movie", 5))
+                 .Returns(Task.CompletedTask);
 
-            var userManager = GetMockUserManager();
+    var pageModel = new MovieDetailsModel(context, userManager.Object, reviewService.Object);
 
-            var pageModel = new MovieDetailsModel(dbContext, userManager);
+    TestHelper.SetUserAndHttpContext(pageModel, user.Id, user.UserName);
 
-            // Act
-            var result = await pageModel.OnGetAsync(movie.Id);
+    var result = await pageModel.OnPostAddReviewAsync(movie.Id, "Great movie", 5);
 
-            // Assert
-            Assert.IsType<PageResult>(result);
-            Assert.NotNull(pageModel.Movie);
-            Assert.Equal(movie.Title, pageModel.Movie.Title);
-            Assert.Equal(movie.Description, pageModel.Movie.Description);
-        }
+    Assert.IsType<RedirectToPageResult>(result);
+    reviewService.Verify(rs => rs.AddReviewAsync(movie.Id, user.Id, "Great movie", 5), Times.Once);
+}
 
-        [Fact]
-        public async Task OnGetAsync_ReturnsNotFoundWhenMovieDoesNotExist()
-        {
-            // Arrange
-            var dbContext = GetInMemoryDbContext();
-            var userManager = GetMockUserManager();
-            var pageModel = new MovieDetailsModel(dbContext, userManager);
 
-            // Act
-            var result = await pageModel.OnGetAsync(999); // Non-existent movie ID
+    [Fact]
+    public async Task OnPostAddReviewAsync_NotLoggedIn_RedirectsToLogin()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("AddReviewNoUserDb")
+            .Options;
 
-            // Assert
-            Assert.IsType<NotFoundResult>(result);
-        }
+        using var context = new ApplicationDbContext(options);
 
-        [Fact]
-        public async Task OnGetAsync_ReturnsPageWithFavorites()
-        {
-            // Arrange
-            var dbContext = GetInMemoryDbContext();
+        var movie = new Movie { Title = "ReviewNoUserMovie" };
+        context.Movies.Add(movie);
+        await context.SaveChangesAsync();
 
-            var userId = "test-user-id";
-            var movie = new Movie { Id = 1, Title = "Test Movie" };
-            var favoritesList = new MovieList
-            {
-                Id = 1,
-                Name = "My Favorites",
-                OwnerId = userId,
-                Movies = new List<MovieListItem>
-                {
-                    new MovieListItem { MovieId = movie.Id, MovieListId = 1, Movie = movie }
-                }
-            };
-            dbContext.Movies.Add(movie);
-            dbContext.MovieLists.Add(favoritesList);
-            await dbContext.SaveChangesAsync();
+        var reviewService = new Mock<ReviewService>(null);
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object,null,null,null,null,null,null,null,null);
 
-            var userManager = GetMockUserManager();
+        var pageModel = new MovieDetailsModel(context, userManager.Object, reviewService.Object);
 
-            var httpContext = new DefaultHttpContext();
-            var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, userId),
-            }, "TestAuthentication"));
+        var result = await pageModel.OnPostAddReviewAsync(movie.Id, "Nice", 5);
 
-            httpContext.User = claimsPrincipal;
-
-            var pageModel = new PanoramaApp.Pages.MovieLists.MyFavoritesModel(dbContext, userManager)
-            {
-                PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
-                {
-                    HttpContext = httpContext
-                }
-            };
-
-            // Act
-            var result = await pageModel.OnGetAsync();
-
-            // Assert
-            Assert.IsType<PageResult>(result);
-            Assert.NotNull(pageModel.MovieList);
-            Assert.Single(pageModel.MovieList.Movies);
-            Assert.Equal(movie.Title, pageModel.MovieList.Movies.First().Movie.Title);
-        }
+        var redirect = Assert.IsType<RedirectToPageResult>(result);
+        Assert.Equal("/Account/Login", redirect.PageName);
     }
 }

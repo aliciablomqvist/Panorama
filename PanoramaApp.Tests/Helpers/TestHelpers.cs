@@ -1,52 +1,29 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using PanoramaApp.Data;
-using PanoramaApp.Models;
-using System;
 using System.Security.Claims;
-using PanoramaApp.Services;
-
 
 namespace PanoramaApp.Tests.Helpers
 {
-public static class TestHelpers
+public static class TestHelper
 {
-    public static ApplicationDbContext GetInMemoryDbContext()
+    public static void SetUserAndHttpContext<TPageModel>(TPageModel pageModel, string userId, string userName)
+        where TPageModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
+        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, userId),
+            new Claim(ClaimTypes.Name, userName)
+        }, "TestAuth"));
 
-        return new ApplicationDbContext(options);
-        }
+        var httpContext = new DefaultHttpContext { User = claimsPrincipal };
 
-public static Mock<UserManager<TUser>> GetMockUserManager<TUser>() where TUser : class
-{
-    var store = new Mock<IUserStore<TUser>>();
-    return new Mock<UserManager<TUser>>(
-        store.Object, null, null, null, null, null, null, null, null
-    );
-}
-
-public static HttpContext GetMockHttpContext(string userId)
-{
-    var httpContext = new DefaultHttpContext();
-    var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
-    {
-        new Claim(ClaimTypes.NameIdentifier, userId)
-    }));
-    httpContext.User = claimsPrincipal;
-    return httpContext;
-}
-
-public static Mock<ReviewService> GetMockReviewService()
-{
-    var mockReviewService = new Mock<ReviewService>();
-    // Behövs dessa också?
-    // mockReviewService.Setup(s => s.AddReviewAsync(...)).ReturnsAsync(...);
-    return mockReviewService;
-}
+        pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
+        {
+            HttpContext = httpContext
+        };
     }
+}
 }

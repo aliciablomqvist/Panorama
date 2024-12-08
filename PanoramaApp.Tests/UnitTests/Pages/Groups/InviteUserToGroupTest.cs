@@ -1,61 +1,74 @@
+using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using PanoramaApp.Data;
+using PanoramaApp.Models;
+using PanoramaApp.Pages.Groups;
+using Xunit;
 
-namespace PanoramaApp.Tests.UnitTests.Pages.Groups
+public class InvitationsModelTests
 {
-    public class InviteUserToGroupTests
+    [Fact]
+    public async Task OnPostAcceptAsync_ValidInvitationId_MarksAsAcceptedAndRedirects()
     {
+        // Arrange (Given)
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("TestDb_Invitations")
+            .Options;
 
-            private readonly string userId = "test-user-id";
-    private readonly ApplicationDbContext _context;
-    private readonly Mock<UserManager<IdentityUser>> _mockUserManager;
-    private readonly HttpContext _httpContext;
+        using var context = new ApplicationDbContext(options);
 
-    public InviteUserToGroupTests()
-    {
-        _context = TestHelpers.GetInMemoryDbContext();
-        _mockUserManager = TestHelpers.GetMockUserManager();
-         _httpContext = TestHelpers.GetMockHttpContext(userId);
+        var invitation = new GroupInvitation
+        {
+            GroupId = 1,
+            InvitedUserId = "user123",
+            InvitedByUserId = "inviter123",
+            IsAccepted = false,
+            InvitationDate = DateTime.UtcNow
+        };
+        context.GroupInvitations.Add(invitation);
+        await context.SaveChangesAsync();
+
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(
+            userStore.Object, null, null, null, null, null, null, null, null);
+
+        var pageModel = new InvitationsModel(context, userManager.Object);
+
+        // Act (When)
+        var result = await pageModel.OnPostAcceptAsync(invitation.Id);
+
+        // Assert (Then)
+        var redirectResult = Assert.IsType<RedirectToPageResult>(result);
+        Assert.Null(redirectResult.PageName);
+
+        var updatedInvitation = await context.GroupInvitations.FindAsync(invitation.Id);
+        Assert.True(updatedInvitation.IsAccepted);
     }
 
-
-[Fact]
-public async Task InviteUserToGroup_ShouldAddUserToGroupMembers()
-{
-    // Arrange
-    var dbContext = GetInMemoryDbContext();
-    var ownerId = "owner-id";
-    var inviteeId = "invitee-id";
-
-    var owner = new IdentityUser { Id = ownerId, UserName = "owner" };
-    var invitee = new IdentityUser { Id = inviteeId, UserName = "invitee" };
-    dbContext.Users.AddRange(owner, invitee);
-
-    var group = new Group { Id = 1, Name = "Test Group", OwnerId = ownerId };
-    dbContext.Groups.Add(group);
-    await dbContext.SaveChangesAsync();
-
-    var userManager = GetMockUserManager();
-    var httpContext = GetMockHttpContext(ownerId);
-
-    var pageModel = new InvitationsModel(dbContext, userManager)
+    [Fact]
+    public async Task OnPostAcceptAsync_InvalidInvitationId_ReturnsNotFound()
     {
-        PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
-        {
-            HttpContext = httpContext
-        },
-        GroupId = group.Id,
-        InviteeUserName = invitee.UserName
-    };
+        // Arrange (Given)
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("TestDb_Invitations_Invalid")
+            .Options;
 
-    // Act
-    var result = await pageModel.OnPostAsync();
+        using var context = new ApplicationDbContext(options);
 
-    // Assert
-    var groupMember = await dbContext.GroupMembers
-        .FirstOrDefaultAsync(gm => gm.GroupId == group.Id && gm.UserId == inviteeId);
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(
+            userStore.Object, null, null, null, null, null, null, null, null);
 
-    Assert.NotNull(groupMember);
-    Assert.Equal(group.Id, groupMember.GroupId);
-    Assert.Equal(inviteeId, groupMember.UserId);
-}
-}
+        var pageModel = new InvitationsModel(context, userManager.Object);
+
+        // Act (When)
+        var result = await pageModel.OnPostAcceptAsync(999);
+
+        // Assert (Then)
+        Assert.IsType<NotFoundResult>(result);
+    }
 }

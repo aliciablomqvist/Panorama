@@ -3,20 +3,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace PanoramaApp.Pages.Groups
 {
     public class VoteFilmsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
+    private readonly UserManager<IdentityUser> _userManager;
 
-        public VoteFilmsModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+    public int MovieId { get; set; }
+
+    public VoteFilmsModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+    {
+        _context = context;
+        _userManager = userManager;
+    }
+
 
         public Group Group { get; set; } = default!;
         public int GroupId { get; set; }
