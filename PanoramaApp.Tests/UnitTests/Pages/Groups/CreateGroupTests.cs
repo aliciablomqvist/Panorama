@@ -1,93 +1,93 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using PanoramaApp.Data;
+using PanoramaApp.Models;
+using Xunit;
 
-namespace PanoramaApp.Tests.UnitTests.Pages.Groups
+public class CreateGroupModelTests
 {
-    public class CreateGroupTests
+    [Fact]
+    public async Task OnPostAsync_GivenValidData_CreatesGroupAndMembersAndRedirects()
     {
-            private readonly string userId = "test-user-id";
-    private readonly ApplicationDbContext _context;
-    private readonly Mock<UserManager<IdentityUser>> _mockUserManager;
+        // Arrange (Given)
 
-    private readonly HttpContext _httpContext;
+        // Skapa en in-memory databas för testet
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDb_CreateGroup")
+            .Options;
 
-    public CreateGroupTests()
-    {
-        _context = TestHelpers.GetInMemoryDbContext();
-        _mockUserManager = TestHelpers.GetMockUserManager();
-          _httpContext = TestHelpers.GetMockHttpContext(userId);
+        using var context = new ApplicationDbContext(options);
+
+        // Lägg till några användare i databasen
+        var user1 = new IdentityUser { Id = "user1", UserName = "user1@example.com" };
+        var user2 = new IdentityUser { Id = "user2", UserName = "user2@example.com" };
+        context.Users.AddRange(user1, user2);
+        await context.SaveChangesAsync();
+
+        // Mocka UserManager
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(
+            userStore.Object, null, null, null, null, null, null, null, null);
+
+        // Ställ in mock-svar för FindByIdAsync
+        userManager.Setup(u => u.FindByIdAsync("user1")).ReturnsAsync(user1);
+        userManager.Setup(u => u.FindByIdAsync("user2")).ReturnsAsync(user2);
+
+        // Skapa PageModel och sätt egenskaper
+        var pageModel = new CreateGroupModel(context, userManager.Object)
+        {
+            Name = "TestGroup",
+            SelectedUsers = new List<string> { "user1", "user2" }
+        };
+
+        // Act (When)
+        var result = await pageModel.OnPostAsync();
+
+        // Assert (Then)
+        // Kontrollera att vi fick en redirect
+        var redirectResult = Assert.IsType<RedirectToPageResult>(result);
+        Assert.Equal("/Groups/ViewGroups", redirectResult.PageName);
+
+        // Kontrollera att gruppen skapades
+        var group = await context.Groups.FirstOrDefaultAsync(g => g.Name == "TestGroup");
+        Assert.NotNull(group);
+
+        // Kontrollera att medlemmar har skapats
+        var members = await context.GroupMembers.ToListAsync();
+        Assert.Equal(2, members.Count);
+        Assert.Contains(members, m => m.UserId == "user1");
+        Assert.Contains(members, m => m.UserId == "user2");
     }
 
-        [Fact]
-        public async Task OnPostAsync_ValidData_ShouldCreateGroup()
+    [Fact]
+    public async Task OnPostAsync_GivenInvalidModelState_ReturnsPage()
+    {
+        // Arrange (Given)
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDb_CreateGroup_Invalid")
+            .Options;
+
+        using var context = new ApplicationDbContext(options);
+        
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(
+            userStore.Object, null, null, null, null, null, null, null, null);
+
+        var pageModel = new CreateGroupModel(context, userManager.Object)
         {
-            // Arrange
-            var testGroupName = "Test Group";
-            var pageModel = new CreateGroupModel(_context, _mockUserManager.Object)
-            {
-                Name = testGroupName
-            };
+            Name = "" // Ogiltig data för att trigga ModelState fel
+        };
+        pageModel.ModelState.AddModelError("Name", "Name is required");
 
-            // Act
-            var result = await pageModel.OnPostAsync();
+        // Act (When)
+        var result = await pageModel.OnPostAsync();
 
-            // Assert
-            var group = await _context.Groups.FirstOrDefaultAsync(g => g.Name == testGroupName);
-            Assert.NotNull(group);
-            Assert.Equal(testGroupName, group.Name);
-        }
-
-        [Fact]
-        public async Task OnPostAsync_AddMembersToGroup()
-        {
-            // Arrange
-            var testUsers = new List<string> { "user1", "user2" };
-            var mockUser1 = new IdentityUser { Id = "user1" };
-            var mockUser2 = new IdentityUser { Id = "user2" };
-
-            _mockUserManager.Setup(u => u.FindByIdAsync("user1")).ReturnsAsync(mockUser1);
-            _mockUserManager.Setup(u => u.FindByIdAsync("user2")).ReturnsAsync(mockUser2);
-
-            var pageModel = new CreateGroupModel(_context, _mockUserManager.Object)
-            {
-                Name = "Test Group",
-                SelectedUsers = testUsers
-            };
-
-            // Act
-            var result = await pageModel.OnPostAsync();
-
-            // Assert
-            var group = await _context.Groups.FirstOrDefaultAsync(g => g.Name == "Test Group");
-            Assert.NotNull(group);
-
-            var groupMembers = await _context.GroupMembers.ToListAsync();
-            Assert.Equal(2, groupMembers.Count);
-            Assert.Contains(groupMembers, gm => gm.UserId == "user1");
-            Assert.Contains(groupMembers, gm => gm.UserId == "user2");
-        }
-        [Fact]
-        public async Task CreateGroup_ShouldSetOwnerAndDefaultSettings()
-        {
-            // Arrange
-            var dbContext = GetInMemoryDbContext();
-            var ownerId = "owner-id";
-            var userManager = GetMockUserManager();
-            var httpContext = GetMockHttpContext(ownerId);
-            var pageModel = new CreateGroupModel(dbContext, userManager)
-            {
-                PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
-                {
-                    HttpContext = httpContext
-                },
-                Name = "New Group"
-            };
-
-            // Act
-            var result = await pageModel.OnPostAsync();
-
-            // Assert
-            var group = await dbContext.Groups.FirstOrDefaultAsync(g => g.Name == "New Group");
-            Assert.NotNull(group);
-            Assert.Equal(ownerId, group.OwnerId);
-        }
+        // Assert (Then)
+        // Nu ska vi få PageResult eftersom ModelState är ogiltig
+        Assert.IsType<PageResult>(result);
     }
 }

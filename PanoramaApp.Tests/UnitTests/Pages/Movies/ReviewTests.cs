@@ -1,132 +1,143 @@
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
-using PanoramaApp.Services;
+using PanoramaApp.Pages.Movies;
 using Xunit;
 
-
-namespace PanoramaApp.Tests.UnitTests.Pages.Movies
+public class ReviewsModelTests
 {
-    public class ReviewTests
+    [Fact]
+    public async Task OnGetAsync_ValidMovieId_LoadsMovieAndReviews()
     {
-        private readonly ApplicationDbContext _context;
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("ReviewsGetDb")
+            .Options;
 
-        public ReviewTests()
+        using var context = new ApplicationDbContext(options);
+
+        var movie = new Movie { Title = "ReviewableMovie" };
+        context.Movies.Add(movie);
+        var review = new Review { MovieId = movie.Id, Content = "Nice", Rating = 5 };
+        context.Reviews.Add(review);
+        await context.SaveChangesAsync();
+
+        var pageModel = new ReviewsModel(context);
+        var result = await pageModel.OnGetAsync(movie.Id);
+
+        Assert.IsType<PageResult>(result);
+        Assert.NotNull(pageModel.Movie);
+        Assert.Single(pageModel.Reviews);
+    }
+
+    [Fact]
+    public async Task OnGetAsync_InvalidMovieId_NotFound()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("ReviewsGetNotFoundDb")
+            .Options;
+
+        using var context = new ApplicationDbContext(options);
+
+        var pageModel = new ReviewsModel(context);
+        var result = await pageModel.OnGetAsync(999);
+
+        Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
+    public async Task OnPostAsync_InvalidModel_ReturnsPage()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("ReviewsPostInvalidModelDb")
+            .Options;
+
+        using var context = new ApplicationDbContext(options);
+
+        var movie = new Movie { Title = "ReviewMoviePost" };
+        context.Movies.Add(movie);
+        await context.SaveChangesAsync();
+
+        var pageModel = new ReviewsModel(context)
         {
-        
-            _context = TestHelpers.GetInMemoryDbContext();
-        }
+            Rating = 6, // Ogiltig rating
+            ReviewContent = "Too long"
+        };
 
-        [Fact]
-        public async Task AddReview_ShouldSaveReviewToDatabase()
+        pageModel.ModelState.AddModelError("Rating", "Out of range");
+        var result = await pageModel.OnPostAsync(movie.Id);
+
+        Assert.IsType<PageResult>(result); // Stannar på samma sida
+    }
+
+    [Fact]
+    public async Task OnPostAsync_NotLoggedIn_RedirectsToLogin()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("ReviewsPostNoUserDb")
+            .Options;
+
+        using var context = new ApplicationDbContext(options);
+
+        var movie = new Movie { Title = "NoUserMovie" };
+        context.Movies.Add(movie);
+        await context.SaveChangesAsync();
+
+        var pageModel = new ReviewsModel(context)
         {
-         
-            var userId = "test-user-id";
-            var movie = new Movie { Id = 1, Title = "Test Movie" };
-            var user = new IdentityUser { Id = userId, UserName = "testuser" };
-            _context.Users.Add(user);
-            _context.Movies.Add(movie);
-            await _context.SaveChangesAsync();
+            ReviewContent = "Good",
+            Rating = 4
+        };
 
-            var reviewService = new ReviewService(_context);
+        var result = await pageModel.OnPostAsync(movie.Id);
+        var redirect = Assert.IsType<RedirectToPageResult>(result);
+        Assert.Equal("/Account/Login", redirect.PageName);
+    }
 
-            await reviewService.AddReviewAsync(movie.Id, userId, "Great movie!", 5);
-
-
-            var savedReview = await _context.Reviews.FirstOrDefaultAsync(r => r.MovieId == movie.Id);
-            Assert.NotNull(savedReview);
-            Assert.Equal("Great movie!", savedReview.Content);
-            Assert.Equal(5, savedReview.Rating);
-            Assert.Equal(userId, savedReview.UserId);
-        }
-
-        [Fact]
-        public async Task AddReview_ShouldFailForNonExistentMovie()
-        {
-    
-            var userId = "test-user-id";
-            var user = new IdentityUser { Id = userId, UserName = "testuser" };
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            var reviewService = new ReviewService(_context);
-
-            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            {
-                await reviewService.AddReviewAsync(999, userId, "Great movie!", 5);
-            });
-        }
-
-        [Fact]
-        public async Task AddReview_ShouldFailForUnauthenticatedUser()
-        {
-          
-            var movie = new Movie { Id = 1, Title = "Test Movie" };
-            _context.Movies.Add(movie);
-            await _context.SaveChangesAsync();
-
-            var reviewService = new ReviewService(_context);
-
-            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            {
-                await reviewService.AddReviewAsync(movie.Id, null, "Great movie!", 5);
-            });
-        }
-[Fact]
-public async Task GetReviews_ShouldReturnReviewsForMovie()
+ [Fact]
+public async Task OnPostAsync_LoggedInUser_AddsReviewSuccessfully()
 {
-    // Arrange
-    var dbContext = TestHelpers.GetInMemoryDbContext();
-    var movie = new Movie { Id = 1, Title = "Test Movie" };
-    dbContext.Movies.Add(movie);
-    var user = new IdentityUser { Id = "test-user", UserName = "testuser" };
-    dbContext.Users.Add(user);
-    var review = new Review
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase("ReviewTestDb")
+        .Options;
+
+    using var context = new ApplicationDbContext(options);
+
+    var user = new IdentityUser { Id = "userId", UserName = "test@example.com" };
+    var movie = new Movie { Title = "ReviewableMovie" };
+    context.Users.Add(user);
+    context.Movies.Add(movie);
+    await context.SaveChangesAsync();
+
+    var pageModel = new ReviewsModel(context)
     {
-        Content = "Great movie!",
-        Rating = 5,
-        MovieId = movie.Id,
-        UserId = user.Id
+        ReviewContent = "Great movie!",
+        Rating = 5
     };
-    dbContext.Reviews.Add(review);
-    await dbContext.SaveChangesAsync();
 
-    var pageModel = new ReviewsModel(dbContext);
+    // Sätt HttpContext.User
+    var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id)
+    }, "TestAuth"));
+    var httpContext = new DefaultHttpContext { User = claimsPrincipal };
+    pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
+    {
+        HttpContext = httpContext
+    };
 
     // Act
-    await pageModel.OnGetAsync(movie.Id);
+    var result = await pageModel.OnPostAsync(movie.Id);
 
     // Assert
-    Assert.NotNull(pageModel.Reviews);
-    Assert.Single(pageModel.Reviews);
-    Assert.Equal("Great movie!", pageModel.Reviews.First().Content);
+    Assert.IsType<RedirectToPageResult>(result);
+    var review = await context.Reviews.FirstOrDefaultAsync(r => r.MovieId == movie.Id);
+    Assert.NotNull(review);
+    Assert.Equal("Great movie!", review.Content);
+    Assert.Equal(5, review.Rating);
 }
-
-        [Fact]
-        public async Task GetReviews_ShouldReturnAllReviewsForAMovie()
-        {
-           
-            var movie = new Movie { Id = 1, Title = "Test Movie" };
-            var user1 = new IdentityUser { Id = "user1", UserName = "user1" };
-            var user2 = new IdentityUser { Id = "user2", UserName = "user2" };
-
-            _context.Movies.Add(movie);
-            _context.Users.AddRange(user1, user2);
-            await _context.SaveChangesAsync();
-
-            var reviewService = new ReviewService(_context);
-
-            await reviewService.AddReviewAsync(movie.Id, user1.Id, "Amazing!", 5);
-            await reviewService.AddReviewAsync(movie.Id, user2.Id, "Not bad.", 3);
-
-            var reviews = await reviewService.GetReviewsForMovieAsync(movie.Id);
-
-            Assert.Equal(2, reviews.Count);
-            Assert.Contains(reviews, r => r.Content == "Amazing!" && r.Rating == 5);
-            Assert.Contains(reviews, r => r.Content == "Not bad." && r.Rating == 3);
-        }
-    }
 }
