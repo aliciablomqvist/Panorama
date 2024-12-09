@@ -25,19 +25,17 @@ namespace PanoramaApp.Services
         UserId = userId,
         Content = content,
         Rating = rating,
-        CreatedAt = DateTime.UtcNow // Sätt tiden för när recensionen skapas
+        CreatedAt = DateTime.UtcNow
     };
 
     _context.Reviews.Add(review);
     await _context.SaveChangesAsync();
 }
-
-        // Hämtar recensioner för en specifik film
         public async Task<IList<Review>> GetReviewsForMovieAsync(int movieId)
         {
             return await _context.Reviews
                 .Where(r => r.MovieId == movieId)
-                .Include(r => r.User) // Om du vill hämta användardetaljer
+                .Include(r => r.User)
                 .ToListAsync();
         }
     }

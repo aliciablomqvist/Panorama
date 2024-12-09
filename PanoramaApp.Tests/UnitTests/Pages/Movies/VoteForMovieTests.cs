@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using PanoramaApp.Services;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.Groups;
