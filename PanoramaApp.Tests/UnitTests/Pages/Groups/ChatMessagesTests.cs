@@ -11,7 +11,7 @@ using PanoramaApp.Models;
 using PanoramaApp.Pages.MovieLists;
 using Xunit;
 
-public class PrioritizeMoviesTests
+public class ChatMessageTests
 {
     [Fact]
 public async Task SendMessage_AddsMessageToGroupChat()

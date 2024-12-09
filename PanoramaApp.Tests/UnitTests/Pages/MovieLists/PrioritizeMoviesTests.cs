@@ -10,7 +10,6 @@ using PanoramaApp.Data;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.MovieLists;
 using Xunit;
-
 public class PrioritizeMoviesTests
 {
     [Fact]

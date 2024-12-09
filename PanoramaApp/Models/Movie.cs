@@ -16,5 +16,8 @@ namespace PanoramaApp.Models
 
     public ICollection<MovieListItem> MovieListItems { get; set; }
  public ICollection<MovieList> MovieLists { get; set; } = new List<MovieList>();
+
+  public string TrailerUrl { get; set; } 
+    public int Priority { get; set; } 
     }
 }
