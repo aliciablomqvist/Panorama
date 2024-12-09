@@ -8,16 +8,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PanoramaApp.Services
 {
-    public class MoviePrioritizer
+public static class MoviePrioritizer
 {
-    public static void SetPriority(Movie movie, int priority)
+   public static List<Movie> Prioritize(List<Movie> movies, int movieId, int priority)
+{
+    var movie = movies.FirstOrDefault(m => m.Id == movieId);
+    if (movie != null)
     {
         movie.Priority = priority;
     }
 
-    public static List<Movie> GetPrioritizedMovies(List<Movie> movies)
-    {
-        return movies.OrderByDescending(m => m.Priority).ToList();
-    }
+    return movies.OrderByDescending(m => m.Priority).ToList();
+}
 }
 }

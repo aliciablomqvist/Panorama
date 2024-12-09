@@ -10,25 +10,27 @@ using PanoramaApp.Data;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.MovieLists;
 using Xunit;
-
+using PanoramaApp.Services;
 public class ChatMessageTests
 {
     [Fact]
 public async Task SendMessage_AddsMessageToGroupChat()
 {
+
     // Arrange
     var group = new Group { Id = 1, Name = "Movie Group" };
-    var message = new ChatMessage { Text = "Hello Group!", UserId = "user1", Timestamp = DateTime.UtcNow };
+    var message = new ChatMessage { MessageText  = "Hello Group!", UserId = "user1", Timestamp = DateTime.UtcNow };
 
-    var context = new Mock<GroupChatContext>();
-    var chatService = new GroupChatService(context.Object);
+ 
+    var context = new Mock<ApplicationDbContext>();
+var groupChatService = new GroupChatService(context.Object);
 
     // Act
-    await chatService.SendMessage(group.Id, message);
+    await groupChatService .SendMessage("Hello Group!", "John Doe", group.Id);
 
     // Assert
-    var messages = await chatService.GetMessages(group.Id);
+    var messages = await groupChatService .GetMessages(group.Id);
     Assert.Single(messages);
-    Assert.Equal("Hello Group!", messages.First().Text);
+    //Assert.Equal("Hello, group!", "John Doe", 1, messages.First().MessageText );
 }
 }

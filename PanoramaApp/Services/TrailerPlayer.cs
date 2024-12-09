@@ -8,8 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PanoramaApp.Services
 {
-    public class TrailerPlayer
+public class TrailerPlayer
 {
+    public string GetTrailerUrl(Movie movie)
+    {
+        return movie.TrailerUrl;
+    }
+
     public void Play(string trailerUrl)
     {
         Console.WriteLine($"Playing trailer: {trailerUrl}");

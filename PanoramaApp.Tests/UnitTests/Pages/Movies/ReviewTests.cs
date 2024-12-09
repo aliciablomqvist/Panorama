@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
+using PanoramaApp.Services;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.Movies;
 using Xunit;

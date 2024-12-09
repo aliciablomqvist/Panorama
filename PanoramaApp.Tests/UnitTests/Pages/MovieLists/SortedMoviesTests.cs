@@ -10,6 +10,7 @@ using PanoramaApp.Data;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.MovieLists;
 using Xunit;
+using PanoramaApp.Services;
 
 public class SortedMoviesTests
 {
@@ -23,10 +24,12 @@ public void SortMovies_ByTitle_ReturnsSortedMovies()
         new Movie { Title = "A Movie", ReleaseDate = new DateTime(2019, 1, 1) }
     };
 
-    var sorter = new MovieSorter();
+   // var sorter = new MovieSorter();
 
     // Act
-    var sortedMovies = sorter.Sort(movies, "title");
+var sortedMovies = MovieSorter.Sort(movies, "Title");
+
+
 
     // Assert
     Assert.Equal("A Movie", sortedMovies.First().Title);

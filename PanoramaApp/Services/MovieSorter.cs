@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PanoramaApp.Services
 {
-    public class MovieSorter
+  public static class MovieSorter
 {
-    public static List<Movie> SortMovies(List<Movie> movies, string sortBy)
+    public static List<Movie> Sort(List<Movie> movies, string sortBy)
     {
         return sortBy switch
         {

@@ -17,26 +17,26 @@ namespace PanoramaApp.Services
         _context = context;
     }
 
-    public async Task SendMessageAsync(string messageText, string userName, int groupId)
+public async Task SendMessage(string messageText, string userName, int groupId)
+{
+    var chatMessage = new ChatMessage
     {
-        var chatMessage = new ChatMessage
-        {
-            MessageText = messageText,
-            UserName = userName,
-            Timestamp = DateTime.Now,
-            GroupId = groupId
-        };
+        MessageText = messageText,
+        UserName = userName,
+        Timestamp = DateTime.Now,
+        GroupId = groupId
+    };
 
-        _context.ChatMessages.Add(chatMessage);
-        await _context.SaveChangesAsync();
-    }
+    _context.ChatMessages.Add(chatMessage);
+    await _context.SaveChangesAsync();
+}
 
-    public async Task<List<ChatMessage>> GetMessagesForGroupAsync(int groupId)
-    {
-        return await _context.ChatMessages
-            .Where(m => m.GroupId == groupId)
-            .OrderBy(m => m.Timestamp)
-            .ToListAsync();
-    }
+public async Task<List<ChatMessage>> GetMessages(int groupId)
+{
+    return await _context.ChatMessages
+        .Where(m => m.GroupId == groupId)
+        .OrderBy(m => m.Timestamp)
+        .ToListAsync();
+}
 }
 }

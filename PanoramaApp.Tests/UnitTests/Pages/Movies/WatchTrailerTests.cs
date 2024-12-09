@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using PanoramaApp.Data;
+using PanoramaApp.Services;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.MovieLists;
 using Xunit;

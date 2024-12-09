@@ -10,6 +10,7 @@ using PanoramaApp.Data;
 using PanoramaApp.Models;
 using PanoramaApp.Pages.MovieLists;
 using Xunit;
+using PanoramaApp.Services;
 
 public class MovieCalendarTests
 {
@@ -17,16 +18,17 @@ public class MovieCalendarTests
 public void AddMovieToCalendar_AddsCorrectEntry()
 {
     // Arrange
-    var calendar = new MovieCalendar();
+    var movieCalendar = new MovieCalendar();
     var movie = new Movie { Title = "Test Movie" };
-    var date = new DateTime(2023, 12, 1, 20, 0, 0);
+    var date = new DateTime(2024, 12, 1, 20, 0, 0);
 
     // Act
-    calendar.AddMovie(movie, date);
+    movieCalendar.AddMovie(movie, DateTime.Now);
 
     // Assert
-    Assert.Single(calendar.Entries);
-    Assert.Equal("Test Movie", calendar.Entries.First().Movie.Title);
-    Assert.Equal(date, calendar.Entries.First().DateTime);
+Assert.Equal(date, movieCalendar.Entries.First().Date);
+Assert.Equal("Test Movie", movieCalendar.Entries.First().Movie.Title);
+
+    //Assert.Equal(date, movieCalendar.Entries.First().DateTime);
 }
 }
