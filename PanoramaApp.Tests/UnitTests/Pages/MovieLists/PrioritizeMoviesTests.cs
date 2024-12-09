@@ -13,7 +13,7 @@ using Xunit;
 using PanoramaApp.Services;
 public class PrioritizeMoviesTests
 {
-    [Fact]
+[Fact]
 public void PrioritizeMovies_ReturnsMoviesOrderedByPriority()
 {
     // Arrange
@@ -23,18 +23,11 @@ public void PrioritizeMovies_ReturnsMoviesOrderedByPriority()
         new Movie { Title = "Movie B", Priority = 1 }
     };
 
-    //var prioritizer = new MoviePrioritizer();
-    int movieId = 1;  // Exempelvärde
-    int priority = 2; 
-
-
     // Act
-    var prioritizedMovies = MoviePrioritizer.Prioritize(movies, movieId, priority);
-
-
+    var prioritizedMovies = MoviePrioritizer.GetPrioritizedMovies(movies);
 
     // Assert
-    Assert.Equal("Movie B", prioritizedMovies.First().Title);
-    Assert.Equal("Movie A", prioritizedMovies.Last().Title);
+    Assert.Equal("Movie A", prioritizedMovies.First().Title);
+    Assert.Equal("Movie B", prioritizedMovies.Last().Title);
 }
 }

@@ -7,7 +7,7 @@ namespace PanoramaApp.Models
     public int MovieId { get; set; }
     public Movie Movie { get; set; }
 
-    private List<(DateTime Date, Movie Movie)> _entries = new();
+    public List<(DateTime Date, Movie Movie)> _entries = new();
 
 public void AddMovie(Movie movie, DateTime date)
 {

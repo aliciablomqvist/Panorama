@@ -11,26 +11,55 @@ using PanoramaApp.Models;
 using PanoramaApp.Pages.MovieLists;
 using Xunit;
 using PanoramaApp.Services;
+using PanoramaApp.Tests.Helpers;
 public class ChatMessageTests
 {
-    [Fact]
+[Fact]
 public async Task SendMessage_AddsMessageToGroupChat()
 {
-
     // Arrange
-    var group = new Group { Id = 1, Name = "Movie Group" };
-    var message = new ChatMessage { MessageText  = "Hello Group!", UserId = "user1", Timestamp = DateTime.UtcNow };
+    var messages = new List<ChatMessage>
+    {
+        new ChatMessage { MessageText = "Hello Group!", UserName = "John Doe", GroupId = 1, Timestamp = DateTime.UtcNow }
+    };
 
- 
-    var context = new Mock<ApplicationDbContext>();
-var groupChatService = new GroupChatService(context.Object);
+    var mockChatMessagesDbSet = messages.CreateMockDbSet();
+    var mockDbContext = new Mock<ApplicationDbContext>();
+    mockDbContext.Setup(db => db.ChatMessages).Returns(mockChatMessagesDbSet.Object);
+
+    var groupChatService = new GroupChatService(mockDbContext.Object);
 
     // Act
-    await groupChatService .SendMessage("Hello Group!", "John Doe", group.Id);
+    await groupChatService.SendMessageAsync("Hello Group!", "John Doe", 1);
 
     // Assert
-    var messages = await groupChatService .GetMessages(group.Id);
-    Assert.Single(messages);
-    //Assert.Equal("Hello, group!", "John Doe", 1, messages.First().MessageText );
+    mockDbContext.Verify(db => db.ChatMessages.Add(It.IsAny<ChatMessage>()), Times.Once);
+    mockDbContext.Verify(db => db.SaveChangesAsync(default), Times.Once);
+}
+
+
+[Fact]
+public async Task GetMessages_ReturnsMessagesInOrder()
+{
+    // Arrange
+    var groupId = 1;
+    var messages = new List<ChatMessage>
+    {
+        new ChatMessage { MessageText = "Message 1", GroupId = groupId, Timestamp = DateTime.UtcNow.AddMinutes(-10) },
+        new ChatMessage { MessageText = "Message 2", GroupId = groupId, Timestamp = DateTime.UtcNow }
+    };
+    var mockChatMessagesDbSet = messages.CreateMockDbSet();
+    var mockDbContext = new Mock<ApplicationDbContext>();
+    mockDbContext.Setup(db => db.ChatMessages).Returns(mockChatMessagesDbSet.Object);
+
+    var chatService = new GroupChatService(mockDbContext.Object);
+
+    // Act
+    var result = await chatService.GetMessagesForGroupAsync(groupId);
+
+    // Assert
+    Assert.Equal(2, result.Count);
+    Assert.Equal("Message 1", result.First().MessageText);
+    Assert.Equal("Message 2", result.Last().MessageText);
 }
 }

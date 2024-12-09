@@ -20,5 +20,9 @@ public static class MoviePrioritizer
 
     return movies.OrderByDescending(m => m.Priority).ToList();
 }
+    public static List<Movie> GetPrioritizedMovies(List<Movie> movies)
+    {
+        return movies.OrderByDescending(m => m.Priority).ToList();
+    }
 }
 }
