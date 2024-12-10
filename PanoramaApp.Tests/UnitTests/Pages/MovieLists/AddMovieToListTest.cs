@@ -24,7 +24,7 @@ public class AddMovieModelTests
 
         using var context = new ApplicationDbContext(options);
 
-        var list = new MovieList { Name = "TestList" };
+        var list = new MovieList { Name = "TestList", OwnerId = "user4" };
         context.MovieLists.Add(list);
         await context.SaveChangesAsync();
 
@@ -89,7 +89,7 @@ public class AddMovieModelTests
 
         using var context = new ApplicationDbContext(options);
 
-        var list = new MovieList { Name = "TestList" };
+        var list = new MovieList { Name = "TestList", OwnerId = "user5" };
         var movie1 = new Movie { Title = "Movie1" };
         var movie2 = new Movie { Title = "Movie2" };
         context.MovieLists.Add(list);

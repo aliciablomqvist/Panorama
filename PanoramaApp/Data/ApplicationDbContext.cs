@@ -25,7 +25,7 @@ namespace PanoramaApp.Data
    public DbSet<Review> Reviews { get; set; }
 
     public DbSet<MovieCalendar> MovieCalendars { get; set; }
-    public DbSet<ChatMessage> ChatMessages { get; set; }
+    public virtual DbSet<ChatMessage> ChatMessages { get; set; } //Vad ska denna vara?
     public DbSet<GroupChatContext> GroupChatContexts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

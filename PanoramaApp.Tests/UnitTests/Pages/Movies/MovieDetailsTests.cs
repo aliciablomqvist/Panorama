@@ -17,19 +17,30 @@ using System.Collections.Generic;
 public class MovieDetailsModelTests
 {
 [Fact]
-public async Task OnGetAsync_ValidMovie_LoadsDetails()
+public async Task OnGetAsync_ValidMovie_LoadsListDetails()
 {
     // Arrange
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("MovieDetailsTestDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
-    var user = new IdentityUser { Id = "user1", UserName = "test@example.com" };
-    var movie = new Movie { Title = "Test Movie" };
+    var user = new IdentityUser { Id = "user4", UserName = "test@example.com" };
+                   var movie = new Movie
+        {
+             Id = 1,
+    Title = " Movie testtesttest",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 4
+};
     context.Users.Add(user);
     context.Movies.Add(movie);
+    context.Movies.RemoveRange(context.Movies);
     await context.SaveChangesAsync();
 
     var userStore = new Mock<IUserStore<IdentityUser>>();
@@ -56,6 +67,7 @@ public async Task OnGetAsync_ValidMovie_LoadsDetails()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("MovieDetailsNotFoundDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
@@ -77,12 +89,21 @@ public async Task OnPostAddToFavoritesAsync_LoggedInUser_AddsMovieToFavorites()
     // Arrange
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("AddToFavoritesDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
-    var user = new IdentityUser { Id = "user1", UserName = "test@example.com" };
-    var movie = new Movie { Title = "FavMovie" };
+    var user = new IdentityUser { Id = "user5", UserName = "test@example.com" };
+                   var movie = new Movie
+        {
+    Title = "fav Movie testtest",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 4
+};
     context.Users.Add(user);
     context.Movies.Add(movie);
     await context.SaveChangesAsync();
@@ -114,11 +135,20 @@ public async Task OnPostAddToFavoritesAsync_LoggedInUser_AddsMovieToFavorites()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("AddToFavNoUserDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
 
-        var movie = new Movie { Title = "NoUserMovie" };
+                       var movie = new Movie
+        {
+    Title = "no user Movie testtest",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 4
+};
         context.Movies.Add(movie);
         await context.SaveChangesAsync();
 
@@ -141,12 +171,21 @@ public async Task OnPostMarkAsWatchedAsync_LoggedInUser_AddsMovieToWatched()
     // Arrange
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("MarkAsWatchedDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
-    var user = new IdentityUser { Id = "userId", UserName = "test@example.com" };
-    var movie = new Movie { Title = "WatchedMovie" };
+    var user = new IdentityUser { Id = "user6", UserName = "test@example.com" };
+               var movie = new Movie
+        {
+    Title = "watched Movie testtest",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 4
+};
     context.Users.Add(user);
     context.Movies.Add(movie);
     await context.SaveChangesAsync();
@@ -176,12 +215,21 @@ public async Task OnPostAddReviewAsync_LoggedInUser_AddsReview()
 {
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("AddReviewDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
-    var user = new IdentityUser { Id = "user3", UserName = "testuser@example.com" };
-    var movie = new Movie { Title = "Reviewable Movie" };
+    var user = new IdentityUser { Id = "user7", UserName = "testuser@example.com" };
+            var movie = new Movie
+        {
+    Title = "Movie testtest",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 4
+};
     context.Users.Add(user);
     context.Movies.Add(movie);
     await context.SaveChangesAsync();
@@ -210,11 +258,20 @@ public async Task OnPostAddReviewAsync_LoggedInUser_AddsReview()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("AddReviewNoUserDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
 
-        var movie = new Movie { Title = "ReviewNoUserMovie" };
+        var movie = new Movie
+        {
+    Title = "ReviewNoUserMovie",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 4
+};
         context.Movies.Add(movie);
         await context.SaveChangesAsync();
 

@@ -59,6 +59,7 @@ public async Task OnPostAsync_UserNotLoggedIn_Challenge()
 {
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("CreateMovieListNoUserDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);

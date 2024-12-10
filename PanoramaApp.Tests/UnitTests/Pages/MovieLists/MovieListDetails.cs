@@ -16,11 +16,12 @@ public async Task OnGetAsync_ValidMovie_LoadsDetails()
 {
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("MovieDetailsTestDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
-    var user = new IdentityUser { Id = "user1", UserName = "test@example.com" };
+    var user = new IdentityUser { Id = "user9", UserName = "test@example.com" };
     context.Users.Add(user);
     var movie = new Movie { Title = "Test Movie" };
     context.Movies.Add(movie);
@@ -54,6 +55,7 @@ public async Task OnGetAsync_ValidMovie_LoadsDetails()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("MovieListDetailsErrorDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);

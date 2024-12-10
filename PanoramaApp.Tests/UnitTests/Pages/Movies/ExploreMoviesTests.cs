@@ -15,12 +15,13 @@ public class ExploreMoviesModelTests
         // Arrange (Given)
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ExploreMoviesTestDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
 
-        var movie1 = new Movie { Title = "OlderMovie", ReleaseDate = new DateTime(2000,1,1) };
-        var movie2 = new Movie { Title = "NewerMovie", ReleaseDate = new DateTime(2020,1,1) };
+        var movie1 = new Movie {Id = 1, Title = "OlderMovie", ReleaseDate = new DateTime(2000,1,1) };
+        var movie2 = new Movie { Id = 2,Title = "NewerMovie", ReleaseDate = new DateTime(2020,1,1) };
         context.Movies.AddRange(movie1, movie2);
         await context.SaveChangesAsync();
 
@@ -31,8 +32,8 @@ public class ExploreMoviesModelTests
 
         // Assert (Then)
         Assert.Equal(2, pageModel.Movies.Count);
-        Assert.Equal("NewerMovie", pageModel.Movies[0].Title);
-        Assert.Equal("OlderMovie", pageModel.Movies[1].Title);
+        Assert.Equal( "NewerMovie", pageModel.Movies[0].Title);
+        Assert.Equal( "OlderMovie", pageModel.Movies[1].Title);
     }
 
     [Fact]
@@ -40,6 +41,7 @@ public class ExploreMoviesModelTests
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ExploreMoviesEmptyDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
