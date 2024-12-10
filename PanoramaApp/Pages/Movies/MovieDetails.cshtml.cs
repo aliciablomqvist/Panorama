@@ -135,5 +135,26 @@ namespace PanoramaApp.Pages.Movies
             await _reviewService.AddReviewAsync(movieId, userId, content, rating);
             return RedirectToPage("/Movies/MovieDetails", new { id = movieId });
         }
+
+public string ConvertToEmbedUrl(string youtubeUrl)
+{
+    if (string.IsNullOrEmpty(youtubeUrl)) return string.Empty;
+
+    try
+    {
+        var uri = new Uri(youtubeUrl);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var videoId = query["v"]; // Extrahera 'v'-parametern från URL:en
+
+        return videoId != null ? $"https://www.youtube.com/embed/{videoId}" : string.Empty;
+    }
+    catch
+    {
+        // Om något går fel, returnera en tom sträng
+        return string.Empty;
+    }
+}
+
+
     }
 }
