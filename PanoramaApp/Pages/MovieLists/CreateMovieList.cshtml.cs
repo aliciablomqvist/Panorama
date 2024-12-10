@@ -39,7 +39,7 @@ namespace PanoramaApp.Pages.MovieLists
         _context.MovieLists.Add(movieList);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("/Movies/ViewMovieLists");
+        return RedirectToPage("/MovieLists/ViewMovieLists");
     }
 }
 }

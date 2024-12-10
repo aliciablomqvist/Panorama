@@ -8,7 +8,7 @@
 {
     <h2>Movie List Not Found</h2>
     <p>The requested movie list could not be found.</p>
-    <a class="btn btn-primary" asp-page="/Movies/ViewMovieLists">Back to Movie Lists</a>
+    <a class="btn btn-primary" asp-page="/MovieLists/ViewMovieLists">Back to Movie Lists</a>
 }
 else
 {
@@ -16,7 +16,7 @@ else
 
     <h3>Movies in this List:</h3>
     <ul>
-        @foreach(var movieListItem in Model.MovieList.Movies)
+        @foreach (var movieListItem in Model.MovieList.Movies)
         {
             <li>
                 @if (movieListItem.Movie != null)
@@ -32,8 +32,10 @@ else
     </ul>
 
     <h3>Actions</h3>
-    <a class="btn btn-primary" asp-page="/Movies/AddToMovieList" asp-route-listId="@Model.MovieList.Id">Add Movies</a>
-    <a class="btn btn-secondary" asp-page="/Movies/ShareList" asp-route-listId="@Model.MovieList.Id">Share this List</a>
-    <a class="btn btn-danger" asp-page="/Movies/DeleteList" asp-route-id="@Model.MovieList.Id">Delete List</a>
-    <a class="btn btn-secondary" asp-page="/Movies/ViewMovieLists">Back to Movie Lists</a>
+    <a class="btn btn-primary" asp-page="/MovieLists/AddToMovieList" asp-route-listId="@Model.MovieList.Id">Add Movies</a>
+    <a class="btn btn-secondary" asp-page="/MovieLists/ShareList" asp-route-listId="@Model.MovieList.Id">Share this List</a>
+    <form method="post" asp-page-handler="DeleteList">
+        <button type="submit" class="btn btn-danger">Delete List</button>
+    </form>
+    <a class="btn btn-secondary" asp-page="/MovieLists/ViewMovieLists">Back to Movie Lists</a>
 }
