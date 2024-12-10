@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
 
-namespace PanoramaApp.Pages.Movies
+namespace PanoramaApp.Pages.MovieLists
 {
     public class CreateMovieListModel : PageModel
 {

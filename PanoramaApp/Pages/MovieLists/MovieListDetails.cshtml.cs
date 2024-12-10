@@ -6,7 +6,7 @@ using PanoramaApp.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace PanoramaApp.Pages.Movies
+namespace PanoramaApp.Pages.MovieLists
 {
     public class MovieListDetailsModel : PageModel
 {

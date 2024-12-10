@@ -34,21 +34,43 @@ namespace PanoramaApp.Pages.Groups
             Users = await _context.Users.ToListAsync();
         }
 
-        public async Task<IActionResult> OnPostAcceptAsync(int invitationId)
+public async Task<IActionResult> OnPostAcceptAsync(int invitationId)
+{
+    var currentUser = await _userManager.GetUserAsync(User);
+
+    var invitation = await _context.GroupInvitations
+        .Include(i => i.Group) // Använd navigationsrelationen Group
+        .FirstOrDefaultAsync(i => i.Id == invitationId);
+
+    if (invitation == null || currentUser == null)
+    {
+        return NotFound();
+    }
+
+    // Markera inbjudan som accepterad
+    invitation.IsAccepted = true;
+    _context.GroupInvitations.Update(invitation);
+
+    // Lägg till användaren som medlem i gruppen om de inte redan är medlem
+    var isAlreadyMember = await _context.GroupMembers
+        .AnyAsync(m => m.GroupId == invitation.GroupId && m.UserId == currentUser.Id);
+
+    if (!isAlreadyMember)
+    {
+        var newMember = new GroupMember
         {
-            var invitation = await _context.GroupInvitations.FindAsync(invitationId);
+            GroupId = invitation.GroupId,
+            UserId = currentUser.Id
+        };
 
-            if (invitation == null)
-            {
-                return NotFound();
-            }
+        _context.GroupMembers.Add(newMember);
+    }
 
-            invitation.IsAccepted = true;
-            _context.GroupInvitations.Update(invitation);
-            await _context.SaveChangesAsync();
+    await _context.SaveChangesAsync();
 
-            return RedirectToPage();
-        }
+    return RedirectToPage();
+}
+
 
         public async Task<IActionResult> OnPostInviteAsync(int groupId, string invitedUserId)
         {
