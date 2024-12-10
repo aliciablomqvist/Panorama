@@ -37,6 +37,11 @@ namespace PanoramaApp.Pages.Movies
 
         public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
         {
+            if (updates == null || !updates.Any())
+            {
+                return BadRequest("Invalid data received.");
+            }
+
             foreach (var update in updates)
             {
                 var movie = await _context.Movies.FirstOrDefaultAsync(m => m.Id == update.Id);

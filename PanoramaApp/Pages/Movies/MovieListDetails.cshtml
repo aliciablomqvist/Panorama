@@ -22,7 +22,6 @@ else
                 @if (movieListItem.Movie != null)
                 {
                     <strong>@movieListItem.Movie.Title</strong> Priority: @movieListItem.Movie.Priority.GetValueOrDefault();
-
                 }
                 else
                 {
@@ -31,8 +30,6 @@ else
             </li>
         }
     </ul>
-
-    <button id="savePriority" class="btn btn-primary">Save Priority</button>
 
     <h3>Actions</h3>
     <a class="btn btn-primary" asp-page="/Movies/AddToMovieList" asp-route-listId="@Model.MovieList.Id">Add Movies</a>
@@ -52,8 +49,31 @@ else
             e.target.classList.add('dragging');
         });
 
-        movieList.addEventListener('dragend', (e) => {
-            e.target.classList.remove('dragging');
+        movieList.addEventListener('dragend', async () => {
+            const dragging = document.querySelector('.dragging');
+            if (dragging) {
+                dragging.classList.remove('dragging');
+            }
+
+            const movieElements = [...document.querySelectorAll('#movieList li')];
+            const updates = movieElements.map((el, index) => ({
+                id: parseInt(el.getAttribute('data-id'), 10),
+                priority: movieElements.length - index
+            }));
+
+            console.log("Saving automatically:", JSON.stringify(updates));
+
+            const response = await fetch(`/Movies/MovieListDetails/${movieListId}?handler=SavePriorities`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updates)
+            });
+
+            if (response.ok) {
+                console.log('Priorities saved automatically!');
+            } else {
+                console.error('An error occurred while saving priorities.');
+            }
         });
 
         movieList.addEventListener('dragover', (e) => {
@@ -80,26 +100,5 @@ else
                 }
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
-
-        // Save priority
-        document.getElementById('savePriority').addEventListener('click', async () => {
-            const movieElements = [...document.querySelectorAll('#movieList li')];
-            const updates = movieElements.map((el, index) => ({
-                id: parseInt(el.getAttribute('data-id'), 10),
-                priority: movieElements.length - index
-            }));
-
-            const response = await fetch(`/Movies/MovieListDetails/${movieListId}?handler=SavePriorities`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updates)
-            });
-
-            if (response.ok) {
-                alert('Priorities saved successfully!');
-            } else {
-                alert('An error occurred while saving priorities.');
-            }
-        });
     </script>
 }
