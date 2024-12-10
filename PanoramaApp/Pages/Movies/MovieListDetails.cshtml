@@ -14,22 +14,37 @@ else
 {
     <h2>@Model.MovieList.Name</h2>
 
-    <h3>Movies in this List:</h3>
-    <ul id="movieList">
-        @foreach (var movieListItem in Model.MovieList.Movies.OrderBy(mli => mli.Movie?.Priority ?? 0))
-        {
-            <li draggable="true" data-id="@movieListItem.Movie?.Id" class="draggable">
-                @if (movieListItem.Movie != null)
+    <h3>Sort Movies</h3>
+    <select id="sortBy" class="form-select">
+        <option value="Title">Titel</option>
+        <option value="ReleaseDate">Utgivningsdatum</option>
+        <option value="Priority">Prioritet</option>
+    </select>
+
+   <h3>Movies in this List</h3>
+    <div class="table-responsive">
+        <table id="movieTable" class="table table-striped table-hover align-middle" data-sort-direction="asc">
+            <thead class="table-dark">
+                <tr>
+                           <th scope="col">Priority</th>
+                    <th scope="col"><a href="javascript:void(0);" onclick="sortTable(1)">Title</a></th>
+                    <th scope="col"><a href="javascript:void(0);" onclick="sortTable(2)">Release Date</a></th>
+
+                </tr>
+            </thead>
+            <tbody id="movieListBody">
+                @foreach (var movieListItem in Model.MovieList.Movies)
                 {
-                    <strong>@movieListItem.Movie.Title</strong> Priority: @movieListItem.Movie.Priority.GetValueOrDefault();
+                    <tr draggable="true" data-id="@movieListItem.Movie?.Id" class="draggable" id="movieRow_@movieListItem.Movie?.Id">
+                         <td class="priorityCell" id="priority_@movieListItem.Movie?.Id">@movieListItem.Movie?.Priority</td>
+                        <td>@movieListItem.Movie?.Title</td>
+                        <td>@movieListItem.Movie?.ReleaseDate.ToShortDateString()</td>
+                       
+                    </tr>
                 }
-                else
-                {
-                    <em>Movie not found</em>
-                }
-            </li>
-        }
-    </ul>
+            </tbody>
+        </table>
+    </div>
 
     <h3>Actions</h3>
     <a class="btn btn-primary" asp-page="/Movies/AddToMovieList" asp-route-listId="@Model.MovieList.Id">Add Movies</a>
@@ -41,28 +56,42 @@ else
 @section Scripts {
     <script>
         const movieListId = @Model.MovieList.Id;
+        let changesMade = false;
 
-        // Drag-and-Drop functionality
-        const movieList = document.getElementById('movieList');
+        // Drag-and-Drop functionality to automatically save priority
+        const movieListBody = document.getElementById('movieListBody');
 
-        movieList.addEventListener('dragstart', (e) => {
+        movieListBody.addEventListener('dragstart', (e) => {
             e.target.classList.add('dragging');
         });
 
-        movieList.addEventListener('dragend', async () => {
+        movieListBody.addEventListener('dragend', async () => {
             const dragging = document.querySelector('.dragging');
             if (dragging) {
                 dragging.classList.remove('dragging');
             }
 
-            const movieElements = [...document.querySelectorAll('#movieList li')];
-            const updates = movieElements.map((el, index) => ({
-                id: parseInt(el.getAttribute('data-id'), 10),
-                priority: movieElements.length - index
-            }));
+            // Update priorities based on the new order
+            const movieElements = [...document.querySelectorAll('#movieListBody tr')];
+            const updates = movieElements.map((el, index) => {
+                const movieId = parseInt(el.getAttribute('data-id'), 10);
+                const priority = movieElements.length - index;
+
+                // Update the displayed priority number in the table
+                const priorityCell = el.querySelector('.priorityCell');
+                if (priorityCell) {
+                    priorityCell.innerText = priority;
+                }
+
+                return {
+                    id: movieId,
+                    priority: priority
+                };
+            });
 
             console.log("Saving automatically:", JSON.stringify(updates));
 
+            // Send priority updates to the server
             const response = await fetch(`/Movies/MovieListDetails/${movieListId}?handler=SavePriorities`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -71,19 +100,20 @@ else
 
             if (response.ok) {
                 console.log('Priorities saved automatically!');
+                changesMade = false;
             } else {
                 console.error('An error occurred while saving priorities.');
             }
         });
 
-        movieList.addEventListener('dragover', (e) => {
+        movieListBody.addEventListener('dragover', (e) => {
             e.preventDefault();
-            const afterElement = getDragAfterElement(movieList, e.clientY);
+            const afterElement = getDragAfterElement(movieListBody, e.clientY);
             const dragging = document.querySelector('.dragging');
             if (afterElement == null) {
-                movieList.appendChild(dragging);
+                movieListBody.appendChild(dragging);
             } else {
-                movieList.insertBefore(dragging, afterElement);
+                movieListBody.insertBefore(dragging, afterElement);
             }
         });
 
@@ -100,5 +130,54 @@ else
                 }
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
+
+        // Sorting functionality
+        function sortTable(columnIndex) {
+            const table = document.getElementById("movieTable");
+            const tbody = table.tBodies[0];
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            const currentDirection = table.getAttribute("data-sort-direction");
+            const isAscending = currentDirection === "asc";
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].innerText.trim().toLowerCase();
+                const cellB = rowB.cells[columnIndex].innerText.trim().toLowerCase();
+
+                // Handle sorting of numeric values (priority and date)
+                if (!isNaN(cellA) && !isNaN(cellB)) {
+                    return isAscending
+                        ? cellA - cellB
+                        : cellB - cellA;
+                }
+
+                return isAscending
+                    ? cellA.localeCompare(cellB)
+                    : cellB.localeCompare(cellA);
+            });
+
+            tbody.innerHTML = "";
+            rows.forEach(row => tbody.appendChild(row));
+            table.setAttribute("data-sort-direction", isAscending ? "desc" : "asc");
+        }
+
+        // Ensure priorities are saved before leaving the page (but avoid warning)
+        window.onbeforeunload = async function () {
+            if (changesMade) {
+                const movieElements = [...document.querySelectorAll('#movieListBody tr')];
+                const updates = movieElements.map((el, index) => ({
+                    id: parseInt(el.getAttribute('data-id'), 10),
+                    priority: movieElements.length - index
+                }));
+
+                // Save before leaving the page
+                await fetch(`/Movies/MovieListDetails/${movieListId}?handler=SavePriorities`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates)
+                });
+
+                console.log("Saving priorities before leaving page...");
+            }
+        };
     </script>
 }
