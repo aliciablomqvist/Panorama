@@ -7,30 +7,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PanoramaApp.Pages.Movies
+namespace PanoramaApp.Pages.MovieLists
 {
-    public class MovieListDetailsModel : PageModel
+    public class PrioritizeModel : PageModel
     {
         private readonly ApplicationDbContext _context;
 
-        public MovieListDetailsModel(ApplicationDbContext context)
+        public PrioritizeModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public MovieList MovieList { get; set; } = default!;
+        [BindProperty(SupportsGet = true)]
+        public int MovieListId { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public List<Movie> Movies { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int movieListId)
         {
-            MovieList = await _context.MovieLists
-                .Include(ml => ml.Movies)
-                .ThenInclude(mli => mli.Movie)
-                .FirstOrDefaultAsync(ml => ml.Id == id);
-
-            if (MovieList == null)
-            {
-                return RedirectToPage("/Error");
-            }
+            MovieListId = movieListId;
+            Movies = await _context.Movies
+                .Include(m => m.MovieLists)
+                .Where(m => m.MovieLists.Any(ml => ml.Id == movieListId))
+                .OrderByDescending(m => m.Priority)
+                .ToListAsync();
 
             return Page();
         }
@@ -39,7 +39,9 @@ namespace PanoramaApp.Pages.Movies
         {
             foreach (var update in updates)
             {
-                var movie = await _context.Movies.FirstOrDefaultAsync(m => m.Id == update.Id);
+                var movie = await _context.Movies
+                    .FirstOrDefaultAsync(m => m.Id == update.Id && m.MovieLists.Any(ml => ml.Id == MovieListId));
+
                 if (movie != null)
                 {
                     movie.Priority = update.Priority;

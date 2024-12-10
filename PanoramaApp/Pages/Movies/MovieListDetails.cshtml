@@ -15,13 +15,14 @@ else
     <h2>@Model.MovieList.Name</h2>
 
     <h3>Movies in this List:</h3>
-    <ul>
-        @foreach(var movieListItem in Model.MovieList.Movies)
+    <ul id="movieList">
+        @foreach (var movieListItem in Model.MovieList.Movies.OrderBy(mli => mli.Movie?.Priority ?? 0))
         {
-            <li>
+            <li draggable="true" data-id="@movieListItem.Movie?.Id" class="draggable">
                 @if (movieListItem.Movie != null)
                 {
-                    @movieListItem.Movie.Title
+                    <strong>@movieListItem.Movie.Title</strong> Priority: @movieListItem.Movie.Priority.GetValueOrDefault();
+
                 }
                 else
                 {
@@ -31,9 +32,74 @@ else
         }
     </ul>
 
+    <button id="savePriority" class="btn btn-primary">Save Priority</button>
+
     <h3>Actions</h3>
     <a class="btn btn-primary" asp-page="/Movies/AddToMovieList" asp-route-listId="@Model.MovieList.Id">Add Movies</a>
     <a class="btn btn-secondary" asp-page="/Movies/ShareList" asp-route-listId="@Model.MovieList.Id">Share this List</a>
     <a class="btn btn-danger" asp-page="/Movies/DeleteList" asp-route-id="@Model.MovieList.Id">Delete List</a>
     <a class="btn btn-secondary" asp-page="/Movies/ViewMovieLists">Back to Movie Lists</a>
+}
+
+@section Scripts {
+    <script>
+        const movieListId = @Model.MovieList.Id;
+
+        // Drag-and-Drop functionality
+        const movieList = document.getElementById('movieList');
+
+        movieList.addEventListener('dragstart', (e) => {
+            e.target.classList.add('dragging');
+        });
+
+        movieList.addEventListener('dragend', (e) => {
+            e.target.classList.remove('dragging');
+        });
+
+        movieList.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(movieList, e.clientY);
+            const dragging = document.querySelector('.dragging');
+            if (afterElement == null) {
+                movieList.appendChild(dragging);
+            } else {
+                movieList.insertBefore(dragging, afterElement);
+            }
+        });
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        // Save priority
+        document.getElementById('savePriority').addEventListener('click', async () => {
+            const movieElements = [...document.querySelectorAll('#movieList li')];
+            const updates = movieElements.map((el, index) => ({
+                id: parseInt(el.getAttribute('data-id'), 10),
+                priority: movieElements.length - index
+            }));
+
+            const response = await fetch(`/Movies/MovieListDetails/${movieListId}?handler=SavePriorities`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updates)
+            });
+
+            if (response.ok) {
+                alert('Priorities saved successfully!');
+            } else {
+                alert('An error occurred while saving priorities.');
+            }
+        });
+    </script>
 }
