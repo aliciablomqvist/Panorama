@@ -1,0 +1,52 @@
+@page
+@model PanoramaApp.Pages.Movies.MovieCalendarModel
+@{
+    ViewData["Title"] = "Movie Calendar";
+}
+
+<h2>Movie Calendar</h2>
+
+<h3>Schedule a Movie</h3>
+<form method="post" asp-page-handler="ScheduleMovie">
+<div class="mb-3">
+    <label for="movieId" class="form-label">Select Movie:</label>
+    <select id="movieId" name="MovieId" class="form-select">
+        @if (Model.Movies != null && Model.Movies.Count > 0)
+        {
+            @foreach (var movie in Model.Movies)
+            {
+                <option value="@movie.Id">@movie.Title</option>
+            }
+        }
+        else
+        {
+            <option disabled>No movies available</option>
+        }
+    </select>
+</div>
+
+    <div class="mb-3">
+        <label for="scheduledDate" class="form-label">Select Date and Time:</label>
+        <input type="datetime-local" id="scheduledDate" name="ScheduledDate" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Schedule Movie</button>
+</form>
+
+<h3>Scheduled Movies</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model.ScheduledMovies)
+        {
+            <tr>
+                <td>@entry.Movie.Title</td>
+                <td>@entry.Date.ToString("yyyy-MM-dd HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>
