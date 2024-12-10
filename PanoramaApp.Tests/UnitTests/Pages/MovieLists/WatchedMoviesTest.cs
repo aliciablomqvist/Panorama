@@ -17,15 +17,24 @@ public async Task OnGetAsync_UserWithWatchedMovies_LoadsCorrectMovies()
 {
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("WatchedMoviesTestDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
-    var user = new IdentityUser { Id = "user1", UserName = "test@example.com" };
+    var user = new IdentityUser { Id = "user3", UserName = "test@example.com" };
     context.Users.Add(user);
     await context.SaveChangesAsync();
 
-    var movie = new Movie { Title = "WatchedMovie" };
+                   var movie = new Movie
+        {
+    Title = "watched Movie ",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 4
+};
     var watchedList = new MovieList { Name = "Watched", OwnerId = user.Id };
     context.Movies.Add(movie);
     context.MovieLists.Add(watchedList);
@@ -67,6 +76,7 @@ public async Task OnGetAsync_UserWithWatchedMovies_LoadsCorrectMovies()
         // Arrange
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("WatchedNoUserDb")
+            .EnableSensitiveDataLogging()
             .Options;
         
         using var context = new ApplicationDbContext(options);

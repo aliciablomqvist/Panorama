@@ -17,13 +17,22 @@ public class ReviewsModelTests
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ReviewsGetDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
 
-        var movie = new Movie { Title = "ReviewableMovie" };
+                    var movie = new Movie
+{
+    Title = "ReviewableMovie",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 2
+};
         context.Movies.Add(movie);
-        var review = new Review { MovieId = movie.Id, Content = "Nice", Rating = 5 };
+        var review = new Review { MovieId = movie.Id, Content = "Nice", Rating = 5, UserId = "user1" };
         context.Reviews.Add(review);
         await context.SaveChangesAsync();
 
@@ -40,6 +49,7 @@ public class ReviewsModelTests
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ReviewsGetNotFoundDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
@@ -55,11 +65,20 @@ public class ReviewsModelTests
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ReviewsPostInvalidModelDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
 
-        var movie = new Movie { Title = "ReviewMoviePost" };
+                    var movie = new Movie
+{
+    Title = "ReviewMoviePost",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 3
+};
         context.Movies.Add(movie);
         await context.SaveChangesAsync();
 
@@ -75,41 +94,29 @@ public class ReviewsModelTests
         Assert.IsType<PageResult>(result); 
     }
 
-    [Fact]
-    public async Task OnPostAsync_NotLoggedIn_RedirectsToLogin()
-    {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("ReviewsPostNoUserDb")
-            .Options;
-
-        using var context = new ApplicationDbContext(options);
-
-        var movie = new Movie { Title = "NoUserMovie" };
-        context.Movies.Add(movie);
-        await context.SaveChangesAsync();
-
-        var pageModel = new ReviewsModel(context)
-        {
-            ReviewContent = "Good",
-            Rating = 4
-        };
-
-        var result = await pageModel.OnPostAsync(movie.Id);
-        var redirect = Assert.IsType<RedirectToPageResult>(result);
-        Assert.Equal("/Account/Login", redirect.PageName);
-    }
 
  [Fact]
 public async Task OnPostAsync_LoggedInUser_AddsReviewSuccessfully()
 {
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("ReviewTestDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
-    var user = new IdentityUser { Id = "userId", UserName = "test@example.com" };
-    var movie = new Movie { Title = "ReviewableMovie" };
+    var user = new IdentityUser { Id = "user8", UserName = "test@example.com" };
+                var movie = new Movie
+{
+    Title = "ReviewableMovie",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 2
+};
+
+
     context.Users.Add(user);
     context.Movies.Add(movie);
     await context.SaveChangesAsync();

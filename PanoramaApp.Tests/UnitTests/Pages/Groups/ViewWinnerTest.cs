@@ -19,9 +19,33 @@ public class ViewWinnerModelTests
 
         using var context = new ApplicationDbContext(options);
 
-        var group = new Group { Name = "VotingGroup" };
-        var movie1 = new Movie { Title = "Movie1", Group = group };
-        var movie2 = new Movie { Title = "Movie2", Group = group };
+        var group = new Group
+{
+    Id = 3,
+    Name = "Example Group",
+    OwnerId = "user1"
+};
+
+        var movie1 = new Movie
+{
+    Title = "Movie1",
+    Description = "This is a description.",
+    Genre = "Action",
+    Group = group,
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now
+};
+
+        var movie2 = new Movie
+{
+    Title = "Movie2",
+    Description = "This is a description.",
+    Genre = "Romance",
+    Group = group,
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now
+};
+
         context.Groups.Add(group);
         context.Movies.AddRange(movie1, movie2);
         await context.SaveChangesAsync();

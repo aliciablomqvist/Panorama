@@ -14,6 +14,7 @@ public class ShareModelTests
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ShareTestDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
@@ -39,6 +40,7 @@ public class ShareModelTests
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ShareNotFoundDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);

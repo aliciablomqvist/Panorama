@@ -19,6 +19,7 @@ public class GroupChatSteps
     public GroupChatSteps()
     {
         _dbContextMock = new Mock<ApplicationDbContext>();
+        
         _groupChatService = new GroupChatService(_dbContextMock.Object);
         _chatHistory = new List<ChatMessage>();
     }
@@ -30,6 +31,9 @@ public class GroupChatSteps
         _dbContextMock.Setup(db => db.Groups.FindAsync(_group.Id))
                       .ReturnsAsync(_group);
     }
+
+
+
 [Given(@"the group exists in the database")]
 public void GivenTheGroupExistsInTheDatabase()
 {

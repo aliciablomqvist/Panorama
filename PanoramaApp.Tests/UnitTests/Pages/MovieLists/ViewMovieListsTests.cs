@@ -14,6 +14,7 @@ public class ViewMovieListsModelTests
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ViewMovieListsEmptyDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
@@ -38,6 +39,7 @@ public class ViewMovieListsModelTests
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("ViewMovieListsDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);

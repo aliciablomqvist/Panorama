@@ -19,17 +19,33 @@ public class MyFavoritesModelTests
         // Arrange (Given)
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("MyFavoritesTestDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
 
-        var user = new IdentityUser { Id = "user1", UserName = "user1@example.com" };
-        var movie = new Movie { Title = "FavoriteMovie" };
+        var user = new IdentityUser { Id = "user2", UserName = "user1@example.com" };
+                      var movie = new Movie
+        {
+            Id = 3,
+    Title = "favorite Movie testtest",
+    Description = "An example movie description",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 4
+};
         context.Users.Add(user);
         await context.SaveChangesAsync();
 
-        var movieList = new MovieList { Name = "My Favorites", OwnerId = user.Id };
+        var movieList = new MovieList {  Id = 1,
+    Name = "Favorites",
+    OwnerId = "user1"};
+
+    
         context.MovieLists.Add(movieList);
+       // context.Favorites.Add(favorite { MovieId = 1, UserId = user.Id }); Hur ska den vara?
+        Assert.NotNull(movieList.OwnerId);
         await context.SaveChangesAsync();
 
         var movieListItem = new MovieListItem { MovieListId = movieList.Id, Movie = movie };
@@ -77,6 +93,7 @@ pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
         // Arrange
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("MyFavoritesNoUserDb")
+            .EnableSensitiveDataLogging()
             .Options;
         using var context = new ApplicationDbContext(options);
 

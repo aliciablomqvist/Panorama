@@ -19,7 +19,17 @@ public void AddMovieToCalendar_AddsCorrectEntry()
 {
     // Arrange
     var movieCalendar = new MovieCalendar();
-    var movie = new Movie { Title = "Test Movie" };
+    var movie = new Movie
+{
+    Id = 1,
+    Title = "Test Movie",
+    Description = "This is a description.",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 1
+};
+
     var date = new DateTime(2024, 12, 1, 20, 0, 0);
 
     movieCalendar.AddMovie(movie, date);

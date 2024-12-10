@@ -20,9 +20,24 @@ public class ViewGroupsModelTests
 
         using var context = new ApplicationDbContext(options);
 
-        var group = new Group { Name = "TestGroup" };
+        var group = new Group
+{
+    Id = 2,
+    Name = "Example Group",
+    OwnerId = "user1"
+};
         var member = new GroupMember { Group = group, UserId = "user1" };
-        var movie = new Movie { Title = "TestMovie", Group = group };
+       var movie = new Movie
+{
+    Id = 1,
+    Title = "Test Movie",
+    Description = "This is a description.",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 1
+};
+
 
         context.Groups.Add(group);
         context.GroupMembers.Add(member);

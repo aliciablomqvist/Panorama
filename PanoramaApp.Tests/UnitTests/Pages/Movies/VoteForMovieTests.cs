@@ -20,12 +20,31 @@ public class VoteFilmsModelTests
         // Arrange (Given)
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("VoteFilmsTestDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
 
-        var group = new Group { Name = "VoteGroup" };
-        var movie = new Movie { Title = "VoteMovie", Group = group };
+        var group = new Group
+{
+    Id = 4,
+    Name = "Voting group",
+    OwnerId = "user1"
+};
+
+var movie = new Movie
+{
+    Id = 1,
+    Title = "Test Movie",
+    GroupId = group.Id, // Matcha med gruppens Id
+    Description = "This is a description.",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 1
+};
+
+
         context.Groups.Add(group);
         context.Movies.Add(movie);
         await context.SaveChangesAsync();
@@ -51,6 +70,7 @@ public class VoteFilmsModelTests
         // Arrange
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("VoteFilmsInvalidGroupDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
@@ -75,12 +95,24 @@ public async Task OnPostVoteAsync_ValidVote_AddsVote()
     // Arrange
     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
         .UseInMemoryDatabase("VoteForMovieTestDb")
+        .EnableSensitiveDataLogging()
         .Options;
 
     using var context = new ApplicationDbContext(options);
 
     var user1 = new IdentityUser { Id = "user1", UserName = "test@example.com" };
-    var movie = new Movie { Title = "Votable Movie" };
+    var movie = new Movie
+{
+    Id = 1,
+    Title = "Test Movie",
+    Description = "This is a description.",
+    Genre = "Action",
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 1
+};
+
+
     context.Users.Add(user1);
     context.Movies.Add(movie);
     await context.SaveChangesAsync();
@@ -109,6 +141,7 @@ public async Task OnPostVoteAsync_ValidVote_AddsVote()
         // Arrange
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("VoteFilmsInvalidGroupVoteDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
@@ -135,12 +168,29 @@ TestHelper.SetUserAndHttpContext(pageModel, "user1", "test@example.com");
         // Arrange
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase("VoteFilmsCountDb")
+            .EnableSensitiveDataLogging()
             .Options;
 
         using var context = new ApplicationDbContext(options);
 
-        var group = new Group { Name = "VoteGroup" };
-        var movie = new Movie { Title = "VoteMovie", Group = group };
+                var group = new Group
+{
+    Id = 5,
+    Name = "Voting group",
+    OwnerId = "user1"
+};
+
+            var movie = new Movie
+{
+    Id = 1,
+    Title = "Test Movie",
+    Description = "This is a description.",
+    Genre = "Action",
+    Group = group,
+    TrailerUrl = "http://example.com/trailer",
+    ReleaseDate = DateTime.Now,
+    Priority = 1
+};
         context.Groups.Add(group);
         context.Movies.Add(movie);
         await context.SaveChangesAsync();
