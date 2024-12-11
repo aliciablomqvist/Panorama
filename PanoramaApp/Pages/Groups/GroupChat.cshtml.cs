@@ -50,17 +50,25 @@ public async Task<IActionResult> OnGetAsync(int groupId)
     return Page();
 }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            var user = await _userManager.GetUserAsync(User);
+public async Task<IActionResult> OnPostAsync()
+{
+    var user = await _userManager.GetUserAsync(User);
 
-            if (user == null)
-            {
-                return Unauthorized();
-            }
+    if (user == null)
+    {
+        return Unauthorized();
+    }
 
-            await _chatService.SendMessageAsync(MessageText, user.UserName, GroupId);
-            return RedirectToPage(new { GroupId });
-        }
+    if (string.IsNullOrWhiteSpace(MessageText))
+    {
+        ModelState.AddModelError("MessageText", "Message cannot be empty.");
+        return Page();
+    }
+
+    await _chatService.SendMessageAsync(MessageText, user.Id, user.UserName, GroupId);
+
+    // Redirect back to the same page to update the chat history.
+    return RedirectToPage(new { GroupId });
+}
     }
 }

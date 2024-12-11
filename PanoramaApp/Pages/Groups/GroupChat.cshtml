@@ -16,11 +16,14 @@
     }
 </div>
 
-<div>
-    <input type="text" id="userInput" placeholder="Enter your name" />
-    <input type="text" id="messageInput" placeholder="Enter your message" />
-    <button id="sendButton">Send</button>
-</div>
+<form method="post">
+    <input type="hidden" name="GroupId" value="@Model.GroupId" />
+    <div class="form-group">
+        <textarea name="MessageText" class="form-control" rows="3" placeholder="Type your message..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+
 <div id="messagesList"></div>
 <a class="btn btn-secondary mt-3" asp-page="/Groups/ViewGroups">Back to Groups</a>
 

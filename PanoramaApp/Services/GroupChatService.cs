@@ -1,10 +1,5 @@
 using PanoramaApp.Data;
 using PanoramaApp.Models;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace PanoramaApp.Services
@@ -18,19 +13,21 @@ namespace PanoramaApp.Services
             _context = context;
         }
 
-        public async Task SendMessageAsync(string messageText, string userName, int groupId)
-        {
-            var chatMessage = new ChatMessage
-            {
-                MessageText = messageText,
-                UserName = userName,
-                Timestamp = DateTime.UtcNow,
-                GroupId = groupId
-            };
+public async Task SendMessageAsync(string messageText, string userId, string userName, int groupId)
+{
+    var chatMessage = new ChatMessage
+    {
+        MessageText = messageText,
+        UserId = userId,
+        UserName = userName,
+        Timestamp = DateTime.UtcNow,
+        GroupId = groupId
+    };
 
-            _context.ChatMessages.Add(chatMessage);
-            await _context.SaveChangesAsync();
-        }
+    _context.ChatMessages.Add(chatMessage);
+    await _context.SaveChangesAsync();
+}
+
 
         public async Task<List<ChatMessage>> GetMessagesForGroupAsync(int groupId)
         {

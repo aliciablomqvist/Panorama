@@ -17,6 +17,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddScoped<ReviewService>(); // For reviews
+builder.Services.AddScoped<GroupChatService>();
 
 // Loggning
 builder.Logging.ClearProviders();
@@ -44,5 +45,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
     endpoints.MapHub<ChatHub>("/chathub"); // Map SignalR hub
 });
-app.MapRazorPages();
+//app.MapRazorPages();
 app.Run();
