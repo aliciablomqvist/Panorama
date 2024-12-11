@@ -1,12 +1,11 @@
-namespace PanoramaApp.DTOs
+namespace PanoramaApp.DTO
 {
     public class UserStatisticsDto
     {
-        public string UserName { get; set; } = string.Empty;
+        public string FavoriteGenre { get; set; }
         public int TotalMoviesWatched { get; set; }
-        public string MostWatchedGenre { get; set; } = string.Empty;
-        public int MostWatchedGenreCount { get; set; }
-        public string MostWatchedDecade { get; set; } = string.Empty;
-        public int MostWatchedDecadeCount { get; set; }
+        public string MostWatchedDecade { get; set; }
+        public Dictionary<string, int> GenreCount { get; set; }
+    
     }
 }

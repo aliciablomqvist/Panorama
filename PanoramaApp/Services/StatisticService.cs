@@ -1,5 +1,5 @@
 using PanoramaApp.Data;
-using PanoramaApp.Models;
+using PanoramaApp.DTO;
 using PanoramaApp.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,51 +15,56 @@ namespace PanoramaApp.Services
             _context = context;
         }
 
-        public async Task<UserStatistics> GetUserStatisticsAsync(string userId)
+        public async Task<UserStatisticsDto> GetUserStatisticsAsync(string userId)
         {
-            var watchedMovies = await _context.Movies
-                .Where(m => m.MovieListItems.Any(ml => ml.MovieList.OwnerId == userId))
+            var watchedMovies = await _context.MovieLists
+                .Where(ml => ml.Name == "Watched" && ml.OwnerId == userId)
+                .Include(ml => ml.Movies)
+                .ThenInclude(mli => mli.Movie)
+                .SelectMany(ml => ml.Movies.Select(mli => mli.Movie))
                 .ToListAsync();
 
-            var genreCounts = watchedMovies
+            var genreCount = watchedMovies
                 .GroupBy(m => m.Genre)
                 .ToDictionary(g => g.Key, g => g.Count());
 
-            var decadeCounts = watchedMovies
-                .GroupBy(m => m.ReleaseDate.Year / 10 * 10)
-                .ToDictionary(g => g.Key, g => g.Count());
+            var mostWatchedDecade = watchedMovies
+                .GroupBy(m => (m.ReleaseDate.Year / 10) * 10)
+                .OrderByDescending(g => g.Count())
+                .FirstOrDefault()?.Key.ToString() ?? "N/A";
 
-            return new UserStatistics
+            return new UserStatisticsDto
             {
-                MostWatchedGenre = genreCounts.OrderByDescending(g => g.Value).FirstOrDefault().Key ?? "Unknown",
-                MostWatchedDecade = decadeCounts.OrderByDescending(d => d.Value).FirstOrDefault().Key,
-                GenreCounts = genreCounts,
-                DecadeCounts = decadeCounts,
-                UserName = "User Name Placeholder" // Replace with actual user data if available
+                FavoriteGenre = genreCount.OrderByDescending(g => g.Value).FirstOrDefault().Key,
+                TotalMoviesWatched = watchedMovies.Count,
+                MostWatchedDecade = mostWatchedDecade,
+                GenreCount = genreCount
             };
         }
 
-        public async Task<GroupStatistics> GetGroupStatisticsAsync(int groupId)
+        public async Task<GroupStatisticsDto> GetGroupStatisticsAsync(int groupId)
         {
-            var watchedMovies = await _context.Movies
-                .Where(m => m.MovieListItems.Any(ml => ml.MovieList.SharedWithGroups.Any(g => g.Id == groupId)))
+            var groupMovies = await _context.Groups
+                .Where(g => g.Id == groupId)
+                .Include(g => g.Movies)
+                .ThenInclude(m => m.MovieListItems)
+                .SelectMany(g => g.Movies.SelectMany(mli => mli.MovieListItems.Select(mli => mli.Movie)))
                 .ToListAsync();
 
-            var genreCounts = watchedMovies
+            var genreCount = groupMovies
                 .GroupBy(m => m.Genre)
                 .ToDictionary(g => g.Key, g => g.Count());
 
-            var decadeCounts = watchedMovies
-                .GroupBy(m => m.ReleaseDate.Year / 10 * 10)
-                .ToDictionary(g => g.Key, g => g.Count());
+            var mostPopularDecade = groupMovies
+                .GroupBy(m => (m.ReleaseDate.Year / 10) * 10)
+                .OrderByDescending(g => g.Count())
+                .FirstOrDefault()?.Key.ToString() ?? "N/A";
 
-            return new GroupStatistics
+            return new GroupStatisticsDto
             {
-                MostWatchedGenre = genreCounts.OrderByDescending(g => g.Value).FirstOrDefault().Key ?? "Unknown",
-                MostWatchedDecade = decadeCounts.OrderByDescending(d => d.Value).FirstOrDefault().Key,
-                GenreCounts = genreCounts,
-                DecadeCounts = decadeCounts,
-                GroupName = "Group Name Placeholder" // Replace with actual group data if available
+                MostWatchedGenre = genreCount.OrderByDescending(g => g.Value).FirstOrDefault().Key,
+                TotalMoviesWatchedByGroup = groupMovies.Count,
+                MostPopularDecade = mostPopularDecade
             };
         }
     }
