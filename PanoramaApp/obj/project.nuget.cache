@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4eDTpBYViKQ=",
+  "dgSpecHash": "Dx1yF+Y+vDU=",
   "success": true,
   "projectFilePath": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\PanoramaApp.csproj",
   "expectedPackageFiles": [
@@ -132,6 +132,7 @@
     "C:\\Users\\Stefan\\.nuget\\packages\\nuget.projectmodel\\6.3.1\\nuget.projectmodel.6.3.1.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\nuget.protocol\\6.3.1\\nuget.protocol.6.3.1.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\nuget.versioning\\6.3.1\\nuget.versioning.6.3.1.nupkg.sha512",
+    "C:\\Users\\Stefan\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\system.codedom\\5.0.0\\system.codedom.5.0.0.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\system.composition\\7.0.0\\system.composition.7.0.0.nupkg.sha512",

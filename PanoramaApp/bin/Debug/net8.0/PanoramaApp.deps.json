@@ -12,7 +12,8 @@
           "Microsoft.AspNetCore.Identity.UI": "8.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.0",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.0"
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.0",
+          "StyleCop.Analyzers": "1.1.118"
         },
         "runtime": {
           "PanoramaApp.dll": {}
@@ -1656,6 +1657,7 @@
           }
         }
       },
+      "StyleCop.Analyzers/1.1.118": {},
       "System.CodeDom/5.0.0": {
         "runtime": {
           "lib/netstandard2.0/System.CodeDom.dll": {
@@ -2817,6 +2819,13 @@
       "sha512": "sha512-T/igBDLXCd+pH3YTWgGVNvYSOwbwaT30NyyM9ONjvlHlmaUjKBJpr9kH0AeL+Ado4EJsBhU3qxXVc6lyrpRcMw==",
       "path": "nuget.versioning/6.3.1",
       "hashPath": "nuget.versioning.6.3.1.nupkg.sha512"
+    },
+    "StyleCop.Analyzers/1.1.118": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Onx6ovGSqXSK07n/0eM3ZusiNdB6cIlJdabQhWGgJp3Vooy9AaLS/tigeybOJAobqbtggTamoWndz72JscZBvw==",
+      "path": "stylecop.analyzers/1.1.118",
+      "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
     },
     "System.CodeDom/5.0.0": {
       "type": "package",

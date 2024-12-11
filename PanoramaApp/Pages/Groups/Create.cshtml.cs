@@ -34,36 +34,44 @@ public class CreateGroupModel : PageModel
     }
 
     public async Task<IActionResult> OnPostAsync()
+{
+    if (!ModelState.IsValid)
     {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
-        var newGroup = new Group
-        {
-            Name = Name
-        };
-
-        _context.Groups.Add(newGroup);
-        await _context.SaveChangesAsync();
-
-        foreach (var userId in SelectedUsers)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user != null)
-            {
-                var groupMember = new GroupMember
-                {
-                    GroupId = newGroup.Id,
-                    UserId = user.Id
-                };
-                _context.GroupMembers.Add(groupMember);
-            }
-        }
-
-        await _context.SaveChangesAsync();
-
-       return RedirectToPage("/Groups/ViewGroups");
-
+        return Page();
     }
+
+    var currentUser = await _userManager.GetUserAsync(User); // Get the current logged-in user
+    if (currentUser == null)
+    {
+        // Handle the case where the user is not logged in (redirect to login page or show an error)
+        return RedirectToPage("/Account/Login");
+    }
+
+    var newGroup = new Group
+    {
+        Name = Name,
+        OwnerId = currentUser.Id // Set the OwnerId to the current user's ID
+    };
+
+    _context.Groups.Add(newGroup);
+    await _context.SaveChangesAsync();
+
+    foreach (var userId in SelectedUsers)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user != null)
+        {
+            var groupMember = new GroupMember
+            {
+                GroupId = newGroup.Id,
+                UserId = user.Id
+            };
+            _context.GroupMembers.Add(groupMember);
+        }
+    }
+
+    await _context.SaveChangesAsync();
+
+    return RedirectToPage("/Groups/ViewGroups");
+}
 }
