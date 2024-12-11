@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5epk3q8mFqCnQanjHvg0RHvftbBgnlicP0TDYdYhv/Q=",
+  "Hash": "43SYqHwV7lQx4t5G1ASidAWEDlnk8XpOPiMw1teZURs=",
   "Source": "PanoramaApp",
   "BasePath": "_content/PanoramaApp",
   "Mode": "Default",
@@ -1193,6 +1193,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\PanoramaApp.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\wwwroot\\css\\chat.css",
+      "SourceId": "PanoramaApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\wwwroot\\",
+      "BasePath": "_content/PanoramaApp",
+      "RelativePath": "css/chat.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\chat.css"
     },
     {
       "Identity": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\wwwroot\\css\\site.css",

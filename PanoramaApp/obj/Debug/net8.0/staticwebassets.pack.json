@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\PanoramaApp.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\wwwroot\\css\\chat.css",
+      "PackagePath": "staticwebassets\\css\\chat.css"
+    },
+    {
       "Id": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
