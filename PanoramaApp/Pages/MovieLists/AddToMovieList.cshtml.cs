@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 
 
-namespace PanoramaApp.Pages.Movies
+namespace PanoramaApp.Pages.MovieLists
 {
     public class AddMovieModel : PageModel
     {

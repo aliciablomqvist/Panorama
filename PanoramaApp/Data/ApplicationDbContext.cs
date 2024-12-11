@@ -75,6 +75,8 @@ namespace PanoramaApp.Data
         .HasOne(mli => mli.Movie)
         .WithMany(m => m.MovieListItems)
         .HasForeignKey(mli => mli.MovieId);
+
+
 }
 
     }

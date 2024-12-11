@@ -14,10 +14,34 @@ else
 {
     <h2>@Model.Movie.Title</h2>
 
-<p><strong>Genre:</strong> @Model.Movie.Genre</p>
-<p><strong>Beskrivning:</strong> @Model.Movie.Description</p>
-<p><strong>Utgivningsdatum:</strong> @Model.Movie.ReleaseDate.ToString("yyyy-MM-dd")</p>
-<p><strong>Röster:</strong> @Model.Movie.Votes</p>
+    <p><strong>Genre:</strong> @Model.Movie.Genre</p>
+    <p><strong>Description:</strong> @Model.Movie.Description</p>
+    <p><strong>Release Date:</strong> @Model.Movie.ReleaseDate.ToString("yyyy-MM-dd")</p>
+    <p><strong>Votes:</strong> @Model.Movie.Votes</p>
+
+@if (!string.IsNullOrEmpty(Model.Movie.TrailerUrl))
+{
+    var embedUrl = Model.ConvertToEmbedUrl(Model.Movie.TrailerUrl); // Kalla metoden här
+
+    <div class="trailer-container">
+        <h3>Watch Trailer</h3>
+        <iframe 
+            width="560" 
+            height="315" 
+            src="@embedUrl" 
+            title="@Model.Movie.Title Trailer" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+    </div>
+}
+else
+{
+    <p><em>No trailer available for this movie.</em></p>
+}
+
+
 
     <form method="post" asp-page-handler="AddToFavorites">
         <input type="hidden" name="movieId" value="@Model.Movie.Id" />
@@ -25,12 +49,12 @@ else
     </form>
 
     <form method="post" asp-page-handler="MarkAsWatched">
-    <input type="hidden" name="movieId" value="@Model.Movie.Id" />
-    <button type="submit" class="btn btn-success">Mark as Watched</button>
-</form>
+        <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+        <button type="submit" class="btn btn-success">Mark as Watched</button>
+    </form>
 
-<a class="btn btn-secondary" asp-page="/Movies/Reviews" asp-route-movieId="@Model.Movie.Id">
-    View Reviews
-</a>
+    <a class="btn btn-secondary" asp-page="/Movies/Reviews" asp-route-movieId="@Model.Movie.Id">
+        View Reviews
+    </a>
     <a class="btn btn-secondary" asp-page="/Movies/Index">Back to Movies</a>
 }

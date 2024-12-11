@@ -86,24 +86,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/MovieLists/AddToMovieList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVMaXN0c1xBZGRUb01vdmllTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/MovieLists/CreateMovieList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVMaXN0c1xDcmVhdGVNb3ZpZUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/MovieLists/MovieListDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVMaXN0c1xNb3ZpZUxpc3REZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/MovieLists/MyFavorites.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVMaXN0c1xNeUZhdm9yaXRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/MovieLists/ShareList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVMaXN0c1xTaGFyZUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/MovieLists/ViewMovieLists.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVMaXN0c1xWaWV3TW92aWVMaXN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/MovieLists/WatchedMovies.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVMaXN0c1xXYXRjaGVkTW92aWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/Movies/AddToMovieList.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVzXEFkZFRvTW92aWVMaXN0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/Movies/CreateMovieList.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVzXENyZWF0ZU1vdmllTGlzdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/Movies/ExploreMovies.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVzXEV4cGxvcmVNb3ZpZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/Movies/MovieCalendar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVzXE1vdmllQ2FsZW5kYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/Movies/MovieDetails.cshtml]
@@ -116,10 +132,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/Movies/Reviews.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVzXFJldmlld3MuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/Movies/ShareList.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aWVzXFNoYXJlTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Stefan/Documents/GitHub/Panorama/PanoramaApp/Pages/Movies/ViewMovieLists.cshtml]
