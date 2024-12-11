@@ -19,5 +19,7 @@ namespace PanoramaApp.Models
 
   public string TrailerUrl { get; set; } 
     public int? Priority { get; set; } 
+    
+    public int? TmdbId { get; set; }
     }
 }

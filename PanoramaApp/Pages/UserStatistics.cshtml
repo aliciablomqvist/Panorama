@@ -1,0 +1,25 @@
+@page
+@model PanoramaApp.Pages.UserStatisticsModel
+@{
+    ViewData["Title"] = "User Statistics";
+}
+
+<h2>User Statistics</h2>
+
+@if (Model.Statistics != null)
+{
+    <p><strong>Favorite Genre:</strong> @Model.Statistics.FavoriteGenre</p>
+    <p><strong>Total Movies Watched:</strong> @Model.Statistics.TotalMoviesWatched</p>
+    <p><strong>Most Watched Decade:</strong> @Model.Statistics.MostWatchedDecade</p>
+    <h3>Movies by Genre</h3>
+    <ul>
+        @foreach (var genre in Model.Statistics.GenreCount)
+        {
+            <li>@genre.Key: @genre.Value movies</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No statistics available.</p>
+}

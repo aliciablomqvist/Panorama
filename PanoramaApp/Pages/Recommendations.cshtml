@@ -1,0 +1,31 @@
+@page "{tmdbId:int}"
+@model RecommendationsModel
+
+<h1>Recommendations</h1>
+
+@if (Model.CurrentMovie != null)
+{
+    <h2>For Movie: @Model.CurrentMovie.Title</h2>
+}
+else
+{
+    <p>Movie details not available.</p>
+}
+
+@if (Model.Recommendations?.Any() ?? false)
+{
+    <h2>Recommended Movies</h2>
+    <ul>
+        @foreach (var recommendation in Model.Recommendations)
+        {
+            <li>
+                <strong>@recommendation.Title</strong>
+           
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No recommendations found.</p>
+}

@@ -19,6 +19,8 @@ else
     <p><strong>Release Date:</strong> @Model.Movie.ReleaseDate.ToString("yyyy-MM-dd")</p>
     <p><strong>Votes:</strong> @Model.Movie.Votes</p>
 
+    <a asp-page="/Recommendations" asp-route-tmdbId="@Model.Movie.TmdbId">View Recommendations</a>
+
 @if (!string.IsNullOrEmpty(Model.Movie.TrailerUrl))
 {
     var embedUrl = Model.ConvertToEmbedUrl(Model.Movie.TrailerUrl); // Kalla metoden här

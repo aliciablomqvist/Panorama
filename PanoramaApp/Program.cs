@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Services;
 using PanoramaApp.Hubs;
+using PanoramaApp.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddScoped<ReviewService>(); // For reviews
 builder.Services.AddScoped<GroupChatService>();
+builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+builder.Services.AddHttpClient<TmdbService>();
+
+
 
 // Loggning
 builder.Logging.ClearProviders();

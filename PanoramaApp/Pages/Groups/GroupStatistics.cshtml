@@ -1,0 +1,18 @@
+@page
+@model PanoramaApp.Pages.Groups.GroupStatisticsModel
+@{
+    ViewData["Title"] = "Group Statistics";
+}
+
+<h2>Group Statistics</h2>
+
+@if (Model.Statistics != null)
+{
+    <p><strong>Most Watched Genre:</strong> @Model.Statistics.MostWatchedGenre</p>
+    <p><strong>Total Movies Watched:</strong> @Model.Statistics.TotalMoviesWatchedByGroup</p>
+    <p><strong>Most Popular Decade:</strong> @Model.Statistics.MostPopularDecade</p>
+}
+else
+{
+    <p>No statistics available for this group.</p>
+}
