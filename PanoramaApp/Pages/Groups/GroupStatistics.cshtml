@@ -1,0 +1,23 @@
+@page
+@model PanoramaApp.Pages.Groups.GroupStatisticsModel
+
+<h2>Group Statistics</h2>
+
+<p><strong>Most Watched Genre:</strong> @Model.Statistics.MostWatchedGenre</p>
+<p><strong>Most Watched Decade:</strong> @Model.Statistics.MostWatchedDecade</p>
+
+<h3>Genre Breakdown:</h3>
+<ul>
+    @foreach (var genre in Model.Statistics.GenreCounts)
+    {
+        <li>@genre.Key: @genre.Value movies</li>
+    }
+</ul>
+
+<h3>Decade Breakdown:</h3>
+<ul>
+    @foreach (var decade in Model.Statistics.DecadeCounts)
+    {
+        <li>@decade.Key's: @decade.Value movies</li>
+    }
+</ul>
