@@ -10,15 +10,18 @@ namespace PanoramaApp.Services
 {
 public static class MoviePrioritizer
 {
-   public static List<Movie> Prioritize(List<Movie> movies, int movieId, int priority)
+   public static List<Movie> Prioritize(List<Movie> movies, int movieListId, int movieId, int priority)
 {
-    var movie = movies.FirstOrDefault(m => m.Id == movieId);
-    if (movie != null)
-    {
-        movie.Priority = priority;
-    }
+var movie = movies.FirstOrDefault(m => m.Id == movieId && m.MovieLists.Any(ml => ml.Id == movieListId));
+        if (movie != null)
+        {
+            movie.Priority = priority;
+        }
 
-    return movies.OrderByDescending(m => m.Priority).ToList();
+     return movies
+            .Where(m => m.MovieLists.Any(ml => ml.Id == movieListId))
+            .OrderByDescending(m => m.Priority)
+            .ToList();
 }
     public static List<Movie> GetPrioritizedMovies(List<Movie> movies)
     {
