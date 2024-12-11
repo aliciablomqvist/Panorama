@@ -58,7 +58,10 @@ else
         <select id="user" name="invitedUserId" class="form-select">
             @foreach (var user in Model.Users)
             {
-                <option value="@user.Id">@user.UserName</option>
+                @if (user.Id != Model.CurrentUserId)
+                {
+                    <option value="@user.Id">@user.UserName</option>
+                }
             }
         </select>
     </div>

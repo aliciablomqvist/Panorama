@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PanoramaApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+143bc60b1ec896bf45844262cf7f8e91b2496391")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+962c6e3ae505b693c34ae7484c0eb574fa901014")]
 [assembly: System.Reflection.AssemblyProductAttribute("PanoramaApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PanoramaApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
