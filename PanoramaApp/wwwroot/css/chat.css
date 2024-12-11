@@ -1,0 +1,12 @@
+
+    .chat-history {
+        border: 1px solid #ddd;
+        padding: 10px;
+        max-height: 400px;
+        overflow-y: auto;
+        background-color: #f9f9f9;
+    }
+
+    .chat-message {
+        margin-bottom: 10px;
+    }

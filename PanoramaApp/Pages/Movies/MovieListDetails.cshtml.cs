@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PanoramaApp.Pages.Movies
 {
@@ -35,32 +32,32 @@ namespace PanoramaApp.Pages.Movies
             return Page();
         }
 
-      public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
-{
-    if (updates == null || !updates.Any())
-    {
-        return BadRequest("Invalid data received.");
-    }
-
-    foreach (var update in updates)
-    {
-        var movie = await _context.Movies
-            .FirstOrDefaultAsync(m => m.Id == update.Id);
-
-        if (movie != null)
+        public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
         {
-            movie.Priority = update.Priority;
+            if (updates == null || !updates.Any())
+            {
+                return BadRequest("Invalid data received.");
+            }
+
+            foreach (var update in updates)
+            {
+                var movie = await _context.Movies
+                    .FirstOrDefaultAsync(m => m.Id == update.Id);
+
+                if (movie != null)
+                {
+                    movie.Priority = update.Priority;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return new JsonResult(new { success = true });
         }
-    }
-
-    await _context.SaveChangesAsync();
-    return new JsonResult(new { success = true });
-}
-
 
         public class MoviePriorityUpdate
         {
             public int Id { get; set; }
+
             public int Priority { get; set; }
         }
     }

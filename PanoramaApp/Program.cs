@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Services;
+using PanoramaApp.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +15,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 
 builder.Services.AddRazorPages();
-builder.Services.AddScoped<ReviewService>(); //For reviews
+builder.Services.AddSignalR();
+builder.Services.AddScoped<ReviewService>(); // For reviews
+builder.Services.AddScoped<GroupChatService>();
 
-//Loggning
+// Loggning
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+
+
 
 
 var app = builder.Build();
@@ -28,10 +34,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// app.MapHub<ChatHub>("/chatHub");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+    endpoints.MapHub<ChatHub>("/chathub"); // Map SignalR hub
+});
+//app.MapRazorPages();
 app.Run();
