@@ -7,26 +7,35 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace PanoramaApp.Pages.Groups
 {
-    public class GroupStatisticsModel : PageModel
+   public class GroupStatisticsModel : PageModel
+{
+    private readonly IStatisticsService _statisticsService;
+
+    public GroupStatisticsDto Statistics { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public int GroupId { get; set; }
+
+    public GroupStatisticsModel(IStatisticsService statisticsService)
     {
-        private readonly IStatisticsService _statisticsService;
+        _statisticsService = statisticsService;
+    }
 
-        public GroupStatisticsDto Statistics { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public int GroupId { get; set; }
-
-        public GroupStatisticsModel(IStatisticsService statisticsService)
+    public async Task OnGetAsync()
+    {
+        if (GroupId > 0)
         {
-            _statisticsService = statisticsService;
+            Statistics = await _statisticsService.GetGroupStatisticsAsync(GroupId);
         }
-
-        public async Task OnGetAsync()
+        else
         {
-            if (GroupId > 0)
+            Statistics = new GroupStatisticsDto
             {
-                Statistics = await _statisticsService.GetGroupStatisticsAsync(GroupId);
-            }
+                MostWatchedGenre = "N/A",
+                TotalMoviesWatchedByGroup = 0,
+                MostPopularDecade = "N/A"
+            };
         }
     }
+}
 }

@@ -42,30 +42,65 @@ namespace PanoramaApp.Services
             };
         }
 
-        public async Task<GroupStatisticsDto> GetGroupStatisticsAsync(int groupId)
+    public async Task<GroupStatisticsDto> GetGroupStatisticsAsync(int groupId)
+{
+    // Hämta gruppmedlemmar
+    var groupMembers = await _context.GroupMembers
+        .Where(gm => gm.GroupId == groupId)
+        .Select(gm => gm.UserId)
+        .ToListAsync();
+
+    if (!groupMembers.Any())
+    {
+        return new GroupStatisticsDto
         {
-            var groupMovies = await _context.Groups
-                .Where(g => g.Id == groupId)
-                .Include(g => g.Movies)
-                .ThenInclude(m => m.MovieListItems)
-                .SelectMany(g => g.Movies.SelectMany(mli => mli.MovieListItems.Select(mli => mli.Movie)))
-                .ToListAsync();
+            MostWatchedGenre = "N/A",
+            TotalMoviesWatchedByGroup = 0,
+            MostPopularDecade = "N/A"
+        };
+    }
 
-            var genreCount = groupMovies
-                .GroupBy(m => m.Genre)
-                .ToDictionary(g => g.Key, g => g.Count());
+    // Hämta alla filmer från "Watched" och "Favorites" för alla gruppmedlemmar
+    var watchedMovies = await _context.MovieLists
+        .Where(ml => ml.Name == "Watched" && groupMembers.Contains(ml.OwnerId))
+        .SelectMany(ml => ml.Movies.Select(mli => mli.Movie))
+        .ToListAsync();
 
-            var mostPopularDecade = groupMovies
-                .GroupBy(m => (m.ReleaseDate.Year / 10) * 10)
-                .OrderByDescending(g => g.Count())
-                .FirstOrDefault()?.Key.ToString() ?? "N/A";
+    var favoriteMovies = await _context.MovieLists
+        .Where(ml => ml.Name == "My Favorites" && groupMembers.Contains(ml.OwnerId))
+        .SelectMany(ml => ml.Movies.Select(mli => mli.Movie))
+        .ToListAsync();
 
-            return new GroupStatisticsDto
-            {
-                MostWatchedGenre = genreCount.OrderByDescending(g => g.Value).FirstOrDefault().Key,
-                TotalMoviesWatchedByGroup = groupMovies.Count,
-                MostPopularDecade = mostPopularDecade
-            };
-        }
+    var allMovies = watchedMovies.Concat(favoriteMovies).ToList();
+
+    if (!allMovies.Any())
+    {
+        return new GroupStatisticsDto
+        {
+            MostWatchedGenre = "N/A",
+            TotalMoviesWatchedByGroup = 0,
+            MostPopularDecade = "N/A"
+        };
+    }
+
+    // Beräkna statistik
+    var mostWatchedGenre = allMovies
+        .GroupBy(m => m.Genre)
+        .OrderByDescending(g => g.Count())
+        .FirstOrDefault()?.Key ?? "N/A";
+
+var mostPopularDecade = allMovies
+    .GroupBy(m => (m.ReleaseDate.Year / 10) * 10)
+    .OrderByDescending(g => g.Count())
+    .FirstOrDefault()?.Key.ToString() ?? "N/A";
+
+
+    return new GroupStatisticsDto
+    {
+        MostWatchedGenre = mostWatchedGenre,
+        TotalMoviesWatchedByGroup = allMovies.Count,
+        MostPopularDecade = mostPopularDecade
+    };
+}
     }
 }
