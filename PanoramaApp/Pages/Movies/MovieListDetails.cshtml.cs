@@ -20,10 +20,6 @@ namespace PanoramaApp.Pages.Movies
 
         public MovieList MovieList { get; set; } = default!;
 
-        [BindProperty(SupportsGet = true)]
-public int MovieListId { get; set; }
-
-
         public async Task<IActionResult> OnGetAsync(int id)
         {
             MovieList = await _context.MovieLists
@@ -38,7 +34,8 @@ public int MovieListId { get; set; }
 
             return Page();
         }
-public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
+
+      public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
 {
     if (updates == null || !updates.Any())
     {
