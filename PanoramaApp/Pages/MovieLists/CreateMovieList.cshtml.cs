@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
 
-namespace PanoramaApp.Pages.Movies
+namespace PanoramaApp.Pages.MovieLists
 {
     public class CreateMovieListModel : PageModel
 {
@@ -39,7 +39,7 @@ namespace PanoramaApp.Pages.Movies
         _context.MovieLists.Add(movieList);
         await _context.SaveChangesAsync();
 
-        return RedirectToPage("/Movies/ViewMovieLists");
+        return RedirectToPage("/MovieLists/ViewMovieLists");
     }
 }
 }

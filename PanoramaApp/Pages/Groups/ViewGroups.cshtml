@@ -34,19 +34,14 @@
                             <div>@member.User.UserName</div>
                         }
                     </td>
-<td>
-    <a class="btn btn-primary" asp-page="/Groups/VoteFilms" asp-route-groupId="@group.Id">Vote on a movie</a>
-    <a class="btn btn-primary" asp-page="/Groups/ViewWinner" asp-route-id="@group.Id">View Winner</a>
-    <a class="btn btn-primary" asp-page="/Groups/Invitations" asp-route-id="@group.Id">Invite</a>
-    <a class="btn btn-primary" asp-page="/Groups/AddMoviesPartial" asp-route-groupId="@group.Id">Add Movies</a>
-</td>
-
-<td>
-    <a class="btn btn-primary" asp-page="/MovieLists/Index" asp-route-groupId="@group.Id">View Movie Lists</a>
-    <a class="btn btn-secondary" asp-page="/MovieLists/Share" asp-route-groupId="@group.Id">Share a List</a>
-</td>
-
-
+                    <td>
+                        <a class="btn btn-primary" asp-page="/Groups/VoteFilms" asp-route-groupId="@group.Id">Vote on a Movie</a>
+                        <a class="btn btn-primary" asp-page="/Groups/ViewWinner" asp-route-id="@group.Id">View Winner</a>
+                        <a class="btn btn-primary" asp-page="/Groups/Invitations" asp-route-id="@group.Id">Invite</a>
+                        <a class="btn btn-primary" asp-page="/MovieLists/AddToMovieList" asp-route-groupId="@group.Id">Add Movie</a>
+                        <a class="btn btn-secondary" asp-page="/MovieLists/ViewMovieLists" asp-route-groupId="@group.Id">View Movie Lists</a>
+                        <a class="btn btn-secondary" asp-page="/MovieLists/ShareList" asp-route-groupId="@group.Id">Share a List</a>
+                    </td>
                 </tr>
             }
         </tbody>

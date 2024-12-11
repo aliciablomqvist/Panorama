@@ -5,6 +5,8 @@ namespace PanoramaApp.Models
 {
     public int Id { get; set; }
     public int GroupId { get; set; }
+
+    public Group Group { get; set; } 
     public string InvitedUserId { get; set; } = string.Empty;
     public string InvitedByUserId { get; set; } = string.Empty;
     public bool IsAccepted { get; set; }

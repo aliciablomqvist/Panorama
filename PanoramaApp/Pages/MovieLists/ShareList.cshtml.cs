@@ -4,7 +4,7 @@ using PanoramaApp.Data;
 using PanoramaApp.Models;
 using System.Threading.Tasks;
 
-namespace PanoramaApp.Pages.Movies
+namespace PanoramaApp.Pages.MovieLists
 {
     public class ShareModel : PageModel
     {
