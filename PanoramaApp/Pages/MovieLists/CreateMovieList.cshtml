@@ -9,11 +9,17 @@
 <form method="post">
     <div class="form-group">
         <label for="Name">List Name</label>
-        <input id="Name" name="Name" class="form-control" />
+        <input id="Name" name="Name" class="form-control" required />
     </div>
-    <div class="form-check">
-        <input id="IsShared" name="IsShared" type="checkbox" class="form-check-input" />
-        <label for="IsShared">Share with groups</label>
+    <div class="form-group">
+        <label for="SelectedGroups">Share with Groups</label>
+        <select id="SelectedGroups" name="SelectedGroupIds" multiple class="form-select">
+            @foreach (var group in Model.UserGroups)
+            {
+                <option value="@group.Id">@group.Name</option>
+            }
+        </select>
+        <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple groups.</small>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
