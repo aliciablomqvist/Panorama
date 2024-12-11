@@ -10,7 +10,7 @@ namespace PanoramaApp.Services
 {
 public class TrailerPlayer
 {
-    public string GetTrailerUrl(Movie movie)
+   /* public string GetTrailerUrl(Movie movie)
     {
         return movie.TrailerUrl;
     }
@@ -18,6 +18,6 @@ public class TrailerPlayer
     public void Play(string trailerUrl)
     {
         Console.WriteLine($"Playing trailer: {trailerUrl}");
-    }
+    }*/
 }
 }
