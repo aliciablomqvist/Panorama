@@ -1,6 +1,5 @@
 using PanoramaApp.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PanoramaApp.Interfaces
 {
@@ -19,6 +18,9 @@ namespace PanoramaApp.Interfaces
 
         Task CreateMovieListAsync(string name, string userId, bool isShared);
         Task<MovieList> GetLastCreatedMovieListAsync(string userId);
+
+        Task<List<SelectListItem>> GetAvailableMoviesForListAsync(int listId);
+        Task AddMoviesToListAsync(int listId, List<int> movieIds);
     }
     public class MoviePriorityUpdate
     {

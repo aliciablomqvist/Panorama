@@ -6,6 +6,7 @@ using PanoramaApp.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PanoramaApp.Services
 {
@@ -123,13 +124,63 @@ namespace PanoramaApp.Services
             _context.MovieLists.Add(movieList);
             await _context.SaveChangesAsync();
         }
-        
+
         public async Task<MovieList> GetLastCreatedMovieListAsync(string userId)
         {
             return await _context.MovieLists
                 .Where(ml => ml.OwnerId == userId)
                 .OrderByDescending(ml => ml.Id) // Anta att ID:t ökar med varje ny lista
                 .FirstOrDefaultAsync();
-        }    
-}
+        }
+        public async Task<List<SelectListItem>> GetAvailableMoviesForListAsync(int listId)
+        {
+            var movieList = await GetMovieListByIdAsync(listId);
+
+            if (movieList == null)
+            {
+                return new List<SelectListItem>();
+            }
+
+            var existingMovieIds = movieList.Movies.Select(mli => mli.MovieId).ToList();
+
+            var movies = await _context.Movies
+                .Where(m => !existingMovieIds.Contains(m.Id))
+                .ToListAsync();
+
+            return movies.Select(m => new SelectListItem
+            {
+                Value = m.Id.ToString(),
+                Text = m.Title
+            }).ToList();
+        }
+
+        public async Task AddMoviesToListAsync(int listId, List<int> movieIds)
+        {
+            var movieList = await GetMovieListByIdAsync(listId);
+
+            if (movieList == null || movieIds == null || !movieIds.Any())
+            {
+                return;
+            }
+
+            foreach (var movieId in movieIds)
+            {
+                var movie = await _context.Movies.FindAsync(movieId);
+
+                if (movie != null)
+                {
+                    var movieListItem = new MovieListItem
+                    {
+                        MovieListId = listId,
+                        MovieId = movieId,
+                        Movie = movie
+                    };
+
+                    movieList.Movies.Add(movieListItem);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
+    }
 }
