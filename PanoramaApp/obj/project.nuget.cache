@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2mc5941Hh7U=",
+  "dgSpecHash": "ELwvxuvKZRg=",
   "success": true,
   "projectFilePath": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\PanoramaApp.csproj",
   "expectedPackageFiles": [
@@ -92,6 +92,7 @@
     "C:\\Users\\Stefan\\.nuget\\packages\\microsoft.codeanalysis.csharp.workspaces\\4.8.0-3.final\\microsoft.codeanalysis.csharp.workspaces.4.8.0-3.final.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\microsoft.codeanalysis.elfie\\1.0.0\\microsoft.codeanalysis.elfie.1.0.0.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\microsoft.codeanalysis.features\\4.8.0-3.final\\microsoft.codeanalysis.features.4.8.0-3.final.nupkg.sha512",
+    "C:\\Users\\Stefan\\.nuget\\packages\\microsoft.codeanalysis.netanalyzers\\9.0.0\\microsoft.codeanalysis.netanalyzers.9.0.0.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\microsoft.codeanalysis.razor\\6.0.24\\microsoft.codeanalysis.razor.6.0.24.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\microsoft.codeanalysis.scripting.common\\4.8.0-3.final\\microsoft.codeanalysis.scripting.common.4.8.0-3.final.nupkg.sha512",
     "C:\\Users\\Stefan\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\4.8.0-3.final\\microsoft.codeanalysis.workspaces.common.4.8.0-3.final.nupkg.sha512",
