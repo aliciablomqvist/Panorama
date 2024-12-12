@@ -10,6 +10,8 @@ namespace PanoramaApp.Interfaces
         Task<List<MovieList>> GetListsByUserAsync(string userId);
         Task<MovieList> GetMovieListByIdAsync(int id);
         Task UpdateMoviePrioritiesAsync(List<MoviePriorityUpdate> updates);
+
+        Task<List<Movie>> GetMoviesFromListAsync(string listName, string userId);
     }
     public class MoviePriorityUpdate
     {

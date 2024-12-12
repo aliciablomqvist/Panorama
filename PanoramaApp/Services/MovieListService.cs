@@ -68,5 +68,14 @@ namespace PanoramaApp.Services
 
             await _context.SaveChangesAsync();
         }
+        public async Task<List<Movie>> GetMoviesFromListAsync(string listName, string userId)
+        {
+            var movieList = await _context.MovieLists
+                .Include(ml => ml.Movies)
+                .ThenInclude(mli => mli.Movie)
+                .FirstOrDefaultAsync(ml => ml.Name == listName && ml.OwnerId == userId);
+
+            return movieList?.Movies.Select(mli => mli.Movie).ToList() ?? new List<Movie>();
+        }
     }
 }
