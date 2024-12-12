@@ -44,5 +44,29 @@ namespace PanoramaApp.Services
                 .Where(ml => ml.OwnerId == userId)
                 .ToListAsync();
         }
+
+        public async Task<MovieList> GetMovieListByIdAsync(int id)
+        {
+            return await _context.MovieLists
+                .Include(ml => ml.Movies)
+                .ThenInclude(mli => mli.Movie)
+                .FirstOrDefaultAsync(ml => ml.Id == id);
+        }
+
+        public async Task UpdateMoviePrioritiesAsync(List<MoviePriorityUpdate> updates)
+        {
+            foreach (var update in updates)
+            {
+                var movie = await _context.Movies
+                    .FirstOrDefaultAsync(m => m.Id == update.Id);
+
+                if (movie != null)
+                {
+                    movie.Priority = update.Priority;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

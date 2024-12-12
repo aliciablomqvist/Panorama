@@ -29,6 +29,7 @@ builder.Services.AddScoped<IMovieCalendarService, MovieCalendarService>();
 builder.Services.AddScoped<IMovieListService, MovieListService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IUrlHelperService, UrlHelperService>();
+builder.Services.AddScoped<IMovieListService, MovieListService>();
 
 
 // Loggning
