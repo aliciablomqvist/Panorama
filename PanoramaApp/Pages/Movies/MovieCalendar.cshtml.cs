@@ -8,20 +8,21 @@ namespace PanoramaApp.Pages.Movies
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
     using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
 
     public class MovieCalendarModel : PageModel
     {
-        private readonly ApplicationDbContext context;
+        private readonly IMovieCalendarService _movieCalendarService;
 
-        public MovieCalendarModel(ApplicationDbContext context)
+        public MovieCalendarModel(IMovieCalendarService movieCalendarService)
         {
-            this.context = context;
+            _movieCalendarService = movieCalendarService;
         }
 
-        public List<Movie> Movies { get; set; } // Alla filmer som kan schemaläggas
+        public List<Movie> Movies { get; set; } = new List<Movie>();
 
-        public List<MovieCalendar> ScheduledMovies { get; set; } // Schemalagda filmer
+        public List<MovieCalendar> ScheduledMovies { get; set; } = new List<MovieCalendar>();
 
         [BindProperty]
         public int MovieId { get; set; }
@@ -31,40 +32,23 @@ namespace PanoramaApp.Pages.Movies
 
         public async Task<IActionResult> OnGetAsync()
         {
-            // Hämta alla filmer
-            this.Movies = await this.context.Movies.ToListAsync();
-
-            // Logga antalet hämtade filmer
-            Console.WriteLine($"Number of movies fetched: {this.Movies.Count}");
-
-            // Hämta schemalagda filmer
-            this.ScheduledMovies = await this.context.MovieCalendars
-                .Include(mc => mc.Movie)
-                .ToListAsync();
-
-            return this.Page();
+            Movies = await _movieCalendarService.GetAllMoviesAsync();
+            ScheduledMovies = await _movieCalendarService.GetScheduledMoviesAsync();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostScheduleMovieAsync()
         {
-            var movie = await this.context.Movies.FirstOrDefaultAsync(m => m.Id == this.MovieId);
-
-            if (movie == null)
+            try
             {
-                this.ModelState.AddModelError(string.Empty, "The movie does not exist.");
-                return await this.OnGetAsync(); // Återställ sidan med data
+                await _movieCalendarService.ScheduleMovieAsync(MovieId, ScheduledDate);
+                return RedirectToPage();
             }
-
-            var calendarEntry = new MovieCalendar
+            catch (ArgumentException ex)
             {
-                MovieId = this.MovieId,
-                Date = this.ScheduledDate,
-            };
-
-            this.context.MovieCalendars.Add(calendarEntry);
-            await this.context.SaveChangesAsync();
-
-            return this.RedirectToPage();
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return await OnGetAsync(); // Återställ sidan med data
+            }
         }
     }
 }

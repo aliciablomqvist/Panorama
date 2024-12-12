@@ -1,9 +1,6 @@
 // <copyright file="Reviews.cshtml.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-
-namespace PanoramaApp.Pages.Movies
-{
     using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
@@ -11,14 +8,22 @@ namespace PanoramaApp.Pages.Movies
     using Microsoft.EntityFrameworkCore;
     using PanoramaApp.Data;
     using PanoramaApp.Models;
+    using PanoramaApp.Services;
+    using PanoramaApp.Interfaces;
+
+namespace PanoramaApp.Pages.Movies
+{
+
 
     public class ReviewsModel : PageModel
     {
-        private readonly ApplicationDbContext context;
+        private readonly IReviewService _reviewService;
+        private readonly IMovieService _movieService;
 
-        public ReviewsModel(ApplicationDbContext context)
+        public ReviewsModel(IReviewService reviewService, IMovieService movieService)
         {
-            this.context = context;
+            _reviewService = reviewService;
+            _movieService = movieService;
         }
 
         [BindProperty]
@@ -27,67 +32,54 @@ namespace PanoramaApp.Pages.Movies
         public string ReviewContent { get; set; }
 
         [BindProperty]
-        [Range(1, 5, ErrorMessage = "Rating must be between number 1 and 5.")]
+        [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")]
         public int Rating { get; set; }
 
         public Movie Movie { get; set; }
 
-        public List<Review> Reviews { get; set; }
+        public IList<Review> Reviews { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int movieId)
         {
-            this.Movie = await this.context.Movies
-                .Include(m => m.MovieListItems)
-                .FirstOrDefaultAsync(m => m.Id == movieId);
+            
+            Movie = await _movieService.GetMovieByIdAsync(movieId);
 
-            if (this.Movie == null)
+            if (Movie == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            this.Reviews = await this.context.Reviews
-                .Include(r => r.User)
-                .Where(r => r.MovieId == movieId)
-                .ToListAsync();
 
-            return this.Page();
+            Reviews = await _reviewService.GetReviewsForMovieAsync(movieId);
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int movieId)
         {
-            if (!this.ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return this.Page();
+                return Page();
             }
 
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
             {
-                return this.RedirectToPage("/Account/Login");
+                return RedirectToPage("/Account/Login");
             }
-
-            var review = new Review
-            {
-                MovieId = movieId,
-                UserId = userId,
-                Content = this.ReviewContent,
-                Rating = this.Rating,
-                CreatedAt = DateTime.UtcNow,
-            };
 
             try
             {
-                this.context.Reviews.Add(review);
-                await this.context.SaveChangesAsync();
+
+                await _reviewService.AddReviewAsync(movieId, userId, ReviewContent, Rating);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error saving review: {ex.Message}");
-                this.ModelState.AddModelError(string.Empty, "An error occurred while saving your review. Please try again later.");
-                return this.Page();
+                ModelState.AddModelError(string.Empty, "An error occurred while saving your review. Please try again later.");
+                return Page();
             }
 
-            return this.RedirectToPage(new { movieId = movieId });
+            return RedirectToPage(new { movieId });
         }
     }
 }

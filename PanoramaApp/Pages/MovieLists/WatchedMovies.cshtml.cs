@@ -11,40 +11,35 @@ namespace PanoramaApp.Pages.MovieLists
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
     using PanoramaApp.Data;
+    using PanoramaApp.Services;
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
 
     public class WatchedModel : PageModel
     {
-        private readonly ApplicationDbContext context;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly IMovieListService _movieListService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public WatchedModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public WatchedModel(IMovieListService movieListService, UserManager<IdentityUser> userManager)
         {
-            this.context = context;
-            this.userManager = userManager;
+            _movieListService = movieListService;
+            _userManager = userManager;
         }
 
-        public List<Movie> WatchedMovies { get; set; }
+        public List<Movie> WatchedMovies { get; private set; } = new List<Movie>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
-                return this.RedirectToPage("/Account/Login");
+                return RedirectToPage("/Account/Login");
             }
 
-            var userId = user.Id;
+            WatchedMovies = await _movieListService.GetMoviesFromListAsync("Watched", user.Id);
 
-            var watchedList = await this.context.MovieLists
-                .Include(ml => ml.Movies)
-                .ThenInclude(mli => mli.Movie)
-                .FirstOrDefaultAsync(ml => ml.Name == "Watched" && ml.OwnerId == userId);
-
-            this.WatchedMovies = watchedList?.Movies.Select(mli => mli.Movie).ToList() ?? new List<Movie>();
-
-            return this.Page();
+            return Page();
         }
     }
 }

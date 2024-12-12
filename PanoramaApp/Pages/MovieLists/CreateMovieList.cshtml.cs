@@ -13,64 +13,56 @@ namespace PanoramaApp.Pages.MovieLists
     using Microsoft.EntityFrameworkCore;
     using PanoramaApp.Data;
     using PanoramaApp.Models;
+    using PanoramaApp.Services;
+    using PanoramaApp.Interfaces;
 
     public class CreateMovieListModel : PageModel
     {
-        private readonly ApplicationDbContext context;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly IMovieListService _movieListService;
+        private readonly IGroupService _groupService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CreateMovieListModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public CreateMovieListModel(
+            IMovieListService movieListService,
+            IGroupService groupService,
+            UserManager<IdentityUser> userManager)
         {
-            this.context = context;
-            this.userManager = userManager;
+            _movieListService = movieListService;
+            _groupService = groupService;
+            _userManager = userManager;
         }
 
         [BindProperty]
         public string Name { get; set; } = string.Empty;
 
         [BindProperty]
-        public List<int> SelectedGroupIds { get; set; } = new List<int>();
+        public List<int> SelectedGroupIds { get; set; } = new();
 
-        public List<Group> UserGroups { get; set; } = new ();
+        public List<Group> UserGroups { get; private set; } = new();
 
         public async Task OnGetAsync()
         {
-            var userId = this.userManager.GetUserId(this.User);
-            this.UserGroups = await this.context.Groups
-                .Where(g => g.Members.Any(m => m.UserId == userId))
-                .ToListAsync();
+            var userId = _userManager.GetUserId(User);
+            UserGroups = await _groupService.GetUserGroupsAsync(userId);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return this.Challenge();
+                return Challenge();
             }
 
-            var movieList = new MovieList
-            {
-                Name = this.Name,
-                OwnerId = user.Id,
-                IsShared = this.SelectedGroupIds.Count > 0,
-            };
+            await _movieListService.CreateMovieListAsync(Name, user.Id, SelectedGroupIds.Count > 0);
 
-            this.context.MovieLists.Add(movieList);
-            await this.context.SaveChangesAsync();
-
-            foreach (var groupId in this.SelectedGroupIds)
+            var movieList = await _movieListService.GetLastCreatedMovieListAsync(user.Id);
+            if (movieList != null)
             {
-                var group = await this.context.Groups.FindAsync(groupId);
-                if (group != null)
-                {
-                    group.MovieLists.Add(movieList);
-                }
+                await _groupService.AddMovieListToGroupsAsync(movieList, SelectedGroupIds);
             }
 
-            await this.context.SaveChangesAsync();
-
-            return this.RedirectToPage("/MovieLists/ViewMovieLists");
+            return RedirectToPage("/MovieLists/ViewMovieLists");
         }
     }
 }

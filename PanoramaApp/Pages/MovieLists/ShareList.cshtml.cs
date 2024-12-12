@@ -2,44 +2,45 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PanoramaApp.Interfaces;
+using PanoramaApp.Models;
+using System.Threading.Tasks;
+
 namespace PanoramaApp.Pages.MovieLists
 {
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.RazorPages;
-    using PanoramaApp.Data;
-    using PanoramaApp.Models;
-
-    public class ShareModel : PageModel
+    public class ShareListModel : PageModel
     {
-        private readonly ApplicationDbContext context;
+        private readonly IMovieListService _movieListService;
 
-        public ShareModel(ApplicationDbContext context)
+        public ShareListModel(IMovieListService movieListService)
         {
-            this.context = context;
+            _movieListService = movieListService;
         }
 
-        public MovieList MovieList { get; set; }
-
-        public string ShareableLink { get; set; }
-
-        public int ListId { get; set; }
-
-        public string RecipientUserName { get; set; }
+        public MovieList MovieList { get; private set; }
+        public string ShareableLink { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int listId)
         {
-            this.MovieList = await this.context.MovieLists.FindAsync(listId);
 
-            if (this.MovieList == null)
+            MovieList = await _movieListService.GetMovieListByIdAsync(listId);
+
+            if (MovieList == null)
             {
-                return this.NotFound();
+                return NotFound();
             }
 
-            // Delbar länk
-            this.ShareableLink = this.Url.Page("/Movies/MovieListDetails", null, new { id = listId }, this.Request.Scheme);
+            // Generera en delbar länk direkt med Url.Page
+            ShareableLink = Url.Page(
+                "/Movies/MovieListDetails",
+                null,
+                new { id = listId },
+                Request.Scheme
+            );
 
-            return this.Page();
+            return Page();
         }
     }
 }

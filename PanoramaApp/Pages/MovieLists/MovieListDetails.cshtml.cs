@@ -4,80 +4,45 @@
 
 namespace PanoramaApp.Pages.MovieLists
 {
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
     using PanoramaApp.Data;
     using PanoramaApp.Models;
+    using PanoramaApp.Interfaces;
 
     public class MovieListDetailsModel : PageModel
     {
-        private readonly ApplicationDbContext context;
-        private readonly ILogger<MovieListDetailsModel> logger;
+        private readonly IMovieListService _movieListService;
 
-        public MovieListDetailsModel(ApplicationDbContext context, ILogger<MovieListDetailsModel> logger)
+        public MovieListDetailsModel(IMovieListService movieListService)
         {
-            this.context = context;
-            this.logger = logger;
+            _movieListService = movieListService;
         }
 
         public MovieList MovieList { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            this.logger.LogInformation("Fetching MovieList with ID {Id}", id);
+            MovieList = await _movieListService.GetMovieListByIdAsync(id);
 
-            try
+            if (MovieList == null)
             {
-                this.MovieList = await this.context.MovieLists
-                    .Include(ml => ml.Movies)
-                        .ThenInclude(mli => mli.Movie)
-                    .FirstOrDefaultAsync(ml => ml.Id == id);
-
-                if (this.MovieList == null)
-                {
-                    this.logger.LogWarning("MovieList with ID {Id} not found", id);
-                    return this.RedirectToPage("/Error");
-                }
-
-                return this.Page();
+                return RedirectToPage("/Error");
             }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, "An error occurred while fetching MovieList with ID {Id}", id);
-                return this.RedirectToPage("/Error");
-            }
+
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostDeleteListAsync(int id)
+        public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
         {
-            this.logger.LogInformation("Attempting to delete MovieList with ID {Id}", id);
-
-            try
+            if (updates == null || !updates.Any())
             {
-                var movieList = await this.context.MovieLists
-                    .Include(ml => ml.Movies)
-                    .FirstOrDefaultAsync(ml => ml.Id == id);
-
-                if (movieList == null)
-                {
-                    this.logger.LogWarning("MovieList with ID {Id} not found for deletion", id);
-                    return this.RedirectToPage("/Error");
-                }
-
-                this.context.MovieLists.Remove(movieList);
-                await this.context.SaveChangesAsync();
-
-                this.logger.LogInformation("Successfully deleted MovieList with ID {Id}", id);
-                return this.RedirectToPage("/MovieLists/ViewMovieLists");
+                return BadRequest("Invalid data received.");
             }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, "An error occurred while deleting MovieList with ID {Id}", id);
-                return this.RedirectToPage("/Error");
-            }
+
+            await _movieListService.UpdateMoviePrioritiesAsync(updates);
+            return new JsonResult(new { success = true });
         }
     }
 }

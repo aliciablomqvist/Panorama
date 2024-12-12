@@ -20,3 +20,41 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.user-profile {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.user-profile h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.user-profile .navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-profile .nav-item {
+    margin-bottom: 10px;
+}
+
+.user-profile .nav-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.user-profile .nav-link:hover {
+    color: #0056b3;
+}

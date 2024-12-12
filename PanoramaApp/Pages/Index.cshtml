@@ -1,10 +1,87 @@
 ﻿@page
-@model IndexModel
+@model PanoramaApp.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">@Model.WelcomeMessage</h1>
+    <p class="text-center fs-5">
+        Hello, <strong>@Model.UserName</strong>! Manage your movie lists, groups, and much more.
+    </p>
+
+    <div class="row g-4 mt-4 justify-content-center">
+
+        <div class="col-md-6">
+            <div class="card border-dark shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-dark">Explore Movies</h5>
+                    <p class="card-text fs-5">Discover and add movies to your lists!</p>
+                    <a asp-page="/Movies/ExploreMovies" class="btn btn-success btn-lg">Explore Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">My Groups</h5>
+                    <p class="card-text">View and manage your groups.</p>
+                    <a asp-page="/Groups/ViewGroups" class="btn btn-primary">Go to Groups</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">My Movie Lists</h5>
+                    <p class="card-text">Browse and manage your movie lists.</p>
+                    <a asp-page="/MovieLists/ViewMovieLists" class="btn btn-primary">View Movie Lists</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">View Calendar</h5>
+                    <p class="card-text">See your scheduled movies.</p>
+                    <a asp-page="/Movies/MovieCalendar" class="btn btn-primary">View Calendar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">My Favorites</h5>
+                    <p class="card-text">View your favorite movies.</p>
+                    <a asp-page="/MovieLists/MyFavorites" class="btn btn-secondary">Go to Favorites</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">My Statistics</h5>
+                    <p class="card-text">Track your movie-watching stats.</p>
+                    <a asp-page="/UserStatistics" class="btn btn-secondary">View Statistics</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Watched Movies</h5>
+                    <p class="card-text">Browse your watched movies.</p>
+                    <a asp-page="/MovieLists/WatchedMovies" class="btn btn-secondary">Go to Watched Movies</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

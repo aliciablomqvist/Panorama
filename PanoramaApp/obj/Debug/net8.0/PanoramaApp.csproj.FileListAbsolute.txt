@@ -1,4 +1,5 @@
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\bin\Debug\net8.0\appsettings.json
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\bin\Debug\net8.0\PanoramaApp.staticwebassets.runtime.json
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\bin\Debug\net8.0\PanoramaApp.exe
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\bin\Debug\net8.0\PanoramaApp.deps.json
@@ -254,4 +255,3 @@ C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\refint\Pa
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\PanoramaApp.pdb
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\PanoramaApp.genruntimeconfig.cache
 C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\obj\Debug\net8.0\ref\PanoramaApp.dll
-C:\Users\Stefan\Documents\GitHub\Panorama\PanoramaApp\bin\Debug\net8.0\appsettings.json

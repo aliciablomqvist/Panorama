@@ -11,7 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
 
-public class AddMoviesModel : PageModel
+namespace PanoramaApp.Pages.Groups
+{
+    public class AddMoviesModel : PageModel
 {
     private readonly ApplicationDbContext context;
 
@@ -68,4 +70,5 @@ public class AddMoviesModel : PageModel
         await this.context.SaveChangesAsync();
         return this.RedirectToPage("/Groups/ViewGroups");
     }
+}
 }

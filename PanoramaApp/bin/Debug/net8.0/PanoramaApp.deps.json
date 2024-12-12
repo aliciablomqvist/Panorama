@@ -11,6 +11,7 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.0",
           "Microsoft.AspNetCore.Identity.UI": "8.0.0",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
+          "Microsoft.CodeAnalysis.NetAnalyzers": "9.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.0",
@@ -1112,6 +1113,7 @@
           }
         }
       },
+      "Microsoft.CodeAnalysis.NetAnalyzers/9.0.0": {},
       "Microsoft.CodeAnalysis.Razor/6.0.24": {
         "dependencies": {
           "Microsoft.AspNetCore.Razor.Language": "6.0.24",
@@ -2756,6 +2758,13 @@
       "sha512": "sha512-K9osJYe+g1WwJL58022TsotiVFkto9HF3WbNhH0+olxPjeJ7dw9hLs/AeXoA6P8ErnNf+QNA735KIZWXiGAcLQ==",
       "path": "microsoft.codeanalysis.features/4.8.0-3.final",
       "hashPath": "microsoft.codeanalysis.features.4.8.0-3.final.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.NetAnalyzers/9.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JajbvkrBgtdRghavIjcJuNHMOja4lqBmEezbhZyqWPYh2cpLhT5mPpfC7NQVDO4IehWQum9t/nwF4v+qQGtYWg==",
+      "path": "microsoft.codeanalysis.netanalyzers/9.0.0",
+      "hashPath": "microsoft.codeanalysis.netanalyzers.9.0.0.nupkg.sha512"
     },
     "Microsoft.CodeAnalysis.Razor/6.0.24": {
       "type": "package",
