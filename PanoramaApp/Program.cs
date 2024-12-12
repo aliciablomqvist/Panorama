@@ -19,12 +19,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
-builder.Services.AddScoped<ReviewService>(); // For reviews
+
+// Dependency Injections
+builder.Services.AddScoped<ReviewService>();
 builder.Services.AddScoped<GroupChatService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddHttpClient<TmdbService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
-
+builder.Services.AddScoped<IMovieCalendarService, MovieCalendarService>();
 
 // Loggning
 builder.Logging.ClearProviders();
