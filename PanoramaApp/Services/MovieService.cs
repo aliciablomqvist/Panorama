@@ -25,6 +25,7 @@ namespace PanoramaApp.Services
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
             return await _context.Movies
+                 .Include(m => m.MovieListItems)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
     }

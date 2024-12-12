@@ -24,20 +24,19 @@
         {
             return await _context.Reviews
                 .Where(r => r.MovieId == movieId)
+                 .Include(r => r.User)
                 .OrderByDescending(r => r.CreatedAt)
                 .ToListAsync();
         }
 
         public async Task AddReviewAsync(int movieId, string userId, string content, int rating)
         {
-            // Kontrollera att filmen existerar
             var movieExists = await _context.Movies.AnyAsync(m => m.Id == movieId);
             if (!movieExists)
             {
                 throw new ArgumentException("The movie does not exist.");
             }
 
-            // Skapa och spara recensionen
             var review = new Review
             {
                 MovieId = movieId,
