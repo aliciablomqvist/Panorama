@@ -1,13 +1,14 @@
 @page "{listId:int}"
 @model PanoramaApp.Pages.MovieLists.ShareModel
-@{
-    ViewData["Title"] = "Share Movie List";
+
+<h2>Share Movie List</h2>
+
+@if (Model.MovieList != null)
+{
+    <p>Here is the shareable link for the movie list <strong>@Model.MovieList.Name</strong>:</p>
+    <a href="@Model.ShareableLink" target="_blank">@Model.ShareableLink</a>
 }
-
-<h2>Share @Model.MovieList.Name</h2>
-
-<p>Copy the link below to share this movie list:</p>
-
-<input type="text" value="@Model.ShareableLink" readonly class="form-control">
-
-<a class="btn btn-secondary mt-2" asp-page="/Movies/MovieListDetails" asp-route-id="@Model.MovieList.Id">Back to Movie List Details</a>
+else
+{
+    <p>Movie list not found.</p>
+}

@@ -86,5 +86,14 @@ namespace PanoramaApp.Services
                              ml.SharedWithGroups.Any(g => g.Members.Any(m => m.UserId == userId)))
                 .ToListAsync();
         }
+
+        public async Task<MovieList> GetFavoritesListAsync(string userId)
+        {
+            return await _context.MovieLists
+                .Include(ml => ml.Movies)
+                    .ThenInclude(mli => mli.Movie)
+                .FirstOrDefaultAsync(ml => ml.Name == "My Favorites" && ml.OwnerId == userId);
+
+        }
     }
 }
