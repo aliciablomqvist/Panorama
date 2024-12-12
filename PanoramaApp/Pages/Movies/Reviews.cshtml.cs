@@ -1,20 +1,24 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using System.ComponentModel.DataAnnotations;
+// <copyright file="Reviews.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.Movies
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Security.Claims;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+
     public class ReviewsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public ReviewsModel(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         [BindProperty]
@@ -27,62 +31,63 @@ namespace PanoramaApp.Pages.Movies
         public int Rating { get; set; }
 
         public Movie Movie { get; set; }
+
         public List<Review> Reviews { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int movieId)
         {
-            Movie = await _context.Movies
+            this.Movie = await this.context.Movies
                 .Include(m => m.MovieListItems)
                 .FirstOrDefaultAsync(m => m.Id == movieId);
 
-            if (Movie == null)
+            if (this.Movie == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            Reviews = await _context.Reviews
+            this.Reviews = await this.context.Reviews
                 .Include(r => r.User)
                 .Where(r => r.MovieId == movieId)
                 .ToListAsync();
 
-            return Page();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int movieId)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return Page();
+                return this.Page();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
             {
-                return RedirectToPage("/Account/Login");
+                return this.RedirectToPage("/Account/Login");
             }
 
             var review = new Review
             {
                 MovieId = movieId,
                 UserId = userId,
-                Content = ReviewContent,
-                Rating = Rating,
-                CreatedAt = DateTime.UtcNow
+                Content = this.ReviewContent,
+                Rating = this.Rating,
+                CreatedAt = DateTime.UtcNow,
             };
 
             try
             {
-                _context.Reviews.Add(review);
-                await _context.SaveChangesAsync();
+                this.context.Reviews.Add(review);
+                await this.context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error saving review: {ex.Message}");
-                ModelState.AddModelError("", "An error occurred while saving your review. Please try again later.");
-                return Page();
+                this.ModelState.AddModelError(string.Empty, "An error occurred while saving your review. Please try again later.");
+                return this.Page();
             }
 
-            return RedirectToPage(new { movieId = movieId });
+            return this.RedirectToPage(new { movieId = movieId });
         }
     }
 }

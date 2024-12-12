@@ -1,10 +1,14 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+// <copyright file="20241129164749_UpdateGroupMemberRelations.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace PanoramaApp.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
     public partial class UpdateGroupMemberRelations : Migration
     {
@@ -41,7 +45,7 @@ namespace PanoramaApp.Migrations
                     InvitedUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InvitedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsAccepted = table.Column<bool>(type: "bit", nullable: false),
-                    InvitationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    InvitationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -55,7 +59,7 @@ namespace PanoramaApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -99,7 +103,7 @@ namespace PanoramaApp.Migrations
                 table: "Votes",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
+                defaultValue: string.Empty,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
                 oldNullable: true);

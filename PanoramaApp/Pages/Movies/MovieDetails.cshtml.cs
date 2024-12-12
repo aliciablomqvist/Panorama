@@ -1,57 +1,62 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using PanoramaApp.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+// <copyright file="MovieDetails.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.Movies
 {
+    using System.Collections.Generic;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+    using PanoramaApp.Services;
+
     public class MovieDetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly ReviewService _reviewService;
+        private readonly ApplicationDbContext context;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly ReviewService reviewService;
 
         public MovieDetailsModel(ApplicationDbContext context, UserManager<IdentityUser> userManager, ReviewService reviewService)
         {
-            _context = context;
-            _userManager = userManager;
-            _reviewService = reviewService;
+            this.context = context;
+            this.userManager = userManager;
+            this.reviewService = reviewService;
         }
 
         public Movie Movie { get; set; }
+
         public IList<Review> Reviews { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Movie = await _context.Movies
+            this.Movie = await this.context.Movies
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Movie == null)
+            if (this.Movie == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            Reviews = await _reviewService.GetReviewsForMovieAsync(id);
-            return Page();
+            this.Reviews = await this.reviewService.GetReviewsForMovieAsync(id);
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAddToFavoritesAsync(int movieId)
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             if (user == null)
             {
-                return RedirectToPage("/Account/Login");
+                return this.RedirectToPage("/Account/Login");
             }
 
             var userId = user.Id;
-            var favoritesList = await _context.MovieLists
+            var favoritesList = await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .FirstOrDefaultAsync(ml => ml.Name == "My Favorites" && ml.OwnerId == userId);
 
@@ -60,11 +65,11 @@ namespace PanoramaApp.Pages.Movies
                 favoritesList = new MovieList
                 {
                     Name = "My Favorites",
-                    OwnerId = userId
+                    OwnerId = userId,
                 };
 
-                _context.MovieLists.Add(favoritesList);
-                await _context.SaveChangesAsync();
+                this.context.MovieLists.Add(favoritesList);
+                await this.context.SaveChangesAsync();
             }
 
             if (!favoritesList.Movies.Any(mli => mli.MovieId == movieId))
@@ -72,27 +77,27 @@ namespace PanoramaApp.Pages.Movies
                 var movieListItem = new MovieListItem
                 {
                     MovieListId = favoritesList.Id,
-                    MovieId = movieId
+                    MovieId = movieId,
                 };
                 favoritesList.Movies.Add(movieListItem);
-                await _context.SaveChangesAsync();
+                await this.context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/Movies/MovieDetails", new { id = movieId });
+            return this.RedirectToPage("/Movies/MovieDetails", new { id = movieId });
         }
 
         public async Task<IActionResult> OnPostMarkAsWatchedAsync(int movieId)
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             if (user == null)
             {
-                return RedirectToPage("/Account/Login");
+                return this.RedirectToPage("/Account/Login");
             }
 
             var userId = user.Id;
 
-            var watchedList = await _context.MovieLists
+            var watchedList = await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .FirstOrDefaultAsync(ml => ml.Name == "Watched" && ml.OwnerId == userId);
 
@@ -101,11 +106,11 @@ namespace PanoramaApp.Pages.Movies
                 watchedList = new MovieList
                 {
                     Name = "Watched",
-                    OwnerId = userId
+                    OwnerId = userId,
                 };
 
-                _context.MovieLists.Add(watchedList);
-                await _context.SaveChangesAsync();
+                this.context.MovieLists.Add(watchedList);
+                await this.context.SaveChangesAsync();
             }
 
             if (!watchedList.Movies.Any(mli => mli.MovieId == movieId))
@@ -113,48 +118,49 @@ namespace PanoramaApp.Pages.Movies
                 var movieListItem = new MovieListItem
                 {
                     MovieListId = watchedList.Id,
-                    MovieId = movieId
+                    MovieId = movieId,
                 };
 
                 watchedList.Movies.Add(movieListItem);
-                await _context.SaveChangesAsync();
+                await this.context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/Movies/MovieDetails", new { id = movieId });
+            return this.RedirectToPage("/Movies/MovieDetails", new { id = movieId });
         }
 
         public async Task<IActionResult> OnPostAddReviewAsync(int movieId, string content, int rating)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (string.IsNullOrEmpty(userId))
             {
-                return RedirectToPage("/Account/Login");
+                return this.RedirectToPage("/Account/Login");
             }
 
-            await _reviewService.AddReviewAsync(movieId, userId, content, rating);
-            return RedirectToPage("/Movies/MovieDetails", new { id = movieId });
+            await this.reviewService.AddReviewAsync(movieId, userId, content, rating);
+            return this.RedirectToPage("/Movies/MovieDetails", new { id = movieId });
         }
 
-public string ConvertToEmbedUrl(string youtubeUrl)
-{
-    if (string.IsNullOrEmpty(youtubeUrl)) return string.Empty;
+        public string ConvertToEmbedUrl(string youtubeUrl)
+        {
+            if (string.IsNullOrEmpty(youtubeUrl))
+            {
+                return string.Empty;
+            }
 
-    try
-    {
-        var uri = new Uri(youtubeUrl);
-        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
-        var videoId = query["v"]; // Extrahera 'v'-parametern från URL:en
+            try
+            {
+                var uri = new Uri(youtubeUrl);
+                var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+                var videoId = query["v"]; // Extrahera 'v'-parametern från URL:en
 
-        return videoId != null ? $"https://www.youtube.com/embed/{videoId}" : string.Empty;
-    }
-    catch
-    {
-        // Om något går fel, returnera en tom sträng
-        return string.Empty;
-    }
-}
-
-
+                return videoId != null ? $"https://www.youtube.com/embed/{videoId}" : string.Empty;
+            }
+            catch
+            {
+                // Om något går fel, returnera en tom sträng
+                return string.Empty;
+            }
+        }
     }
 }

@@ -1,41 +1,45 @@
-using PanoramaApp.Services;
-using PanoramaApp.Interfaces;
-using PanoramaApp.Models;
-using PanoramaApp.DTO;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+// <copyright file="GroupStatistics.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.Groups
 {
-   public class GroupStatisticsModel : PageModel
-{
-    private readonly IStatisticsService _statisticsService;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using PanoramaApp.DTO;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+    using PanoramaApp.Services;
 
-    public GroupStatisticsDto Statistics { get; set; }
-
-    [BindProperty(SupportsGet = true)]
-    public int GroupId { get; set; }
-
-    public GroupStatisticsModel(IStatisticsService statisticsService)
+    public class GroupStatisticsModel : PageModel
     {
-        _statisticsService = statisticsService;
-    }
+        private readonly IStatisticsService statisticsService;
 
-    public async Task OnGetAsync()
-    {
-        if (GroupId > 0)
+        public GroupStatisticsDto Statistics { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int GroupId { get; set; }
+
+        public GroupStatisticsModel(IStatisticsService statisticsService)
         {
-            Statistics = await _statisticsService.GetGroupStatisticsAsync(GroupId);
+            this.statisticsService = statisticsService;
         }
-        else
+
+        public async Task OnGetAsync()
         {
-            Statistics = new GroupStatisticsDto
+            if (this.GroupId > 0)
             {
-                MostWatchedGenre = "N/A",
-                TotalMoviesWatchedByGroup = 0,
-                MostPopularDecade = "N/A"
-            };
+                this.Statistics = await this.statisticsService.GetGroupStatisticsAsync(this.GroupId);
+            }
+            else
+            {
+                this.Statistics = new GroupStatisticsDto
+                {
+                    MostWatchedGenre = "N/A",
+                    TotalMoviesWatchedByGroup = 0,
+                    MostPopularDecade = "N/A",
+                };
+            }
         }
     }
-}
 }

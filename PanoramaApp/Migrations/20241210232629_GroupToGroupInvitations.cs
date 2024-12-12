@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+// <copyright file="20241210232629_GroupToGroupInvitations.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace PanoramaApp.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
     public partial class GroupToGroupInvitations : Migration
     {
@@ -15,7 +19,7 @@ namespace PanoramaApp.Migrations
                 table: "ChatMessages",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupInvitations_GroupId",

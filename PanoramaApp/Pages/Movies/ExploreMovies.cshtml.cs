@@ -1,27 +1,31 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Models;
-using PanoramaApp.Data;
-using PanoramaApp.Services;
+// <copyright file="ExploreMovies.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace PanoramaApp.Pages.Movies
 {
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+    using PanoramaApp.Services;
+
     public class ExploreMoviesModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public ExploreMoviesModel(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public List<Movie> Movies { get; set; } = new List<Movie>();
+
         public async Task OnGetAsync()
         {
- 
-            Movies = await _context.Movies
-                .OrderByDescending(m => m.ReleaseDate) 
+            this.Movies = await this.context.Movies
+                .OrderByDescending(m => m.ReleaseDate)
                 .ToListAsync();
         }
     }
 }
-

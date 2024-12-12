@@ -1,24 +1,27 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Identity;
-
+// <copyright file="AddToMovieList.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.MovieLists
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+
     public class AddMovieModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-          private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext context;
+        private readonly UserManager<IdentityUser> userManager;
 
-public AddMovieModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
-    {
-        _context = context;
-        _userManager = userManager;
-    }
+        public AddMovieModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        {
+            this.context = context;
+            this.userManager = userManager;
+        }
 
         public MovieList MovieList { get; set; }
 
@@ -27,77 +30,76 @@ public AddMovieModel(ApplicationDbContext context, UserManager<IdentityUser> use
 
         public List<SelectListItem> MovieOptions { get; set; }
 
-public async Task<IActionResult> OnGetAsync(int listId)
-{
-    Console.WriteLine($"OnGetAsync called with ID: {listId}");
-    
-    try
-    {
-        MovieList = await _context.MovieLists
-            .Include(ml => ml.Movies)
-                .ThenInclude(mli => mli.Movie)
-            .FirstOrDefaultAsync(ml => ml.Id == listId);
-
-        if (MovieList == null)
+        public async Task<IActionResult> OnGetAsync(int listId)
         {
-            Console.WriteLine($"MovieList not found for ID: {listId}");
-            return RedirectToPage("/Error");
-        }
+            Console.WriteLine($"OnGetAsync called with ID: {listId}");
 
-
-        var existingMovieIds = MovieList.Movies.Select(mlm => mlm.MovieId).ToList();
-
-        var movies = await _context.Movies
-            .Where(m => !existingMovieIds.Contains(m.Id))
-            .ToListAsync();
-
-        MovieOptions = movies.Select(m => new SelectListItem
-        {
-            Value = m.Id.ToString(),
-            Text = m.Title
-        }).ToList();
-
-        Console.WriteLine($"Fetched MovieList: {MovieList.Name} with {MovieList.Movies.Count} movies.");
-        return Page();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Exception in OnGetAsync: {ex.Message}");
-        return RedirectToPage("/Error");
-    }
-}
-
-public async Task<IActionResult> OnPostAsync(int listId)
-{
-    MovieList = await _context.MovieLists
-        .Include(ml => ml.Movies)
-        .FirstOrDefaultAsync(ml => ml.Id == listId);
-
-    if (MovieList == null)
-    {
-        return NotFound();
-    }
-
-    if (SelectedMovieIds != null && SelectedMovieIds.Any())
-    {
-        foreach (var movieId in SelectedMovieIds)
-        {
-            var movie = await _context.Movies.FindAsync(movieId);
-
-            var movieListItem = new MovieListItem
+            try
             {
-                MovieListId = listId,
-                MovieList = MovieList,
-                MovieId = movieId,
-                Movie = movie
-            };
-            MovieList.Movies.Add(movieListItem);
+                this.MovieList = await this.context.MovieLists
+                    .Include(ml => ml.Movies)
+                        .ThenInclude(mli => mli.Movie)
+                    .FirstOrDefaultAsync(ml => ml.Id == listId);
+
+                if (this.MovieList == null)
+                {
+                    Console.WriteLine($"MovieList not found for ID: {listId}");
+                    return this.RedirectToPage("/Error");
+                }
+
+                var existingMovieIds = this.MovieList.Movies.Select(mlm => mlm.MovieId).ToList();
+
+                var movies = await this.context.Movies
+                    .Where(m => !existingMovieIds.Contains(m.Id))
+                    .ToListAsync();
+
+                this.MovieOptions = movies.Select(m => new SelectListItem
+                {
+                    Value = m.Id.ToString(),
+                    Text = m.Title,
+                }).ToList();
+
+                Console.WriteLine($"Fetched MovieList: {this.MovieList.Name} with {this.MovieList.Movies.Count} movies.");
+                return this.Page();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in OnGetAsync: {ex.Message}");
+                return this.RedirectToPage("/Error");
+            }
         }
 
-        await _context.SaveChangesAsync();
-    }
+        public async Task<IActionResult> OnPostAsync(int listId)
+        {
+            this.MovieList = await this.context.MovieLists
+                .Include(ml => ml.Movies)
+                .FirstOrDefaultAsync(ml => ml.Id == listId);
 
-    return RedirectToPage("/Movies/MovieListDetails", new { id = listId });
-}
+            if (this.MovieList == null)
+            {
+                return this.NotFound();
+            }
+
+            if (this.SelectedMovieIds != null && this.SelectedMovieIds.Any())
+            {
+                foreach (var movieId in this.SelectedMovieIds)
+                {
+                    var movie = await this.context.Movies.FindAsync(movieId);
+
+                    var movieListItem = new MovieListItem
+                    {
+                        MovieListId = listId,
+                        MovieList = this.MovieList,
+                        MovieId = movieId,
+                        Movie = movie,
+                    };
+                    this.MovieList.Movies.Add(movieListItem);
+                }
+
+                await this.context.SaveChangesAsync();
+            }
+
+            return this.RedirectToPage("/Movies/MovieListDetails", new { id = listId });
+        }
     }
 }

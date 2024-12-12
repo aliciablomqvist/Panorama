@@ -1,10 +1,17 @@
-using Microsoft.AspNetCore.Identity;
+// <copyright file="GroupChatContext.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace PanoramaApp.Models
 {
-public class GroupChatContext
-{
-    public int Id { get; set; }
-    public string GroupName { get; set; }
-    public ICollection<ChatMessage> Messages { get; set; }
-}
+    using Microsoft.AspNetCore.Identity;
+
+    public class GroupChatContext
+    {
+        public int Id { get; set; }
+
+        public string GroupName { get; set; }
+
+        public ICollection<ChatMessage> Messages { get; set; }
+    }
 }

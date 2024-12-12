@@ -1,22 +1,26 @@
+// <copyright file="Create.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 public class CreateGroupModel : PageModel
 {
-    private readonly ApplicationDbContext _context;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly ApplicationDbContext context;
+    private readonly UserManager<IdentityUser> userManager;
 
     public CreateGroupModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
     {
-        _context = context;
-        _userManager = userManager;
+        this.context = context;
+        this.userManager = userManager;
     }
 
     [BindProperty]
@@ -29,49 +33,48 @@ public class CreateGroupModel : PageModel
 
     public async Task OnGetAsync()
     {
-   
-        Users = await _context.Users.ToListAsync();
+        this.Users = await this.context.Users.ToListAsync();
     }
 
     public async Task<IActionResult> OnPostAsync()
-{
-    if (!ModelState.IsValid)
     {
-        return Page();
-    }
-
-    var currentUser = await _userManager.GetUserAsync(User); // Get the current logged-in user
-    if (currentUser == null)
-    {
-        // Handle the case where the user is not logged in (redirect to login page or show an error)
-        return RedirectToPage("/Account/Login");
-    }
-
-    var newGroup = new Group
-    {
-        Name = Name,
-        OwnerId = currentUser.Id // Set the OwnerId to the current user's ID
-    };
-
-    _context.Groups.Add(newGroup);
-    await _context.SaveChangesAsync();
-
-    foreach (var userId in SelectedUsers)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user != null)
+        if (!this.ModelState.IsValid)
         {
-            var groupMember = new GroupMember
-            {
-                GroupId = newGroup.Id,
-                UserId = user.Id
-            };
-            _context.GroupMembers.Add(groupMember);
+            return this.Page();
         }
+
+        var currentUser = await this.userManager.GetUserAsync(this.User); // Get the current logged-in user
+        if (currentUser == null)
+        {
+            // Handle the case where the user is not logged in (redirect to login page or show an error)
+            return this.RedirectToPage("/Account/Login");
+        }
+
+        var newGroup = new Group
+        {
+            Name = this.Name,
+            OwnerId = currentUser.Id, // Set the OwnerId to the current user's ID
+        };
+
+        this.context.Groups.Add(newGroup);
+        await this.context.SaveChangesAsync();
+
+        foreach (var userId in this.SelectedUsers)
+        {
+            var user = await this.userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var groupMember = new GroupMember
+                {
+                    GroupId = newGroup.Id,
+                    UserId = user.Id,
+                };
+                this.context.GroupMembers.Add(groupMember);
+            }
+        }
+
+        await this.context.SaveChangesAsync();
+
+        return this.RedirectToPage("/Groups/ViewGroups");
     }
-
-    await _context.SaveChangesAsync();
-
-    return RedirectToPage("/Groups/ViewGroups");
-}
 }

@@ -1,18 +1,22 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using System.Threading.Tasks;
+// <copyright file="ShareList.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.MovieLists
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+
     public class ShareModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public ShareModel(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public MovieList MovieList { get; set; }
@@ -20,21 +24,22 @@ namespace PanoramaApp.Pages.MovieLists
         public string ShareableLink { get; set; }
 
         public int ListId { get; set; }
-    public string RecipientUserName { get; set; }
+
+        public string RecipientUserName { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int listId)
         {
-            MovieList = await _context.MovieLists.FindAsync(listId);
+            this.MovieList = await this.context.MovieLists.FindAsync(listId);
 
-            if (MovieList == null)
+            if (this.MovieList == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            //Delbar länk
-            ShareableLink = Url.Page("/Movies/MovieListDetails", null, new { id = listId }, Request.Scheme);
+            // Delbar länk
+            this.ShareableLink = this.Url.Page("/Movies/MovieListDetails", null, new { id = listId }, this.Request.Scheme);
 
-            return Page();
+            return this.Page();
         }
     }
 }

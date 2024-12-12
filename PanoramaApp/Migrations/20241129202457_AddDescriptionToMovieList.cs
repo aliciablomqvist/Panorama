@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+// <copyright file="20241129202457_AddDescriptionToMovieList.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace PanoramaApp.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
     public partial class AddDescriptionToMovieList : Migration
     {
@@ -19,7 +23,7 @@ namespace PanoramaApp.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsShared = table.Column<bool>(type: "bit", nullable: false)
+                    IsShared = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -37,7 +41,7 @@ namespace PanoramaApp.Migrations
                 columns: table => new
                 {
                     MovieListsId = table.Column<int>(type: "int", nullable: false),
-                    SharedWithGroupsId = table.Column<int>(type: "int", nullable: false)
+                    SharedWithGroupsId = table.Column<int>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -64,7 +68,7 @@ namespace PanoramaApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MovieId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MovieListId = table.Column<int>(type: "int", nullable: false)
+                    MovieListId = table.Column<int>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {

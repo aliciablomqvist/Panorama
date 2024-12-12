@@ -1,23 +1,19 @@
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+// <copyright file="TrailerPlayer.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Services
 {
-public class TrailerPlayer
-{
-   /* public string GetTrailerUrl(Movie movie)
+    public class TrailerPlayer
     {
-        return movie.TrailerUrl;
-    }
+        /* public string GetTrailerUrl(Movie movie)
+         {
+             return movie.TrailerUrl;
+         }
 
-    public void Play(string trailerUrl)
-    {
-        Console.WriteLine($"Playing trailer: {trailerUrl}");
-    }*/
-}
+         public void Play(string trailerUrl)
+         {
+             Console.WriteLine($"Playing trailer: {trailerUrl}");
+         }*/
+    }
 }

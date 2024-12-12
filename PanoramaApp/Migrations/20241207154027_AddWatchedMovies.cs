@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+// <copyright file="20241207154027_AddWatchedMovies.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace PanoramaApp.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
     public partial class AddWatchedMovies : Migration
     {

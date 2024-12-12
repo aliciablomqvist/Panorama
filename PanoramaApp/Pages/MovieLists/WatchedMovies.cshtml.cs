@@ -1,46 +1,50 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+// <copyright file="WatchedMovies.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.MovieLists
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+
     public class WatchedModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext context;
+        private readonly UserManager<IdentityUser> userManager;
 
         public WatchedModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
-            _context = context;
-            _userManager = userManager;
+            this.context = context;
+            this.userManager = userManager;
         }
 
         public List<Movie> WatchedMovies { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             if (user == null)
             {
-                return RedirectToPage("/Account/Login");
+                return this.RedirectToPage("/Account/Login");
             }
 
             var userId = user.Id;
 
-            var watchedList = await _context.MovieLists
+            var watchedList = await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .ThenInclude(mli => mli.Movie)
                 .FirstOrDefaultAsync(ml => ml.Name == "Watched" && ml.OwnerId == userId);
 
-            WatchedMovies = watchedList?.Movies.Select(mli => mli.Movie).ToList() ?? new List<Movie>();
+            this.WatchedMovies = watchedList?.Movies.Select(mli => mli.Movie).ToList() ?? new List<Movie>();
 
-            return Page();
+            return this.Page();
         }
     }
 }

@@ -1,10 +1,14 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+// <copyright file="20241209142737_AddMovieAndChatModels.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace PanoramaApp.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
     public partial class AddMovieAndChatModels : Migration
     {
@@ -23,7 +27,7 @@ namespace PanoramaApp.Migrations
                 table: "Movies",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
 
             migrationBuilder.CreateTable(
                 name: "GroupChatContexts",
@@ -31,7 +35,7 @@ namespace PanoramaApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -45,7 +49,7 @@ namespace PanoramaApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: false)
+                    MovieId = table.Column<int>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -68,7 +72,7 @@ namespace PanoramaApp.Migrations
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    GroupChatContextId = table.Column<int>(type: "int", nullable: true)
+                    GroupChatContextId = table.Column<int>(type: "int", nullable: true),
                 },
                 constraints: table =>
                 {

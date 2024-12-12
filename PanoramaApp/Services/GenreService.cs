@@ -1,17 +1,21 @@
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+// <copyright file="GenreService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Services
 {
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Text.Json;
+    using System.Threading.Tasks;
+
     public class GenreService
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient httpClient;
 
         public GenreService(HttpClient httpClient)
         {
-            _httpClient = httpClient;
+            this.httpClient = httpClient;
         }
 
         public async Task<List<string>> FetchGenresAsync()
@@ -24,7 +28,7 @@ namespace PanoramaApp.Services
             request.Headers.Add("x-rapidapi-key", "67a961b759mshd87ba4ce7aea481p1aab7cjsn78a745e1dd6a");
             request.Headers.Add("x-rapidapi-host", "moviesdatabase.p.rapidapi.com");
 
-            var response = await _httpClient.SendAsync(request);
+            var response = await this.httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
@@ -34,7 +38,7 @@ namespace PanoramaApp.Services
 
         public class GenreResponse
         {
-            public List<string> Results { get; set; } = new();
+            public List<string> Results { get; set; } = new ();
         }
     }
 }

@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+// <copyright file="20241211191922_AddTmdbIdToMovies.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace PanoramaApp.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
     public partial class AddTmdbIdToMovies : Migration
     {

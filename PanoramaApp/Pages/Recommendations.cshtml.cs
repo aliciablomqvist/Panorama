@@ -1,49 +1,55 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data; 
-using PanoramaApp.Services;
-using PanoramaApp.Models;
-using Microsoft.AspNetCore.Mvc;
+// <copyright file="Recommendations.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace PanoramaApp.Pages{
-public class RecommendationsModel : PageModel
+namespace PanoramaApp.Pages
 {
-    private readonly TmdbService _tmdbService;
-    private readonly ApplicationDbContext _dbContext;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+    using PanoramaApp.Services;
 
-    public Movie CurrentMovie { get; private set; }
-    public List<Movie> Recommendations { get; private set; } = new List<Movie>();
-
-    public RecommendationsModel(TmdbService tmdbService, ApplicationDbContext dbContext)
+    public class RecommendationsModel : PageModel
     {
-        _tmdbService = tmdbService;
-        _dbContext = dbContext;
+        private readonly TmdbService tmdbService;
+        private readonly ApplicationDbContext dbContext;
+
+        public Movie CurrentMovie { get; private set; }
+
+        public List<Movie> Recommendations { get; private set; } = new List<Movie>();
+
+        public RecommendationsModel(TmdbService tmdbService, ApplicationDbContext dbContext)
+        {
+            this.tmdbService = tmdbService;
+            this.dbContext = dbContext;
+        }
+
+        public async Task<IActionResult> OnGetAsync(int tmdbId)
+        {
+            if (tmdbId == 0)
+            {
+                this.ModelState.AddModelError(string.Empty, "Invalid TMDb ID.");
+                return this.Page();
+            }
+
+            this.CurrentMovie = await this.dbContext.Movies.FirstOrDefaultAsync(m => m.TmdbId == tmdbId);
+
+            if (this.CurrentMovie == null)
+            {
+                this.ModelState.AddModelError(string.Empty, "Movie not found in the database.");
+                return this.Page();
+            }
+
+            this.Recommendations = await this.tmdbService.GetRecommendationsAsync(tmdbId);
+
+            if (this.Recommendations == null || !this.Recommendations.Any())
+            {
+                this.Recommendations = new List<Movie>();
+            }
+
+            return this.Page();
+        }
     }
-
-public async Task<IActionResult> OnGetAsync(int tmdbId)
-{
-    if (tmdbId == 0)
-    {
-        ModelState.AddModelError(string.Empty, "Invalid TMDb ID.");
-        return Page();
-    }
-
-    CurrentMovie = await _dbContext.Movies.FirstOrDefaultAsync(m => m.TmdbId == tmdbId);
-
-    if (CurrentMovie == null)
-    {
-        ModelState.AddModelError(string.Empty, "Movie not found in the database.");
-        return Page();
-    }
-
-    Recommendations = await _tmdbService.GetRecommendationsAsync(tmdbId);
-
-    if (Recommendations == null || !Recommendations.Any())
-    {
-        Recommendations = new List<Movie>(); 
-    }
-
-    return Page();
-}
-}
 }

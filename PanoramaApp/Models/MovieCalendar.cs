@@ -1,20 +1,28 @@
-using Microsoft.AspNetCore.Identity;
+// <copyright file="MovieCalendar.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace PanoramaApp.Models
-{public class MovieCalendar
 {
-    public int Id { get; set; }
-    public DateTime Date { get; set; }
-    public int MovieId { get; set; }
-    public Movie Movie { get; set; }
+    using Microsoft.AspNetCore.Identity;
 
-    public List<(DateTime Date, Movie Movie)> _entries = new();
+    public class MovieCalendar
+    {
+        public int Id { get; set; }
 
-public void AddMovie(Movie movie, DateTime date)
-{
-    _entries.Add((date, movie));
-}
+        public DateTime Date { get; set; }
 
+        public int MovieId { get; set; }
 
-    public List<(DateTime Date, Movie Movie)> Entries => _entries;
-}
+        public Movie Movie { get; set; }
+
+        public List<(DateTime Date, Movie Movie)> entries = new ();
+
+        public void AddMovie(Movie movie, DateTime date)
+        {
+            this.entries.Add((date, movie));
+        }
+
+        public List<(DateTime Date, Movie Movie)> Entries => this.entries;
+    }
 }

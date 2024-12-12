@@ -1,47 +1,51 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
+// <copyright file="MovieListDetails.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.Movies
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+
     public class MovieListDetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public MovieListDetailsModel(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public MovieList MovieList { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            MovieList = await _context.MovieLists
+            this.MovieList = await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .ThenInclude(mli => mli.Movie)
                 .FirstOrDefaultAsync(ml => ml.Id == id);
 
-            if (MovieList == null)
+            if (this.MovieList == null)
             {
-                return RedirectToPage("/Error");
+                return this.RedirectToPage("/Error");
             }
 
-            return Page();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
         {
             if (updates == null || !updates.Any())
             {
-                return BadRequest("Invalid data received.");
+                return this.BadRequest("Invalid data received.");
             }
 
             foreach (var update in updates)
             {
-                var movie = await _context.Movies
+                var movie = await this.context.Movies
                     .FirstOrDefaultAsync(m => m.Id == update.Id);
 
                 if (movie != null)
@@ -50,7 +54,7 @@ namespace PanoramaApp.Pages.Movies
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
             return new JsonResult(new { success = true });
         }
 

@@ -1,34 +1,37 @@
-
-using PanoramaApp.Interfaces;
-using PanoramaApp.DTO;
-using PanoramaApp.Services;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using PanoramaApp.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+// <copyright file="UserStatistcs.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages
 {
-public class UserStatisticsModel : PageModel
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.DTO;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Services;
+
+    public class UserStatisticsModel : PageModel
     {
-        private readonly IStatisticsService _statisticsService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IStatisticsService statisticsService;
+        private readonly UserManager<IdentityUser> userManager;
 
         public UserStatisticsDto Statistics { get; set; }
 
         public UserStatisticsModel(IStatisticsService statisticsService, UserManager<IdentityUser> userManager)
         {
-            _statisticsService = statisticsService;
-            _userManager = userManager;
+            this.statisticsService = statisticsService;
+            this.userManager = userManager;
         }
 
         public async Task OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
             if (user != null)
             {
-                Statistics = await _statisticsService.GetUserStatisticsAsync(user.Id);
+                this.Statistics = await this.statisticsService.GetUserStatisticsAsync(user.Id);
             }
         }
     }

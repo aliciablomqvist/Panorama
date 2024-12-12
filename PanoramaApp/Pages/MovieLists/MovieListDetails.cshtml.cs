@@ -1,78 +1,82 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+// <copyright file="MovieListDetails.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.MovieLists
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+
     public class MovieListDetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<MovieListDetailsModel> _logger;
+        private readonly ApplicationDbContext context;
+        private readonly ILogger<MovieListDetailsModel> logger;
 
         public MovieListDetailsModel(ApplicationDbContext context, ILogger<MovieListDetailsModel> logger)
         {
-            _context = context;
-            _logger = logger;
+            this.context = context;
+            this.logger = logger;
         }
 
         public MovieList MovieList { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            _logger.LogInformation("Fetching MovieList with ID {Id}", id);
+            this.logger.LogInformation("Fetching MovieList with ID {Id}", id);
 
             try
             {
-                MovieList = await _context.MovieLists
+                this.MovieList = await this.context.MovieLists
                     .Include(ml => ml.Movies)
                         .ThenInclude(mli => mli.Movie)
                     .FirstOrDefaultAsync(ml => ml.Id == id);
 
-                if (MovieList == null)
+                if (this.MovieList == null)
                 {
-                    _logger.LogWarning("MovieList with ID {Id} not found", id);
-                    return RedirectToPage("/Error");
+                    this.logger.LogWarning("MovieList with ID {Id} not found", id);
+                    return this.RedirectToPage("/Error");
                 }
 
-                return Page();
+                return this.Page();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while fetching MovieList with ID {Id}", id);
-                return RedirectToPage("/Error");
+                this.logger.LogError(ex, "An error occurred while fetching MovieList with ID {Id}", id);
+                return this.RedirectToPage("/Error");
             }
         }
 
         public async Task<IActionResult> OnPostDeleteListAsync(int id)
         {
-            _logger.LogInformation("Attempting to delete MovieList with ID {Id}", id);
+            this.logger.LogInformation("Attempting to delete MovieList with ID {Id}", id);
 
             try
             {
-                var movieList = await _context.MovieLists
+                var movieList = await this.context.MovieLists
                     .Include(ml => ml.Movies)
                     .FirstOrDefaultAsync(ml => ml.Id == id);
 
                 if (movieList == null)
                 {
-                    _logger.LogWarning("MovieList with ID {Id} not found for deletion", id);
-                    return RedirectToPage("/Error");
+                    this.logger.LogWarning("MovieList with ID {Id} not found for deletion", id);
+                    return this.RedirectToPage("/Error");
                 }
 
-                _context.MovieLists.Remove(movieList);
-                await _context.SaveChangesAsync();
+                this.context.MovieLists.Remove(movieList);
+                await this.context.SaveChangesAsync();
 
-                _logger.LogInformation("Successfully deleted MovieList with ID {Id}", id);
-                return RedirectToPage("/MovieLists/ViewMovieLists");
+                this.logger.LogInformation("Successfully deleted MovieList with ID {Id}", id);
+                return this.RedirectToPage("/MovieLists/ViewMovieLists");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while deleting MovieList with ID {Id}", id);
-                return RedirectToPage("/Error");
+                this.logger.LogError(ex, "An error occurred while deleting MovieList with ID {Id}", id);
+                return this.RedirectToPage("/Error");
             }
         }
     }

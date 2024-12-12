@@ -1,31 +1,35 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+// <copyright file="ViewGroups.cshtml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Pages.Groups
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Models;
+
     public class ViewGroupsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public ViewGroupsModel(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public List<Group> Groups { get; set; } = new List<Group>();
 
         public async Task OnGetAsync()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // Filtrera grupper där användaren är medlem
-            Groups = await _context.Groups
+            this.Groups = await this.context.Groups
                 .Include(g => g.Members)
                     .ThenInclude(m => m.User)
                 .Include(g => g.Movies)
