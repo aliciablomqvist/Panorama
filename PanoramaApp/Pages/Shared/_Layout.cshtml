@@ -26,16 +26,14 @@
         <a class="nav-link" asp-page="/Movies/ExploreMovies">Explore Movies</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link btn btn-secondary" asp-page="/Movies/MovieCalendar">View Calendar</a>
+        <a class="nav-link" asp-page="/Movies/MovieCalendar">View Calendar</a>
     </li>
 </ul>
             </ul>
             <ul class="navbar-nav">
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                            <li class="nav-item">
-                               <a href="/Profile/UserProfile">Profile</a>
-                            </li>
+
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">Hello, @User.Identity.Name!</a>
                     </li>

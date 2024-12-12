@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace PanoramaApp.Pages.MovieLists
 {
-    public class ShareModel : PageModel
+    public class ShareListModel : PageModel
     {
         private readonly IMovieListService _movieListService;
 
-        public ShareModel(IMovieListService movieListService)
+        public ShareListModel(IMovieListService movieListService)
         {
             _movieListService = movieListService;
         }
