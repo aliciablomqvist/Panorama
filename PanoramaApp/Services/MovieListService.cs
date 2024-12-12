@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PanoramaApp.Data;
 using PanoramaApp.Interfaces;
 using PanoramaApp.Models;
+using PanoramaApp.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -95,5 +96,40 @@ namespace PanoramaApp.Services
                 .FirstOrDefaultAsync(ml => ml.Name == "My Favorites" && ml.OwnerId == userId);
 
         }
-    }
+
+        public async Task DeleteMovieListAsync(int id)
+        {
+            var movieList = await _context.MovieLists
+                .Include(ml => ml.Movies)
+                .FirstOrDefaultAsync(ml => ml.Id == id);
+
+            if (movieList == null)
+            {
+                throw new ArgumentException($"MovieList with ID {id} not found.");
+            }
+
+            _context.MovieLists.Remove(movieList);
+            await _context.SaveChangesAsync();
+        }
+        public async Task CreateMovieListAsync(string name, string userId, bool isShared)
+        {
+            var movieList = new MovieList
+            {
+                Name = name,
+                OwnerId = userId,
+                IsShared = isShared,
+            };
+
+            _context.MovieLists.Add(movieList);
+            await _context.SaveChangesAsync();
+        }
+        
+        public async Task<MovieList> GetLastCreatedMovieListAsync(string userId)
+        {
+            return await _context.MovieLists
+                .Where(ml => ml.OwnerId == userId)
+                .OrderByDescending(ml => ml.Id) // Anta att ID:t ökar med varje ny lista
+                .FirstOrDefaultAsync();
+        }    
+}
 }

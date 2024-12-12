@@ -26,5 +26,25 @@ namespace PanoramaApp.Services
                 .Where(g => g.Members.Any(m => m.UserId == userId))
                 .ToListAsync();
         }
+        public async Task<List<Group>> GetUserGroupsAsync(string userId)
+        {
+            return await _context.Groups
+                .Where(g => g.Members.Any(m => m.UserId == userId))
+                .ToListAsync();
+        }
+
+        public async Task AddMovieListToGroupsAsync(MovieList movieList, List<int> groupIds)
+        {
+            var groups = await _context.Groups
+                .Where(g => groupIds.Contains(g.Id))
+                .ToListAsync();
+
+            foreach (var group in groups)
+            {
+                group.MovieLists.Add(movieList);
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

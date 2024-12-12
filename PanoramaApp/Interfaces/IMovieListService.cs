@@ -9,12 +9,16 @@ namespace PanoramaApp.Interfaces
         Task AddToListAsync(string listName, int movieId, string userId);
         Task<List<MovieList>> GetListsByUserAsync(string userId);
         Task<MovieList> GetMovieListByIdAsync(int id);
+        Task DeleteMovieListAsync(int id);
         Task UpdateMoviePrioritiesAsync(List<MoviePriorityUpdate> updates);
 
         Task<List<Movie>> GetMoviesFromListAsync(string listName, string userId);
 
         Task<List<MovieList>> GetMovieListsForUserAsync(string userId);
         Task<MovieList> GetFavoritesListAsync(string userId);
+
+        Task CreateMovieListAsync(string name, string userId, bool isShared);
+        Task<MovieList> GetLastCreatedMovieListAsync(string userId);
     }
     public class MoviePriorityUpdate
     {
