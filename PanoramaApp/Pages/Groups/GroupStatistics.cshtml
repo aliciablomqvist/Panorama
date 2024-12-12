@@ -4,15 +4,32 @@
     ViewData["Title"] = "Group Statistics";
 }
 
-<h2>Group Statistics</h2>
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Group Statistics</h2>
 
-@if (Model.Statistics != null)
-{
-    <p><strong>Most Watched Genre:</strong> @Model.Statistics.MostWatchedGenre</p>
-    <p><strong>Total Movies Watched:</strong> @Model.Statistics.TotalMoviesWatchedByGroup</p>
-    <p><strong>Most Popular Decade:</strong> @Model.Statistics.MostPopularDecade</p>
-}
-else
-{
-    <p>No statistics available for this group.</p>
-}
+    @if (Model.Statistics != null)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Statistics Summary</h5>
+                <p class="card-text">
+                    <strong>Most Watched Genre:</strong> @Model.Statistics.MostWatchedGenre
+                </p>
+                <p class="card-text">
+                    <strong>Total Movies Watched:</strong> @Model.Statistics.TotalMoviesWatchedByGroup
+                </p>
+                <p class="card-text">
+                    <strong>Most Popular Decade:</strong> @Model.Statistics.MostPopularDecade
+                </p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            No statistics available for this group.
+        </div>
+    }
+
+    <a asp-page="/Groups/ViewGroups" class="btn btn-secondary mt-4 w-100">Back to Groups</a>
+</div>

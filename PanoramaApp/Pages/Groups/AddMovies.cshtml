@@ -1,18 +1,41 @@
 @page
 @model PanoramaApp.Pages.Groups.AddMoviesModel
+@{
+    ViewData["Title"] = "Add Movies to Group";
+}
 
-<h3>Add Movies to @Model.Group.Name</h3>
+<div class="container mt-4">
+    <h3 class="mb-4 text-center">Add Movies to <strong>@Model.Group.Name</strong></h3>
 
-<form method="post" asp-page-handler="AddMovies">
-    <input type="hidden" name="GroupId" value="@Model.Group.Id" />
-    <div class="form-group">
-        @foreach (var movie in Model.AvailableMovies)
-        {
-            <div>
-                <input type="checkbox" name="SelectedMovies" value="@movie.Id" />
-                @movie.Title
+    <form method="post" asp-page-handler="AddMovies" class="mt-3">
+        <input type="hidden" name="GroupId" value="@Model.Group.Id" />
+
+        <!-- Available Movies -->
+        <div class="mb-4">
+            <label class="form-label">Available Movies</label>
+            <div class="form-check">
+                @if (Model.AvailableMovies.Any())
+                {
+                    @foreach (var movie in Model.AvailableMovies)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="movie-@movie.Id" name="SelectedMovies"
+                                value="@movie.Id" />
+                            <label class="form-check-label" for="movie-@movie.Id">@movie.Title</label>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted">No movies available to add.</p>
+                }
             </div>
-        }
-    </div>
-    <button type="submit" class="btn btn-primary">Add Movies</button>
-</form>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Add Movies</button>
+    </form>
+
+    <!-- Back Button -->
+    <a asp-page="/Groups/ViewGroups" class="btn btn-secondary mt-4 w-100">Back to Groups</a>
+</div>
