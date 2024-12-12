@@ -13,67 +13,61 @@ namespace PanoramaApp.Pages.MovieLists
     using Microsoft.Extensions.Logging;
     using PanoramaApp.Data;
     using PanoramaApp.Models;
-
+    using PanoramaApp.Interfaces;
     public class ViewMovieListsModel : PageModel
     {
-        private readonly ApplicationDbContext context;
-        private readonly ILogger<ViewMovieListsModel> logger;
+        private readonly IMovieListService _movieListService;
+        private readonly IGroupService _groupService;
+        private readonly ILogger<ViewMovieListsModel> _logger;
 
-        public ViewMovieListsModel(ApplicationDbContext context, ILogger<ViewMovieListsModel> logger)
+        public ViewMovieListsModel(
+            IMovieListService movieListService,
+            IGroupService groupService,
+            ILogger<ViewMovieListsModel> logger)
         {
-            this.context = context;
-            this.logger = logger;
+            _movieListService = movieListService;
+            _groupService = groupService;
+            _logger = logger;
         }
 
-        public List<MovieList> MovieLists { get; set; } = new ();
-
-        public List<Group> Groups { get; set; } = new ();
+        public List<MovieList> MovieLists { get; private set; } = new();
+        public List<Group> Groups { get; private set; } = new();
 
         public async Task OnGetAsync()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            this.logger.LogInformation("Fetching MovieLists and Groups for user {UserId}", userId);
+            _logger.LogInformation("Fetching MovieLists and Groups for user {UserId}", userId);
 
             try
             {
-                // Hämta film-listor som användaren äger eller som är delade med grupper användaren är medlem i
-                this.MovieLists = await this.context.MovieLists
-                    .Include(ml => ml.Movies) // Hämta filmer i varje lista
-                    .Include(ml => ml.SharedWithGroups) // Hämta grupper listan är delad med
-                    .Where(ml => ml.OwnerId == userId ||
-                                 ml.SharedWithGroups.Any(g => g.Members.Any(m => m.UserId == userId)))
-                    .ToListAsync();
+                // Hämta filmlistor
+                MovieLists = await _movieListService.GetMovieListsForUserAsync(userId);
 
-                if (this.MovieLists.Count == 0)
+                if (MovieLists.Count == 0)
                 {
-                    this.logger.LogWarning("No MovieLists found for user {UserId}", userId);
+                    _logger.LogWarning("No MovieLists found for user {UserId}", userId);
                 }
                 else
                 {
-                    this.logger.LogInformation("Fetched {Count} MovieLists for user {UserId}", this.MovieLists.Count, userId);
+                    _logger.LogInformation("Fetched {Count} MovieLists for user {UserId}", MovieLists.Count, userId);
                 }
 
-                // Hämta grupper där användaren är medlem
-                this.Groups = await this.context.Groups
-                    .Include(g => g.Members)
-                        .ThenInclude(m => m.User)
-                    .Include(g => g.Movies)
-                    .Where(g => g.Members.Any(m => m.UserId == userId))
-                    .ToListAsync();
+                // Hämta grupper
+                Groups = await _groupService.GetGroupsForUserAsync(userId);
 
-                if (this.Groups.Count == 0)
+                if (Groups.Count == 0)
                 {
-                    this.logger.LogWarning("No groups found for user {UserId}", userId);
+                    _logger.LogWarning("No groups found for user {UserId}", userId);
                 }
                 else
                 {
-                    this.logger.LogInformation("Fetched {Count} groups for user {UserId}", this.Groups.Count, userId);
+                    _logger.LogInformation("Fetched {Count} groups for user {UserId}", Groups.Count, userId);
                 }
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, "An error occurred while fetching MovieLists or Groups.");
+                _logger.LogError(ex, "An error occurred while fetching MovieLists or Groups.");
             }
         }
     }

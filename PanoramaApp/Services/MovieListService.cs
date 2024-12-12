@@ -77,5 +77,14 @@ namespace PanoramaApp.Services
 
             return movieList?.Movies.Select(mli => mli.Movie).ToList() ?? new List<Movie>();
         }
+        public async Task<List<MovieList>> GetMovieListsForUserAsync(string userId)
+        {
+            return await _context.MovieLists
+                .Include(ml => ml.Movies)
+                .Include(ml => ml.SharedWithGroups)
+                .Where(ml => ml.OwnerId == userId ||
+                             ml.SharedWithGroups.Any(g => g.Members.Any(m => m.UserId == userId)))
+                .ToListAsync();
+        }
     }
 }
