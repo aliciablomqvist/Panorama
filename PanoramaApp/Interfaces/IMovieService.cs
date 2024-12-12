@@ -8,5 +8,6 @@ namespace PanoramaApp.Interfaces
     public interface IMovieService
     {
         Task<List<Movie>> GetMoviesAsync();
+        Task<Movie> GetMovieByIdAsync(int id);
     }
 }

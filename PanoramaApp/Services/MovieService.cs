@@ -22,5 +22,10 @@ namespace PanoramaApp.Services
                     .OrderByDescending(m => m.ReleaseDate)
                     .ToListAsync();
             }
+        public async Task<Movie> GetMovieByIdAsync(int id)
+        {
+            return await _context.Movies
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
+    }
     }

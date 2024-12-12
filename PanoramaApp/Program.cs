@@ -21,12 +21,15 @@ builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 
 // Dependency Injections
-builder.Services.AddScoped<ReviewService>();
 builder.Services.AddScoped<GroupChatService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddHttpClient<TmdbService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IMovieCalendarService, MovieCalendarService>();
+builder.Services.AddScoped<IMovieListService, MovieListService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IUrlHelperService, UrlHelperService>();
+
 
 // Loggning
 builder.Logging.ClearProviders();
