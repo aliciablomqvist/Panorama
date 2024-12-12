@@ -23,6 +23,8 @@ builder.Services.AddScoped<ReviewService>(); // For reviews
 builder.Services.AddScoped<GroupChatService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddHttpClient<TmdbService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+
 
 // Loggning
 builder.Logging.ClearProviders();

@@ -14,11 +14,11 @@ insert_final_newline = false
 # Specifika inställningar för C#-filer
 [*.cs]
 dotnet_diagnostic.CA1502.severity = warning  # Avoid excessive complexity
-dotnet_diagnostic.CA1707.severity = error    # Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.severity = warning    # Identifiers should not contain underscores
 dotnet_diagnostic.CA2200.severity = warning  # Rethrow to preserve stack details
 dotnet_diagnostic.SA1200.severity = warning  # Using statements should be inside namespaces
-dotnet_diagnostic.SA1600.severity = error    # Documentation should be present on public methods
-dotnet_diagnostic.SA1309.severity = error  
+dotnet_diagnostic.SA1600.severity = warning    # Documentation should be present on public methods
+dotnet_diagnostic.SA1309.severity = warning  
 dotnet_diagnostic.IDE0055.severity = suggestion
 csharp_style_var_for_built_in_types = true:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion

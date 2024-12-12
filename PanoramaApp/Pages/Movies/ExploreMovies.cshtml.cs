@@ -9,23 +9,26 @@ namespace PanoramaApp.Pages.Movies
     using PanoramaApp.Data;
     using PanoramaApp.Models;
     using PanoramaApp.Services;
+    using PanoramaApp.Interfaces;
 
+    /// <summary>
+    /// Represents a movie exploration page in the application.
+    /// Handles movie-related data and operations.
+    /// </summary>
     public class ExploreMoviesModel : PageModel
     {
-        private readonly ApplicationDbContext context;
+        private readonly IMovieService _movieService;
 
-        public ExploreMoviesModel(ApplicationDbContext context)
+        public ExploreMoviesModel(IMovieService movieService)
         {
-            this.context = context;
+            _movieService = movieService;
         }
 
         public List<Movie> Movies { get; set; } = new List<Movie>();
 
         public async Task OnGetAsync()
         {
-            this.Movies = await this.context.Movies
-                .OrderByDescending(m => m.ReleaseDate)
-                .ToListAsync();
+            Movies = await _movieService.GetMoviesAsync();
         }
     }
 }
