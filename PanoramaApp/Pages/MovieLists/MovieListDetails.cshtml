@@ -1,5 +1,5 @@
 @page "{id:int}" 
-@model PanoramaApp.Pages.Movies.MovieListDetailsModel
+@model PanoramaApp.Pages.MovieLists.MovieListDetailsModel
 @{
     ViewData["Title"] = Model.MovieList != null ? $"Details for {Model.MovieList.Name}" : "Movie List Details";
 }
@@ -51,6 +51,7 @@ else
     <a class="btn btn-secondary" asp-page="/Movies/ShareList" asp-route-listId="@Model.MovieList.Id">Share this List</a>
     <a class="btn btn-danger" asp-page="/Movies/DeleteList" asp-route-id="@Model.MovieList.Id">Delete List</a>
     <a class="btn btn-secondary" asp-page="/Movies/ViewMovieLists">Back to Movie Lists</a>
+
 }
 
 @section Scripts {

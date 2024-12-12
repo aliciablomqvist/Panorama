@@ -23,7 +23,7 @@ else
 
 @if (!string.IsNullOrEmpty(Model.Movie.TrailerUrl))
 {
-    var embedUrl = Model.ConvertToEmbedUrl(Model.Movie.TrailerUrl); // Kalla metoden här
+    var embedUrl = Model.ConvertToEmbedUrl(Model.Movie.TrailerUrl);
 
     <div class="trailer-container">
         <h3>Watch Trailer</h3>
@@ -58,5 +58,5 @@ else
     <a class="btn btn-secondary" asp-page="/Movies/Reviews" asp-route-movieId="@Model.Movie.Id">
         View Reviews
     </a>
-    <a class="btn btn-secondary" asp-page="/Movies/Index">Back to Movies</a>
+    <a class="btn btn-secondary" asp-page="/Movies/ExploreMovies">Back to Movies</a>
 }

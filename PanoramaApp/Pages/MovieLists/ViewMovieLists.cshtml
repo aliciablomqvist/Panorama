@@ -59,8 +59,11 @@ else
         {
             <li>
                 @group.Name
-                <a asp-page="/Groups/Details" asp-route-id="@group.Id" class="btn btn-link">View</a>
+                <a asp-page="/Groups/ViewGroups" asp-route-id="@group.Id" class="btn btn-link">View</a>
             </li>
+                                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/MovieLists/CreateMovieList">Create Movie List</a>
+                    </li>
         }
     </ul>
 }
