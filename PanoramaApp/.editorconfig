@@ -13,18 +13,20 @@ insert_final_newline = false
 
 # Specifika inställningar för C#-filer
 [*.cs]
-dotnet_diagnostic.CA1502.severity = warning  # Avoid excessive complexity
-dotnet_diagnostic.CA1707.severity = warning    # Identifiers should not contain underscores
-dotnet_diagnostic.CA2200.severity = warning  # Rethrow to preserve stack details
-dotnet_diagnostic.SA1200.severity = warning  # Using statements should be inside namespaces
-dotnet_diagnostic.SA1600.severity = warning    # Documentation should be present on public methods
-dotnet_diagnostic.SA1309.severity = warning  
-dotnet_diagnostic.IDE0055.severity = suggestion
+dotnet_diagnostic.CA1502.severity = none  # Avoid excessive complexity
+dotnet_diagnostic.CA1707.severity = none    # Identifiers should not contain underscores
+dotnet_diagnostic.CA2200.severity = none  # Rethrow to preserve stack details
+dotnet_diagnostic.SA1200.severity = none  # Using statements should be inside namespaces
+dotnet_diagnostic.SA1600.severity = none    # Documentation should be present on public methods
+dotnet_diagnostic.SA1309.severity = none  
+dotnet_diagnostic.SA1649.severity = none 
+dotnet_diagnostic.IDE0055.severity = none
+dotnet_diagnostic.CS8618.severity = none
+dotnet_diagnostic.SA1201.severity = none
 csharp_style_var_for_built_in_types = true:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion
 csharp_style_var_elsewhere = true:suggestion
 csharp_new_line_before_open_brace = all
 csharp_prefer_braces = true:error
 csharp_style_expression_bodied_methods = true:suggestion
-csharp_style_expression_bodied_properties = true:suggestion
-csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
+

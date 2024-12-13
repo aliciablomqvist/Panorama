@@ -86,7 +86,6 @@ namespace PanoramaApp.Services
                 };
             }
 
-            // Beräkna statistik
             var mostWatchedGenre = allMovies
                 .GroupBy(m => m.Genre)
                 .OrderByDescending(g => g.Count())

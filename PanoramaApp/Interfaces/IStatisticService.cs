@@ -2,14 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using PanoramaApp.DTO;
+
 namespace PanoramaApp.Interfaces
 {
-    using Microsoft.EntityFrameworkCore;
-    using PanoramaApp.Data;
-    using PanoramaApp.DTO;
-    using PanoramaApp.Models;
-    using PanoramaApp.Services;
-
     public interface IStatisticsService
     {
         Task<UserStatisticsDto> GetUserStatisticsAsync(string userId);
