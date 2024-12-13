@@ -46,5 +46,19 @@ namespace PanoramaApp.Services
 
             await _context.SaveChangesAsync();
         }
-    }
+
+        public async Task<Group> GetGroupByIdAsync(int groupId)
+        {
+            return await _context.Groups
+                .Include(g => g.Movies)
+                .FirstOrDefaultAsync(g => g.Id == groupId);
+ }
+                public async Task<Group> GetGroupWithMoviesAsync(int groupId)
+        {
+            return await _context.Groups
+                .Include(g => g.Movies)
+                .FirstOrDefaultAsync(g => g.Id == groupId);
+        }
+        }
 }
+ 

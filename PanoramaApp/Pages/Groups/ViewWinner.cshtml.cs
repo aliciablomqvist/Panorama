@@ -2,49 +2,33 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PanoramaApp.Interfaces;
+using PanoramaApp.Services;
+using PanoramaApp.Models;
+using System.Threading.Tasks;
+
 namespace PanoramaApp.Pages.Groups
 {
-    using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.EntityFrameworkCore;
-    using PanoramaApp.Data;
-    using PanoramaApp.Models;
-
     public class ViewWinnerModel : PageModel
     {
-        private readonly ApplicationDbContext context;
+        private readonly IWinnerService _winnerService;
 
-        public ViewWinnerModel(ApplicationDbContext context)
+        public ViewWinnerModel(IWinnerService winnerService)
         {
-            this.context = context;
+            _winnerService = winnerService;
         }
 
-        public Group Group { get; set; } = new Group();
-
-        public Movie? WinningMovie { get; set; }
-
-        public int WinningMovieVoteCount { get; set; } = 0;
+        public Group Group { get; private set; } = new();
+        public Movie? WinningMovie { get; private set; }
+        public int WinningMovieVoteCount { get; private set; } = 0;
 
         public async Task OnGetAsync(int id)
         {
-            this.Group = await this.context.Groups
-                .Include(g => g.Movies)
-                .FirstOrDefaultAsync(g => g.Id == id);
+            var (winningMovie, voteCount) = await _winnerService.GetWinningMovieAsync(id);
 
-            if (this.Group == null || !this.Group.Movies.Any())
-            {
-                return;
-            }
-
-            var groupVotes = await this.context.Votes.Where(v => v.GroupId == id).ToListAsync();
-
-            this.WinningMovie = this.Group.Movies
-                .OrderByDescending(m => groupVotes.Count(v => v.MovieId == m.Id))
-                .FirstOrDefault();
-
-            if (this.WinningMovie != null)
-            {
-                this.WinningMovieVoteCount = groupVotes.Count(v => v.MovieId == this.WinningMovie.Id);
-            }
+            WinningMovie = winningMovie;
+            WinningMovieVoteCount = voteCount;
         }
     }
 }

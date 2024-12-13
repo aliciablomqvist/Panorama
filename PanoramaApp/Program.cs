@@ -32,6 +32,8 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IUrlHelperService, UrlHelperService>();
 builder.Services.AddScoped<IMovieListService, MovieListService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IVoteService, VoteService>();
+builder.Services.AddScoped<IWinnerService, WinnerService>();
 
 // Loggning
 builder.Logging.ClearProviders();

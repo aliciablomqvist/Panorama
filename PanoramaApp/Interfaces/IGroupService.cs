@@ -10,5 +10,9 @@ namespace PanoramaApp.Interfaces
         Task<List<Group>> GetGroupsForUserAsync(string userId);
         Task<List<Group>> GetUserGroupsAsync(string userId);
         Task AddMovieListToGroupsAsync(MovieList movieList, List<int> groupIds);
+        Task<Group> GetGroupByIdAsync(int groupId);
+        
+        Task<Group> GetGroupWithMoviesAsync(int groupId);
+
     }
 }
