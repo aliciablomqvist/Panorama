@@ -62,7 +62,7 @@ The project focuses on adhering to SOLID principles, ensuring the architecture i
     *   Run migrations to set up the database schema:
         
  ```bash 
- dotnet ef database update
+dotnet ef database update
         
 3.  **Configure TMDB API**:
     
