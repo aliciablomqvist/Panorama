@@ -36,7 +36,7 @@ namespace PanoramaApp.Pages.Groups
             CurrentUserId = currentUser?.Id ?? string.Empty;
 
             Invitations = await _invitationService.GetPendingInvitationsAsync(CurrentUserId);
-            Groups = await _groupService.GetGroupsForUserAsync(CurrentUserId);
+            Groups = await _groupService.GetDetailedGroupsForUserAsync(CurrentUserId);
             Users = await _userService.GetAllUsersAsync();
         }
 

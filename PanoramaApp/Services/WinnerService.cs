@@ -10,32 +10,39 @@ namespace PanoramaApp.Services
         private readonly IGroupService _groupService;
         private readonly IVoteService _voteService;
 
-        public WinnerService(IGroupService groupService, IVoteService voteService)
-        {
-            _groupService = groupService;
-            _voteService = voteService;
-        }
+        private readonly IUserService _userService;
 
-        public async Task<(Movie? WinningMovie, int VoteCount)> GetWinningMovieAsync(int groupId)
-        {
-            var group = await _groupService.GetGroupWithMoviesAsync(groupId);
+public WinnerService(IGroupService groupService, IVoteService voteService, IUserService userService)
+{
+    _groupService = groupService;
+    _voteService = voteService;
+    _userService = userService;
+}
 
-            if (group == null || !group.Movies.Any())
-            {
-                return (null, 0);
-            }
+public async Task<(Movie? WinningMovie, int VoteCount)> GetWinningMovieAsync(int groupId)
+{
+    var user = await _userService.GetCurrentUserAsync();
+    var userId = user.Id;
 
-            var voteCounts = await _voteService.GetVoteCountsForGroupAsync(groupId);
+    var group = await _groupService.GetGroupWithMoviesAsync(groupId, userId);
 
-            var winningMovie = group.Movies
-                .OrderByDescending(m => voteCounts.ContainsKey(m.Id) ? voteCounts[m.Id] : 0)
-                .FirstOrDefault();
+    if (group == null || !group.Movies.Any())
+    {
+        return (null, 0);
+    }
 
-            var winningVoteCount = winningMovie != null && voteCounts.ContainsKey(winningMovie.Id)
-                ? voteCounts[winningMovie.Id]
-                : 0;
+    var voteCounts = await _voteService.GetVoteCountsForGroupAsync(groupId);
 
-            return (winningMovie, winningVoteCount);
-        }
+    var winningMovie = group.Movies
+        .OrderByDescending(m => voteCounts.ContainsKey(m.Id) ? voteCounts[m.Id] : 0)
+        .FirstOrDefault();
+
+    var winningVoteCount = winningMovie != null && voteCounts.ContainsKey(winningMovie.Id)
+        ? voteCounts[winningMovie.Id]
+        : 0;
+
+    return (winningMovie, winningVoteCount);
+}
+
     }
 }

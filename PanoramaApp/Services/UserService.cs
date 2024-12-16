@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace PanoramaApp.Services
 {
@@ -23,7 +24,8 @@ namespace PanoramaApp.Services
 
         public async Task<List<IdentityUser>> GetAllUsersAsync()
         {
-            return await _userManager.Users.ToListAsync();
+            return await Task.Run(() => _userManager.Users.ToList());
         }
+
     }
 }
