@@ -23,7 +23,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 'latest'
+        dotnet-version: '8.0'
 
     # Step 3: Restore dependencies
     - name: Install dependencies
