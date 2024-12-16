@@ -53,11 +53,15 @@ namespace PanoramaApp.Services
                 .Include(g => g.Movies)
                 .FirstOrDefaultAsync(g => g.Id == groupId);
  }
-                public async Task<Group> GetGroupWithMoviesAsync(int groupId)
+                public async Task<Group> GetGroupWithMoviesAsync(int groupId,string userId)
         {
             return await _context.Groups
                 .Include(g => g.Movies)
+                   .Include(g => g.Members)
+                .Where(g => g.Members.Any(m => m.UserId == userId))
+                .ToListAsync()
                 .FirstOrDefaultAsync(g => g.Id == groupId);
+
         }
         }
 }

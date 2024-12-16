@@ -34,6 +34,9 @@ builder.Services.AddScoped<IMovieListService, MovieListService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IVoteService, VoteService>();
 builder.Services.AddScoped<IWinnerService, WinnerService>();
+builder.Services.AddScoped<IInvitationService, InvitationService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 // Loggning
 builder.Logging.ClearProviders();
