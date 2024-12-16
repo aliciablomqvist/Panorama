@@ -7,6 +7,7 @@ namespace PanoramaApp.Pages
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
     using PanoramaApp.Models;
     using PanoramaApp.Services;

@@ -4,14 +4,22 @@
 
 namespace PanoramaApp.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
 
-    public class GroupChatService
+    public class GroupChatService : IGroupChatService
     {
         private readonly ApplicationDbContext context;
 
+        /// <summary>Initializes a new instance of the <see cref="GroupChatService" /> class.</summary>
+        /// <param name="context">The context.</param>
         public GroupChatService(ApplicationDbContext context)
         {
             this.context = context;

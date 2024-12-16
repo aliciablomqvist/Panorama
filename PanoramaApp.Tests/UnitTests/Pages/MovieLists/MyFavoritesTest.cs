@@ -25,26 +25,29 @@ public class MyFavoritesModelTests
         using var context = new ApplicationDbContext(options);
 
         var user = new IdentityUser { Id = "user2", UserName = "user1@example.com" };
-                      var movie = new Movie
+        var movie = new Movie
         {
             Id = 3,
-    Title = "favorite Movie testtest",
-    Description = "An example movie description",
-    Genre = "Action",
-    TrailerUrl = "http://example.com/trailer",
-    ReleaseDate = DateTime.Now,
-    Priority = 4
-};
+            Title = "favorite Movie testtest",
+            Description = "An example movie description",
+            Genre = "Action",
+            TrailerUrl = "http://example.com/trailer",
+            ReleaseDate = DateTime.Now,
+            Priority = 4
+        };
         context.Users.Add(user);
         await context.SaveChangesAsync();
 
-        var movieList = new MovieList {  Id = 1,
-    Name = "Favorites",
-    OwnerId = "user1"};
+        var movieList = new MovieList
+        {
+            Id = 1,
+            Name = "Favorites",
+            OwnerId = "user1"
+        };
 
-    
+
         context.MovieLists.Add(movieList);
-       // context.Favorites.Add(favorite { MovieId = 1, UserId = user.Id }); Hur ska den vara?
+        // context.Favorites.Add(favorite { MovieId = 1, UserId = user.Id }); Hur ska den vara?
         Assert.NotNull(movieList.OwnerId);
         await context.SaveChangesAsync();
 
@@ -61,21 +64,21 @@ public class MyFavoritesModelTests
 
         var pageModel = new MyFavoritesModel(context, userManager.Object);
 
-var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
-{
+        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+        {
     new Claim(ClaimTypes.NameIdentifier, user.Id)
-}, "TestAuth"));
+        }, "TestAuth"));
 
-var httpContext = new DefaultHttpContext
-{
-    User = claimsPrincipal
-};
+        var httpContext = new DefaultHttpContext
+        {
+            User = claimsPrincipal
+        };
 
 
-pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
-{
-    HttpContext = httpContext
-};
+        pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
+        {
+            HttpContext = httpContext
+        };
 
         // Act (When)
         var result = await pageModel.OnGetAsync();
@@ -99,7 +102,7 @@ pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         // Ingen inloggad användare
         var pageModel = new MyFavoritesModel(context, userManager.Object);

@@ -7,6 +7,7 @@ namespace PanoramaApp.Data
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Models;
 
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>

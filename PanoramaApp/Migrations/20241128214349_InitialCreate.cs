@@ -7,6 +7,7 @@
 namespace PanoramaApp.Migrations
 {
     using System;
+
     using Microsoft.EntityFrameworkCore.Migrations;
 
     /// <inheritdoc />

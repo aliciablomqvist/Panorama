@@ -1,29 +1,29 @@
 // <copyright file="Reviews.cshtml.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
+namespace PanoramaApp.Pages.Movies
+{
     using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
+
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
     using PanoramaApp.Services;
-    using PanoramaApp.Interfaces;
-
-namespace PanoramaApp.Pages.Movies
-{
-
 
     public class ReviewsModel : PageModel
     {
-        private readonly IReviewService _reviewService;
-        private readonly IMovieService _movieService;
+        private readonly IReviewService reviewService;
+        private readonly IMovieService movieService;
 
         public ReviewsModel(IReviewService reviewService, IMovieService movieService)
         {
-            _reviewService = reviewService;
-            _movieService = movieService;
+            this.reviewService = reviewService;
+            this.movieService = movieService;
         }
 
         [BindProperty]
@@ -41,45 +41,42 @@ namespace PanoramaApp.Pages.Movies
 
         public async Task<IActionResult> OnGetAsync(int movieId)
         {
-            
-            Movie = await _movieService.GetMovieByIdAsync(movieId);
+            this.Movie = await this.movieService.GetMovieByIdAsync(movieId);
 
-            if (Movie == null)
+            if (this.Movie == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
+            this.Reviews = await this.reviewService.GetReviewsForMovieAsync(movieId);
 
-            Reviews = await _reviewService.GetReviewsForMovieAsync(movieId);
-
-            return Page();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int movieId)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return Page();
+                return this.Page();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
             {
-                return RedirectToPage("/Account/Login");
+                return this.RedirectToPage("/Account/Login");
             }
 
             try
             {
-
-                await _reviewService.AddReviewAsync(movieId, userId, ReviewContent, Rating);
+                await this.reviewService.AddReviewAsync(movieId, userId, this.ReviewContent, this.Rating);
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while saving your review. Please try again later.");
-                return Page();
+                this.ModelState.AddModelError(string.Empty, "An error occurred while saving your review. Please try again later.");
+                return this.Page();
             }
 
-            return RedirectToPage(new { movieId });
+            return this.RedirectToPage(new { movieId });
         }
     }
 }

@@ -2,45 +2,46 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Interfaces;
-using PanoramaApp.Models;
-using System.Threading.Tasks;
-
 namespace PanoramaApp.Pages.MovieLists
 {
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+
     public class ShareListModel : PageModel
     {
-        private readonly IMovieListService _movieListService;
+        private readonly IMovieListService movieListService;
 
         public ShareListModel(IMovieListService movieListService)
         {
-            _movieListService = movieListService;
+            this.movieListService = movieListService;
         }
 
         public MovieList MovieList { get; private set; }
+
         public string ShareableLink { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int listId)
         {
+            this.MovieList = await this.movieListService.GetMovieListByIdAsync(listId);
 
-            MovieList = await _movieListService.GetMovieListByIdAsync(listId);
-
-            if (MovieList == null)
+            if (this.MovieList == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             // Generera en delbar länk direkt med Url.Page
-            ShareableLink = Url.Page(
+            this.ShareableLink = this.Url.Page(
                 "/Movies/MovieListDetails",
                 null,
                 new { id = listId },
-                Request.Scheme
-            );
+                this.Request.Scheme);
 
-            return Page();
+            return this.Page();
         }
     }
 }

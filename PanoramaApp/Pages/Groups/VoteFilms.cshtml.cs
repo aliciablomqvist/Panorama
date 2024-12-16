@@ -4,35 +4,35 @@
 
 namespace PanoramaApp.Pages.Groups
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.EntityFrameworkCore;
-    using PanoramaApp.Data;
+
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
 
     public class VoteFilmsModel : PageModel
     {
-        private readonly ApplicationDbContext context;
+        private readonly IGroupService groupService;
+        private readonly IVoteService voteService;
         private readonly UserManager<IdentityUser> userManager;
 
-        public int MovieId { get; set; }
-
-        public VoteFilmsModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public VoteFilmsModel(IGroupService groupService, IVoteService voteService, UserManager<IdentityUser> userManager)
         {
-            this.context = context;
+            this.groupService = groupService;
+            this.voteService = voteService;
             this.userManager = userManager;
         }
 
-        public Group Group { get; set; } = default!;
+        public Group Group { get; private set; }
 
-        public int GroupId { get; set; }
+        public int GroupId { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int groupId)
         {
-            this.Group = await this.context.Groups
-                .Include(g => g.Movies)
-                .FirstOrDefaultAsync(g => g.Id == groupId);
+            this.Group = await this.groupService.GetGroupByIdAsync(groupId);
 
             if (this.Group == null)
             {
@@ -45,30 +45,21 @@ namespace PanoramaApp.Pages.Groups
 
         public async Task<IActionResult> OnPostVoteAsync(int groupId, int movieId)
         {
-            var group = await this.context.Groups.FirstOrDefaultAsync(g => g.Id == groupId);
-            if (group == null)
+            var userId = this.userManager.GetUserId(this.User);
+
+            if (string.IsNullOrEmpty(userId))
             {
-                return this.RedirectToPage("/Error");
+                return this.Challenge();
             }
 
-            var vote = new Vote
-            {
-                MovieId = movieId,
-                GroupId = groupId,
-                UserId = this.User.Identity.Name,
-            };
-
-            this.context.Votes.Add(vote);
-            await this.context.SaveChangesAsync();
+            await this.voteService.AddVoteAsync(groupId, movieId, userId);
 
             return this.RedirectToPage(new { groupId });
         }
 
         public async Task<int> GetVotesForMovieAsync(int movieId)
         {
-            return await this.context.Votes
-                .Where(v => v.MovieId == movieId)
-                .CountAsync();
+            return await this.voteService.GetVotesForMovieAsync(movieId);
         }
     }
 }

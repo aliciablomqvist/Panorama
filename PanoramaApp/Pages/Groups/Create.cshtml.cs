@@ -2,79 +2,58 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data;
-using PanoramaApp.Models;
-
-public class CreateGroupModel : PageModel
+namespace PanoramaApp.Pages.Groups
 {
-    private readonly ApplicationDbContext context;
-    private readonly UserManager<IdentityUser> userManager;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-    public CreateGroupModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+
+    public class CreateGroupModel : PageModel
     {
-        this.context = context;
-        this.userManager = userManager;
-    }
+        private readonly IGroupService groupService;
+        private readonly IUserService userService;
 
-    [BindProperty]
-    public string Name { get; set; } = string.Empty;
-
-    public List<IdentityUser> Users { get; set; } = new List<IdentityUser>();
-
-    [BindProperty]
-    public List<string> SelectedUsers { get; set; } = new List<string>();
-
-    public async Task OnGetAsync()
-    {
-        this.Users = await this.context.Users.ToListAsync();
-    }
-
-    public async Task<IActionResult> OnPostAsync()
-    {
-        if (!this.ModelState.IsValid)
+        public CreateGroupModel(IGroupService groupService, IUserService userService)
         {
-            return this.Page();
+            this.groupService = groupService;
+            this.userService = userService;
         }
 
-        var currentUser = await this.userManager.GetUserAsync(this.User); // Get the current logged-in user
-        if (currentUser == null)
+        [BindProperty]
+        public string Name { get; set; } = string.Empty;
+
+        public List<IdentityUser> Users { get; set; } = new ();
+
+        [BindProperty]
+        public List<string> SelectedUsers { get; set; } = new ();
+
+        public async Task OnGetAsync()
         {
-            // Handle the case where the user is not logged in (redirect to login page or show an error)
-            return this.RedirectToPage("/Account/Login");
+            this.Users = await this.userService.GetAllUsersAsync();
         }
 
-        var newGroup = new Group
+        public async Task<IActionResult> OnPostAsync()
         {
-            Name = this.Name,
-            OwnerId = currentUser.Id, // Set the OwnerId to the current user's ID
-        };
-
-        this.context.Groups.Add(newGroup);
-        await this.context.SaveChangesAsync();
-
-        foreach (var userId in this.SelectedUsers)
-        {
-            var user = await this.userManager.FindByIdAsync(userId);
-            if (user != null)
+            if (!this.ModelState.IsValid)
             {
-                var groupMember = new GroupMember
-                {
-                    GroupId = newGroup.Id,
-                    UserId = user.Id,
-                };
-                this.context.GroupMembers.Add(groupMember);
+                return this.Page();
             }
+
+            var currentUser = await this.userService.GetCurrentUserAsync();
+            if (currentUser == null)
+            {
+                return this.RedirectToPage("/Account/Login");
+            }
+
+            await this.groupService.CreateGroupAsync(this.Name, currentUser.Id, this.SelectedUsers);
+
+            return this.RedirectToPage("/Groups/ViewGroups");
         }
-
-        await this.context.SaveChangesAsync();
-
-        return this.RedirectToPage("/Groups/ViewGroups");
     }
 }

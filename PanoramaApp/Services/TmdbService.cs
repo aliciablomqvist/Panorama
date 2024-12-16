@@ -5,6 +5,7 @@
 namespace PanoramaApp.Services
 {
     using System.Text.Json;
+
     using PanoramaApp.Models;
 
     public class TmdbService

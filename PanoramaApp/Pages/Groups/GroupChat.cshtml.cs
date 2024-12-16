@@ -6,25 +6,25 @@ namespace PanoramaApp.Pages.Groups
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.EntityFrameworkCore;
-    using PanoramaApp.Data;
+
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
-    using PanoramaApp.Services;
 
     public class GroupChatModel : PageModel
     {
-        private readonly GroupChatService chatService;
+        private readonly IGroupChatService chatService;
+        private readonly IGroupService groupService;
         private readonly UserManager<IdentityUser> userManager;
-        private readonly ApplicationDbContext context;
 
-        public GroupChatModel(ApplicationDbContext context, GroupChatService chatService, UserManager<IdentityUser> userManager)
+        public GroupChatModel(IGroupChatService chatService, IGroupService groupService, UserManager<IdentityUser> userManager)
         {
             this.chatService = chatService;
+            this.groupService = groupService;
             this.userManager = userManager;
-            this.context = context;
         }
 
         public List<ChatMessage> Messages { get; set; } = new ();
@@ -43,13 +43,11 @@ namespace PanoramaApp.Pages.Groups
                 return this.Unauthorized();
             }
 
-            // Check if the user is a member of the group
-            var isMember = await this.context.GroupMembers
-                .AnyAsync(m => m.GroupId == groupId && m.UserId == user.Id);
-
+            // Kontrollera medlemskap i gruppen
+            var isMember = await this.groupService.IsUserMemberOfGroupAsync(user.Id, groupId);
             if (!isMember)
             {
-                return this.Forbid(); // Restrict access if the user is not a member of the group
+                return this.Forbid();
             }
 
             this.GroupId = groupId;
@@ -61,7 +59,6 @@ namespace PanoramaApp.Pages.Groups
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-
             if (user == null)
             {
                 return this.Unauthorized();
@@ -75,7 +72,6 @@ namespace PanoramaApp.Pages.Groups
 
             await this.chatService.SendMessageAsync(this.MessageText, user.Id, user.UserName, this.GroupId);
 
-            // Redirect back to the same page to update the chat history.
             return this.RedirectToPage(new { this.GroupId });
         }
     }

@@ -4,47 +4,35 @@
 
 namespace PanoramaApp.Pages.Groups
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.EntityFrameworkCore;
-    using PanoramaApp.Data;
+
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
+    using PanoramaApp.Services;
 
     public class ViewWinnerModel : PageModel
     {
-        private readonly ApplicationDbContext context;
+        private readonly IWinnerService winnerService;
 
-        public ViewWinnerModel(ApplicationDbContext context)
+        public ViewWinnerModel(IWinnerService winnerService)
         {
-            this.context = context;
+            this.winnerService = winnerService;
         }
 
-        public Group Group { get; set; } = new Group();
+        public Group Group { get; private set; } = new ();
 
-        public Movie? WinningMovie { get; set; }
+        public Movie? WinningMovie { get; private set; }
 
-        public int WinningMovieVoteCount { get; set; } = 0;
+        public int WinningMovieVoteCount { get; private set; } = 0;
 
         public async Task OnGetAsync(int id)
         {
-            this.Group = await this.context.Groups
-                .Include(g => g.Movies)
-                .FirstOrDefaultAsync(g => g.Id == id);
+            var (winningMovie, voteCount) = await this.winnerService.GetWinningMovieAsync(id);
 
-            if (this.Group == null || !this.Group.Movies.Any())
-            {
-                return;
-            }
-
-            var groupVotes = await this.context.Votes.Where(v => v.GroupId == id).ToListAsync();
-
-            this.WinningMovie = this.Group.Movies
-                .OrderByDescending(m => groupVotes.Count(v => v.MovieId == m.Id))
-                .FirstOrDefault();
-
-            if (this.WinningMovie != null)
-            {
-                this.WinningMovieVoteCount = groupVotes.Count(v => v.MovieId == this.WinningMovie.Id);
-            }
+            this.WinningMovie = winningMovie;
+            this.WinningMovieVoteCount = voteCount;
         }
     }
 }

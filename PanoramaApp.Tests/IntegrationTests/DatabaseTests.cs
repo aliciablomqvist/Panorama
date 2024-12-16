@@ -1,4 +1,4 @@
-/*using Xunit;
+using Xunit;
 using PanoramaApp.Data;
 using PanoramaApp.Models;
 using Microsoft.EntityFrameworkCore;
@@ -30,4 +30,4 @@ namespace PanoramaApp.Tests.IntegrationTests
             Assert.Equal("Test Group", group.Name);
         }
     }
-}*/
+}

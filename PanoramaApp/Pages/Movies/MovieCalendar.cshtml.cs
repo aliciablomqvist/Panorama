@@ -7,17 +7,18 @@ namespace PanoramaApp.Pages.Movies
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
 
     public class MovieCalendarModel : PageModel
     {
-        private readonly IMovieCalendarService _movieCalendarService;
+        private readonly IMovieCalendarService movieCalendarService;
 
         public MovieCalendarModel(IMovieCalendarService movieCalendarService)
         {
-            _movieCalendarService = movieCalendarService;
+            this.movieCalendarService = movieCalendarService;
         }
 
         public List<Movie> Movies { get; set; } = new List<Movie>();
@@ -32,22 +33,22 @@ namespace PanoramaApp.Pages.Movies
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Movies = await _movieCalendarService.GetAllMoviesAsync();
-            ScheduledMovies = await _movieCalendarService.GetScheduledMoviesAsync();
-            return Page();
+            this.Movies = await this.movieCalendarService.GetAllMoviesAsync();
+            this.ScheduledMovies = await this.movieCalendarService.GetScheduledMoviesAsync();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostScheduleMovieAsync()
         {
             try
             {
-                await _movieCalendarService.ScheduleMovieAsync(MovieId, ScheduledDate);
-                return RedirectToPage();
+                await this.movieCalendarService.ScheduleMovieAsync(this.MovieId, this.ScheduledDate);
+                return this.RedirectToPage();
             }
             catch (ArgumentException ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
-                return await OnGetAsync(); // Återställ sidan med data
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                return await this.OnGetAsync(); // Återställ sidan med data
             }
         }
     }
