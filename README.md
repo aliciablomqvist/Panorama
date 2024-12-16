@@ -53,29 +53,33 @@ The project focuses on adhering to SOLID principles, ensuring the architecture i
 
 1.  **Clone the Repository**:
     
-   ```bash
+```bash
    git clone https://github.com/yourusername/Panorama.git 
    cd Panorama
+```
     
 2.  **Set Up the Database**:
     
     *   Update `appsettings.json` with your SQL Server connection string.
     *   Run migrations to set up the database schema:
         
-```bash 
+```bash
 dotnet ef database update
+```
         
 3.  **Configure TMDB API**:
     
     *   Add your TMDB API key to the project's user secrets:
         
- ```bash
-dotnet user-secrets set "Tmdb:ApiKey" "YOUR_TMDB_API_KEY"```
+```bash
+dotnet user-secrets set "Tmdb:ApiKey" "YOUR_TMDB_API_KEY"
+```
         
 4.  **Run the Application**:
     
- ```bash 
+ ```bash
 dotnet run
+```
     
 5.  Open your browser and navigate to your localhost.
     
