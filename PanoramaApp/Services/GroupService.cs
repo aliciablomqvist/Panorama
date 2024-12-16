@@ -74,6 +74,11 @@ namespace PanoramaApp.Services
                 .Where(g => g.Members.Any(m => m.UserId == userId))
                 .ToListAsync();
         }
+        public async Task<bool> IsUserMemberOfGroupAsync(string userId, int groupId)
+        {
+            return await _context.GroupMembers
+                .AnyAsync(m => m.GroupId == groupId && m.UserId == userId);
         }
+    }
 }
  

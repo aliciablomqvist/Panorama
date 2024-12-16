@@ -1,20 +1,20 @@
-// <copyright file="GroupChatService.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+using Microsoft.EntityFrameworkCore;
+using PanoramaApp.Data;
+using PanoramaApp.Interfaces;
+using PanoramaApp.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PanoramaApp.Services
 {
-    using Microsoft.EntityFrameworkCore;
-    using PanoramaApp.Data;
-    using PanoramaApp.Models;
-
-    public class GroupChatService
+    public class GroupChatService : IGroupChatService
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext _context;
 
         public GroupChatService(ApplicationDbContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         public async Task SendMessageAsync(string messageText, string userId, string userName, int groupId)
@@ -28,13 +28,13 @@ namespace PanoramaApp.Services
                 GroupId = groupId,
             };
 
-            this.context.ChatMessages.Add(chatMessage);
-            await this.context.SaveChangesAsync();
+            _context.ChatMessages.Add(chatMessage);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<ChatMessage>> GetMessagesForGroupAsync(int groupId)
         {
-            return await this.context.ChatMessages
+            return await _context.ChatMessages
                 .Where(m => m.GroupId == groupId)
                 .OrderBy(m => m.Timestamp)
                 .ToListAsync();
