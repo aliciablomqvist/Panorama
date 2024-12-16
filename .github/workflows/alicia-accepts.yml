@@ -1,0 +1,23 @@
+name: Add comment on accepted PR
+on:
+  pull_request:
+    types:
+      - closed
+jobs:
+  comment:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+    - name: Add Alicia comment
+      uses: actions/github-script@v6
+      with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Alicia accepts this pull request 👍'
+            })
