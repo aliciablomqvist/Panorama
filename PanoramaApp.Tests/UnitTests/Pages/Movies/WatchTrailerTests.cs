@@ -15,26 +15,26 @@ using Xunit;
 public class WatchTrailerTests
 {
     [Fact]
-public void PlayTrailer_FetchesCorrectTrailerUrl()
-{
-    // Arrange
-   var movie = new Movie
-{
-    Id = 1,
-    Title = "Test Movie",
-    Description = "This is a description.",
-    Genre = "Action",
-    TrailerUrl = "http://trailer.com/testmovie",
-    ReleaseDate = DateTime.Now,
-    Priority = 1
-};
+    public void PlayTrailer_FetchesCorrectTrailerUrl()
+    {
+        // Arrange
+        var movie = new Movie
+        {
+            Id = 1,
+            Title = "Test Movie",
+            Description = "This is a description.",
+            Genre = "Action",
+            TrailerUrl = "http://trailer.com/testmovie",
+            ReleaseDate = DateTime.Now,
+            Priority = 1
+        };
 
-    var trailerPlayer = new TrailerPlayer();
+        var trailerPlayer = new TrailerPlayer();
 
-    // Act
-    var url = trailerPlayer.GetTrailerUrl(movie);
+        // Act
+        var url = trailerPlayer.GetTrailerUrl(movie);
 
-    // Assert
-    Assert.Equal("http://trailer.com/testmovie", url);
-}
+        // Assert
+        Assert.Equal("http://trailer.com/testmovie", url);
+    }
 }

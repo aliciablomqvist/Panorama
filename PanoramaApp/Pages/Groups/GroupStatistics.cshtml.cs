@@ -6,6 +6,7 @@ namespace PanoramaApp.Pages.Groups
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+
     using PanoramaApp.DTO;
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;

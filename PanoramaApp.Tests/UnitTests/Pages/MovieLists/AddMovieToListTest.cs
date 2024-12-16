@@ -40,7 +40,7 @@ public class AddMovieModelTests
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         var pageModel = new AddMovieModel(context, userManager.Object);
 
@@ -67,7 +67,7 @@ public class AddMovieModelTests
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         var pageModel = new AddMovieModel(context, userManager.Object);
 
@@ -98,7 +98,7 @@ public class AddMovieModelTests
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         var pageModel = new AddMovieModel(context, userManager.Object)
         {
@@ -133,7 +133,7 @@ public class AddMovieModelTests
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         var pageModel = new AddMovieModel(context, userManager.Object)
         {

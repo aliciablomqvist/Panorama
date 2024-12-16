@@ -8,9 +8,11 @@ namespace PanoramaApp.Pages.MovieLists
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+
     using PanoramaApp.Data;
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;

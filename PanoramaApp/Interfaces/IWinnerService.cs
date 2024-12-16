@@ -5,6 +5,7 @@
 namespace PanoramaApp.Interfaces
 {
     using System.Threading.Tasks;
+
     using PanoramaApp.Models;
 
     public interface IWinnerService

@@ -5,10 +5,12 @@
 namespace PanoramaApp.Pages.MovieLists
 {
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;

@@ -5,6 +5,7 @@
 namespace PanoramaApp.Services
 {
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;

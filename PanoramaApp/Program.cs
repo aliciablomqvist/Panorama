@@ -49,7 +49,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// app.MapHub<ChatHub>("/chatHub");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
@@ -61,5 +60,4 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<ChatHub>("/chathub"); // Map SignalR hub
 });
 
-// app.MapRazorPages();
 app.Run();

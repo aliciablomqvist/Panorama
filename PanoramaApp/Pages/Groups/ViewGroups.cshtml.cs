@@ -8,8 +8,10 @@ namespace PanoramaApp.Pages.Groups
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
     using PanoramaApp.Models;
 

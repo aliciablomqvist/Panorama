@@ -10,60 +10,60 @@ using Xunit;
 
 public class CreateGroupModelTests
 {
-[Fact]
-public async Task OnPostAsync_GivenValidData_CreatesGroupAndMembersAndRedirects()
-{
-    // Arrange
-    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .UseInMemoryDatabase(databaseName: "TestDb_CreateGroup")
-        .Options;
-
-    using var context = new ApplicationDbContext(options);
-
-    var user1 = new IdentityUser { Id = "user1", UserName = "user1@example.com" };
-    var user2 = new IdentityUser { Id = "user2", UserName = "user2@example.com" };
-    context.Users.AddRange(user1, user2);
-    await context.SaveChangesAsync();
-
-    // Mock UserManager
-    var userStore = new Mock<IUserStore<IdentityUser>>();
-    var userManager = new Mock<UserManager<IdentityUser>>(
-        userStore.Object, null, null, null, null, null, null, null, null);
-
-    userManager.Setup(u => u.FindByIdAsync("user1")).ReturnsAsync(user1);
-    userManager.Setup(u => u.FindByIdAsync("user2")).ReturnsAsync(user2);
-
-    var group = new Group
+    [Fact]
+    public async Task OnPostAsync_GivenValidData_CreatesGroupAndMembersAndRedirects()
     {
-        Name = "TestGroup",
-        OwnerId = "user1" // Tilldela OwnerId direkt
-    };
+        // Arrange
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDb_CreateGroup")
+            .Options;
 
-    context.Groups.Add(group);
-    await context.SaveChangesAsync();
+        using var context = new ApplicationDbContext(options);
 
-    var pageModel = new CreateGroupModel(context, userManager.Object)
-    {
-        Name = "TestGroup",
-        SelectedUsers = new List<string> { "user1", "user2" }
-    };
+        var user1 = new IdentityUser { Id = "user1", UserName = "user1@example.com" };
+        var user2 = new IdentityUser { Id = "user2", UserName = "user2@example.com" };
+        context.Users.AddRange(user1, user2);
+        await context.SaveChangesAsync();
 
-    // Act
-    var result = await pageModel.OnPostAsync();
+        // Mock UserManager
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(
+            userStore.Object, null, null, null, null, null, null, null, null);
 
-    // Assert
-    var redirectResult = Assert.IsType<RedirectToPageResult>(result);
-    Assert.Equal("/Groups/ViewGroups", redirectResult.PageName);
+        userManager.Setup(u => u.FindByIdAsync("user1")).ReturnsAsync(user1);
+        userManager.Setup(u => u.FindByIdAsync("user2")).ReturnsAsync(user2);
 
-    var savedGroup = await context.Groups.FirstOrDefaultAsync(g => g.Name == "TestGroup");
-    Assert.NotNull(savedGroup);
-    Assert.Equal("user1", savedGroup.OwnerId); // Kontrollera OwnerId
+        var group = new Group
+        {
+            Name = "TestGroup",
+            OwnerId = "user1" // Tilldela OwnerId direkt
+        };
 
-    var members = await context.GroupMembers.ToListAsync();
-    Assert.Equal(2, members.Count);
-    Assert.Contains(members, m => m.UserId == "user1");
-    Assert.Contains(members, m => m.UserId == "user2");
-}
+        context.Groups.Add(group);
+        await context.SaveChangesAsync();
+
+        var pageModel = new CreateGroupModel(context, userManager.Object)
+        {
+            Name = "TestGroup",
+            SelectedUsers = new List<string> { "user1", "user2" }
+        };
+
+        // Act
+        var result = await pageModel.OnPostAsync();
+
+        // Assert
+        var redirectResult = Assert.IsType<RedirectToPageResult>(result);
+        Assert.Equal("/Groups/ViewGroups", redirectResult.PageName);
+
+        var savedGroup = await context.Groups.FirstOrDefaultAsync(g => g.Name == "TestGroup");
+        Assert.NotNull(savedGroup);
+        Assert.Equal("user1", savedGroup.OwnerId); // Kontrollera OwnerId
+
+        var members = await context.GroupMembers.ToListAsync();
+        Assert.Equal(2, members.Count);
+        Assert.Contains(members, m => m.UserId == "user1");
+        Assert.Contains(members, m => m.UserId == "user2");
+    }
 
     [Fact]
     public async Task OnPostAsync_GivenInvalidModelState_ReturnsPage()
@@ -74,7 +74,7 @@ public async Task OnPostAsync_GivenValidData_CreatesGroupAndMembersAndRedirects(
             .Options;
 
         using var context = new ApplicationDbContext(options);
-        
+
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
             userStore.Object, null, null, null, null, null, null, null, null);

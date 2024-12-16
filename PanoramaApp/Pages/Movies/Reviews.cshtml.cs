@@ -5,9 +5,11 @@ namespace PanoramaApp.Pages.Movies
 {
     using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
+
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;

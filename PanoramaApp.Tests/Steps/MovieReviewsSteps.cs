@@ -4,13 +4,13 @@ namespace PanoramaApp.Tests.Steps
     [Binding]
     public class MovieReviewsSteps
     {
-        private readonly ScenarioContext _scenarioContext; 
+        private readonly ScenarioContext _scenarioContext;
 
         public MovieReviewsSteps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
-        
+
 
         [Given(@"that a movie exists in the database")]
         public void GivenThatAMovieExistsInTheDatabase()

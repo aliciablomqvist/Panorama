@@ -6,6 +6,7 @@ namespace PanoramaApp.Interfaces
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using PanoramaApp.Models;
     using PanoramaApp.Services;
 

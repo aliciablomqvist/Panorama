@@ -5,6 +5,7 @@
 namespace PanoramaApp.Interfaces
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
+
     using PanoramaApp.Models;
 
     public interface IMovieListService

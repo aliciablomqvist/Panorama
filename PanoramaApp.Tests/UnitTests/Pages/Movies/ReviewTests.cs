@@ -22,15 +22,15 @@ public class ReviewsModelTests
 
         using var context = new ApplicationDbContext(options);
 
-                    var movie = new Movie
-{
-    Title = "ReviewableMovie",
-    Description = "An example movie description",
-    Genre = "Action",
-    TrailerUrl = "http://example.com/trailer",
-    ReleaseDate = DateTime.Now,
-    Priority = 2
-};
+        var movie = new Movie
+        {
+            Title = "ReviewableMovie",
+            Description = "An example movie description",
+            Genre = "Action",
+            TrailerUrl = "http://example.com/trailer",
+            ReleaseDate = DateTime.Now,
+            Priority = 2
+        };
         context.Movies.Add(movie);
         var review = new Review { MovieId = movie.Id, Content = "Nice", Rating = 5, UserId = "user1" };
         context.Reviews.Add(review);
@@ -70,15 +70,15 @@ public class ReviewsModelTests
 
         using var context = new ApplicationDbContext(options);
 
-                    var movie = new Movie
-{
-    Title = "ReviewMoviePost",
-    Description = "An example movie description",
-    Genre = "Action",
-    TrailerUrl = "http://example.com/trailer",
-    ReleaseDate = DateTime.Now,
-    Priority = 3
-};
+        var movie = new Movie
+        {
+            Title = "ReviewMoviePost",
+            Description = "An example movie description",
+            Genre = "Action",
+            TrailerUrl = "http://example.com/trailer",
+            ReleaseDate = DateTime.Now,
+            Priority = 3
+        };
         context.Movies.Add(movie);
         await context.SaveChangesAsync();
 
@@ -91,60 +91,60 @@ public class ReviewsModelTests
         pageModel.ModelState.AddModelError("Rating", "Out of range");
         var result = await pageModel.OnPostAsync(movie.Id);
 
-        Assert.IsType<PageResult>(result); 
+        Assert.IsType<PageResult>(result);
     }
 
 
- [Fact]
-public async Task OnPostAsync_LoggedInUser_AddsReviewSuccessfully()
-{
-    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .UseInMemoryDatabase("ReviewTestDb")
-        .EnableSensitiveDataLogging()
-        .Options;
-
-    using var context = new ApplicationDbContext(options);
-
-    var user = new IdentityUser { Id = "user8", UserName = "test@example.com" };
-                var movie = new Movie
-{
-    Title = "ReviewableMovie",
-    Description = "An example movie description",
-    Genre = "Action",
-    TrailerUrl = "http://example.com/trailer",
-    ReleaseDate = DateTime.Now,
-    Priority = 2
-};
-
-
-    context.Users.Add(user);
-    context.Movies.Add(movie);
-    await context.SaveChangesAsync();
-
-    var pageModel = new ReviewsModel(context)
+    [Fact]
+    public async Task OnPostAsync_LoggedInUser_AddsReviewSuccessfully()
     {
-        ReviewContent = "Great movie!",
-        Rating = 5
-    };
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("ReviewTestDb")
+            .EnableSensitiveDataLogging()
+            .Options;
 
-    var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
-    {
+        using var context = new ApplicationDbContext(options);
+
+        var user = new IdentityUser { Id = "user8", UserName = "test@example.com" };
+        var movie = new Movie
+        {
+            Title = "ReviewableMovie",
+            Description = "An example movie description",
+            Genre = "Action",
+            TrailerUrl = "http://example.com/trailer",
+            ReleaseDate = DateTime.Now,
+            Priority = 2
+        };
+
+
+        context.Users.Add(user);
+        context.Movies.Add(movie);
+        await context.SaveChangesAsync();
+
+        var pageModel = new ReviewsModel(context)
+        {
+            ReviewContent = "Great movie!",
+            Rating = 5
+        };
+
+        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
+        {
         new Claim(ClaimTypes.NameIdentifier, user.Id)
     }, "TestAuth"));
-    var httpContext = new DefaultHttpContext { User = claimsPrincipal };
-    pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
-    {
-        HttpContext = httpContext
-    };
+        var httpContext = new DefaultHttpContext { User = claimsPrincipal };
+        pageModel.PageContext = new Microsoft.AspNetCore.Mvc.RazorPages.PageContext
+        {
+            HttpContext = httpContext
+        };
 
-    // Act
-    var result = await pageModel.OnPostAsync(movie.Id);
+        // Act
+        var result = await pageModel.OnPostAsync(movie.Id);
 
-    // Assert
-    Assert.IsType<RedirectToPageResult>(result);
-    var review = await context.Reviews.FirstOrDefaultAsync(r => r.MovieId == movie.Id);
-    Assert.NotNull(review);
-    Assert.Equal("Great movie!", review.Content);
-    Assert.Equal(5, review.Rating);
-}
+        // Assert
+        Assert.IsType<RedirectToPageResult>(result);
+        var review = await context.Reviews.FirstOrDefaultAsync(r => r.MovieId == movie.Id);
+        Assert.NotNull(review);
+        Assert.Equal("Great movie!", review.Content);
+        Assert.Equal(5, review.Rating);
+    }
 }

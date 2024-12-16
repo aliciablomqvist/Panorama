@@ -15,10 +15,10 @@ namespace PanoramaApp.Tests.IntegrationTests
         }
 
         [Theory]
-        [InlineData("/Movies/ExploreMovies")] 
-        [InlineData("/Groups/ViewWinner")]  
-        [InlineData("/Identity/Account/Login")] 
-        [InlineData("/MovieLists/MyFavorites")] 
+        [InlineData("/Movies/ExploreMovies")]
+        [InlineData("/Groups/ViewWinner")]
+        [InlineData("/Identity/Account/Login")]
+        [InlineData("/MovieLists/MyFavorites")]
         public async Task Endpoints_Exist_ShouldReturnSuccess(string url)
         {
             // Act

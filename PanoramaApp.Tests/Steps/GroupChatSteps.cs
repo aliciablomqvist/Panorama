@@ -19,7 +19,7 @@ public class GroupChatSteps
     public GroupChatSteps()
     {
         _dbContextMock = new Mock<ApplicationDbContext>();
-        
+
         _groupChatService = new GroupChatService(_dbContextMock.Object);
         _chatHistory = new List<ChatMessage>();
     }
@@ -34,13 +34,13 @@ public class GroupChatSteps
 
 
 
-[Given(@"the group exists in the database")]
-public void GivenTheGroupExistsInTheDatabase()
-{
-    var groupList = new List<Group> { _group };
-    var mockGroupSet = groupList.CreateMockDbSet();
-    _dbContextMock.Setup(db => db.Groups).Returns(mockGroupSet.Object);
-}
+    [Given(@"the group exists in the database")]
+    public void GivenTheGroupExistsInTheDatabase()
+    {
+        var groupList = new List<Group> { _group };
+        var mockGroupSet = groupList.CreateMockDbSet();
+        _dbContextMock.Setup(db => db.Groups).Returns(mockGroupSet.Object);
+    }
 
     [When(@"I send a message saying ""(.*)""")]
     public async Task WhenISendAMessageSaying(string message)
@@ -68,16 +68,16 @@ public void GivenTheGroupExistsInTheDatabase()
         _dbContextMock.Verify(db => db.SaveChangesAsync(default), Times.Once);
     }
 
-  [Given(@"the group has chat messages in its history")]
-public void GivenTheGroupHasChatMessagesInItsHistory()
-{
-    var messages = new List<ChatMessage>
+    [Given(@"the group has chat messages in its history")]
+    public void GivenTheGroupHasChatMessagesInItsHistory()
+    {
+        var messages = new List<ChatMessage>
     {
         new ChatMessage { MessageText = "This is a previous message", GroupId = _group.Id, Timestamp = DateTime.UtcNow.AddMinutes(-5) }
     };
-    var mockMessageSet = messages.CreateMockDbSet();
-    _dbContextMock.Setup(db => db.ChatMessages).Returns(mockMessageSet.Object);
-}
+        var mockMessageSet = messages.CreateMockDbSet();
+        _dbContextMock.Setup(db => db.ChatMessages).Returns(mockMessageSet.Object);
+    }
 
     [When(@"I view the group chat")]
     public async Task WhenIViewTheGroupChat()

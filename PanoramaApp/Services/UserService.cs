@@ -7,9 +7,11 @@ namespace PanoramaApp.Services
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+
     using PanoramaApp.Interfaces;
 
     public class UserService : IUserService

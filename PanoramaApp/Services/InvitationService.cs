@@ -7,7 +7,9 @@ namespace PanoramaApp.Services
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using PanoramaApp.Data;
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;

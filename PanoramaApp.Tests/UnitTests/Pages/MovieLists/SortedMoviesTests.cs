@@ -15,24 +15,24 @@ using PanoramaApp.Services;
 public class SortedMoviesTests
 {
     [Fact]
-public void SortMovies_ByTitle_ReturnsSortedMovies()
-{
-    // Arrange
-    var movies = new List<Movie>
+    public void SortMovies_ByTitle_ReturnsSortedMovies()
+    {
+        // Arrange
+        var movies = new List<Movie>
     {
         new Movie { Title = "B Movie", ReleaseDate = new DateTime(2020, 1, 1) },
         new Movie { Title = "A Movie", ReleaseDate = new DateTime(2019, 1, 1) }
     };
 
-   // var sorter = new MovieSorter();
+        // var sorter = new MovieSorter();
 
-    // Act
-var sortedMovies = MovieSorter.Sort(movies, "Title");
+        // Act
+        var sortedMovies = MovieSorter.Sort(movies, "Title");
 
 
 
-    // Assert
-    Assert.Equal("A Movie", sortedMovies.First().Title);
-    Assert.Equal("B Movie", sortedMovies.Last().Title);
-}
+        // Assert
+        Assert.Equal("A Movie", sortedMovies.First().Title);
+        Assert.Equal("B Movie", sortedMovies.Last().Title);
+    }
 }

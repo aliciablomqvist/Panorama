@@ -6,6 +6,7 @@ namespace PanoramaApp.Services
 {
     using System.Linq;
     using System.Threading.Tasks;
+
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
 

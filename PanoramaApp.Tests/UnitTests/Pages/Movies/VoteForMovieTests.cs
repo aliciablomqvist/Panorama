@@ -26,23 +26,23 @@ public class VoteFilmsModelTests
         using var context = new ApplicationDbContext(options);
 
         var group = new Group
-{
-    Id = 4,
-    Name = "Voting group",
-    OwnerId = "user1"
-};
+        {
+            Id = 4,
+            Name = "Voting group",
+            OwnerId = "user1"
+        };
 
-var movie = new Movie
-{
-    Id = 1,
-    Title = "Test Movie",
-    GroupId = group.Id, // Matcha med gruppens Id
-    Description = "This is a description.",
-    Genre = "Action",
-    TrailerUrl = "http://example.com/trailer",
-    ReleaseDate = DateTime.Now,
-    Priority = 1
-};
+        var movie = new Movie
+        {
+            Id = 1,
+            Title = "Test Movie",
+            GroupId = group.Id, // Matcha med gruppens Id
+            Description = "This is a description.",
+            Genre = "Action",
+            TrailerUrl = "http://example.com/trailer",
+            ReleaseDate = DateTime.Now,
+            Priority = 1
+        };
 
 
         context.Groups.Add(group);
@@ -51,7 +51,7 @@ var movie = new Movie
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         var pageModel = new VoteFilmsModel(context, userManager.Object);
 
@@ -77,7 +77,7 @@ var movie = new Movie
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         var pageModel = new VoteFilmsModel(context, userManager.Object);
 
@@ -88,52 +88,52 @@ var movie = new Movie
         var redirect = Assert.IsType<RedirectToPageResult>(result);
         Assert.Equal("/Error", redirect.PageName);
     }
-    
- [Fact]
-public async Task OnPostVoteAsync_ValidVote_AddsVote()
-{
-    // Arrange
-    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .UseInMemoryDatabase("VoteForMovieTestDb")
-        .EnableSensitiveDataLogging()
-        .Options;
 
-    using var context = new ApplicationDbContext(options);
+    [Fact]
+    public async Task OnPostVoteAsync_ValidVote_AddsVote()
+    {
+        // Arrange
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase("VoteForMovieTestDb")
+            .EnableSensitiveDataLogging()
+            .Options;
 
-    var user1 = new IdentityUser { Id = "user1", UserName = "test@example.com" };
-    var movie = new Movie
-{
-    Id = 1,
-    Title = "Test Movie",
-    Description = "This is a description.",
-    Genre = "Action",
-    TrailerUrl = "http://example.com/trailer",
-    ReleaseDate = DateTime.Now,
-    Priority = 1
-};
+        using var context = new ApplicationDbContext(options);
+
+        var user1 = new IdentityUser { Id = "user1", UserName = "test@example.com" };
+        var movie = new Movie
+        {
+            Id = 1,
+            Title = "Test Movie",
+            Description = "This is a description.",
+            Genre = "Action",
+            TrailerUrl = "http://example.com/trailer",
+            ReleaseDate = DateTime.Now,
+            Priority = 1
+        };
 
 
-    context.Users.Add(user1);
-    context.Movies.Add(movie);
-    await context.SaveChangesAsync();
+        context.Users.Add(user1);
+        context.Movies.Add(movie);
+        await context.SaveChangesAsync();
 
-    var userStore = new Mock<IUserStore<IdentityUser>>();
-    var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object, null, null, null, null, null, null, null, null);
-    userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user1);
+        var userStore = new Mock<IUserStore<IdentityUser>>();
+        var userManager = new Mock<UserManager<IdentityUser>>(userStore.Object, null, null, null, null, null, null, null, null);
+        userManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(user1);
 
-    var pageModel = new VoteFilmsModel(context, userManager.Object);
+        var pageModel = new VoteFilmsModel(context, userManager.Object);
 
-    // Använd hjälpmetoden
-    TestHelper.SetUserAndHttpContext(pageModel, user1.Id, user1.UserName);
+        // Använd hjälpmetoden
+        TestHelper.SetUserAndHttpContext(pageModel, user1.Id, user1.UserName);
 
-    // Act
-    var result = await pageModel.OnPostVoteAsync(1, movie.Id);
+        // Act
+        var result = await pageModel.OnPostVoteAsync(1, movie.Id);
 
-    // Assert
-    Assert.IsType<RedirectToPageResult>(result);
-    var vote = await context.Votes.FirstOrDefaultAsync(v => v.MovieId == movie.Id && v.UserId == user1.Id);
-    Assert.NotNull(vote);
-}
+        // Assert
+        Assert.IsType<RedirectToPageResult>(result);
+        var vote = await context.Votes.FirstOrDefaultAsync(v => v.MovieId == movie.Id && v.UserId == user1.Id);
+        Assert.NotNull(vote);
+    }
 
     [Fact]
     public async Task OnPostVoteAsync_InvalidGroupId_RedirectsToError()
@@ -148,11 +148,11 @@ public async Task OnPostVoteAsync_ValidVote_AddsVote()
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         var pageModel = new VoteFilmsModel(context, userManager.Object);
 
-TestHelper.SetUserAndHttpContext(pageModel, "user1", "test@example.com");
+        TestHelper.SetUserAndHttpContext(pageModel, "user1", "test@example.com");
 
         // Act
         var result = await pageModel.OnPostVoteAsync(999, 1); // ogiltig grupp
@@ -173,24 +173,24 @@ TestHelper.SetUserAndHttpContext(pageModel, "user1", "test@example.com");
 
         using var context = new ApplicationDbContext(options);
 
-                var group = new Group
-{
-    Id = 5,
-    Name = "Voting group",
-    OwnerId = "user1"
-};
+        var group = new Group
+        {
+            Id = 5,
+            Name = "Voting group",
+            OwnerId = "user1"
+        };
 
-            var movie = new Movie
-{
-    Id = 1,
-    Title = "Test Movie",
-    Description = "This is a description.",
-    Genre = "Action",
-    Group = group,
-    TrailerUrl = "http://example.com/trailer",
-    ReleaseDate = DateTime.Now,
-    Priority = 1
-};
+        var movie = new Movie
+        {
+            Id = 1,
+            Title = "Test Movie",
+            Description = "This is a description.",
+            Genre = "Action",
+            Group = group,
+            TrailerUrl = "http://example.com/trailer",
+            ReleaseDate = DateTime.Now,
+            Priority = 1
+        };
         context.Groups.Add(group);
         context.Movies.Add(movie);
         await context.SaveChangesAsync();
@@ -201,7 +201,7 @@ TestHelper.SetUserAndHttpContext(pageModel, "user1", "test@example.com");
 
         var userStore = new Mock<IUserStore<IdentityUser>>();
         var userManager = new Mock<UserManager<IdentityUser>>(
-            userStore.Object,null,null,null,null,null,null,null,null);
+            userStore.Object, null, null, null, null, null, null, null, null);
 
         var pageModel = new VoteFilmsModel(context, userManager.Object);
 
