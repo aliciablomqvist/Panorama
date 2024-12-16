@@ -10,35 +10,35 @@ namespace PanoramaApp.Pages.MovieLists
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
     using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
     using PanoramaApp.Services;
-    using PanoramaApp.Interfaces;
 
     public class MyFavoritesModel : PageModel
     {
-        private readonly IMovieListService _movieListService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IMovieListService movieListService;
+        private readonly UserManager<IdentityUser> userManager;
 
         public MyFavoritesModel(IMovieListService movieListService, UserManager<IdentityUser> userManager)
         {
-            _movieListService = movieListService;
-            _userManager = userManager;
+            this.movieListService = movieListService;
+            this.userManager = userManager;
         }
 
         public MovieList MovieList { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var userId = _userManager.GetUserId(User);
+            var userId = this.userManager.GetUserId(this.User);
 
             if (string.IsNullOrEmpty(userId))
             {
-                return RedirectToPage("/Account/Login");
+                return this.RedirectToPage("/Account/Login");
             }
 
-            MovieList = await _movieListService.GetFavoritesListAsync(userId);
+            this.MovieList = await this.movieListService.GetFavoritesListAsync(userId);
 
-            return Page();
+            return this.Page();
         }
     }
 }

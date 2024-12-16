@@ -1,20 +1,26 @@
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data;
-using PanoramaApp.Interfaces;
-using PanoramaApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+// <copyright file="GroupChatService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+
     public class GroupChatService : IGroupChatService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
+        /// <summary>Initializes a new instance of the <see cref="GroupChatService" /> class.</summary>
+        /// <param name="context">The context.</param>
         public GroupChatService(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task SendMessageAsync(string messageText, string userId, string userName, int groupId)
@@ -28,13 +34,13 @@ namespace PanoramaApp.Services
                 GroupId = groupId,
             };
 
-            _context.ChatMessages.Add(chatMessage);
-            await _context.SaveChangesAsync();
+            this.context.ChatMessages.Add(chatMessage);
+            await this.context.SaveChangesAsync();
         }
 
         public async Task<List<ChatMessage>> GetMessagesForGroupAsync(int groupId)
         {
-            return await _context.ChatMessages
+            return await this.context.ChatMessages
                 .Where(m => m.GroupId == groupId)
                 .OrderBy(m => m.Timestamp)
                 .ToListAsync();

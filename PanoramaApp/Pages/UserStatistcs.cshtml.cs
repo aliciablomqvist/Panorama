@@ -2,6 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+
 namespace PanoramaApp.Pages
 {
     using Microsoft.AspNetCore.Identity;

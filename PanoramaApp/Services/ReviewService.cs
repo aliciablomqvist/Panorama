@@ -2,27 +2,27 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-    using Microsoft.EntityFrameworkCore;
-    using PanoramaApp.Data;
-    using PanoramaApp.Models;
-    using PanoramaApp.Interfaces;
+namespace PanoramaApp.Services
+{
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
 
-    namespace PanoramaApp.Services
-    {
     public class ReviewService : IReviewService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public ReviewService(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task<IList<Review>> GetReviewsForMovieAsync(int movieId)
         {
-            return await _context.Reviews
+            return await this.context.Reviews
                 .Where(r => r.MovieId == movieId)
                  .Include(r => r.User)
                 .OrderByDescending(r => r.CreatedAt)
@@ -31,7 +31,7 @@
 
         public async Task AddReviewAsync(int movieId, string userId, string content, int rating)
         {
-            var movieExists = await _context.Movies.AnyAsync(m => m.Id == movieId);
+            var movieExists = await this.context.Movies.AnyAsync(m => m.Id == movieId);
             if (!movieExists)
             {
                 throw new ArgumentException("The movie does not exist.");
@@ -43,11 +43,11 @@
                 UserId = userId,
                 Content = content,
                 Rating = rating,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
             };
 
-            _context.Reviews.Add(review);
-            await _context.SaveChangesAsync();
+            this.context.Reviews.Add(review);
+            await this.context.SaveChangesAsync();
         }
     }
 }

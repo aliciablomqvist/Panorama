@@ -1,55 +1,59 @@
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data;
-using PanoramaApp.Interfaces;
-using PanoramaApp.Models;
-using PanoramaApp.Services;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
+// <copyright file="MovieListService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+    using PanoramaApp.Services;
+
     public class MovieListService : IMovieListService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public MovieListService(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task AddToListAsync(string listName, int movieId, string userId)
         {
-            var list = await _context.MovieLists
+            var list = await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .FirstOrDefaultAsync(ml => ml.Name == listName && ml.OwnerId == userId);
 
             if (list == null)
             {
                 list = new MovieList { Name = listName, OwnerId = userId };
-                _context.MovieLists.Add(list);
-                await _context.SaveChangesAsync();
+                this.context.MovieLists.Add(list);
+                await this.context.SaveChangesAsync();
             }
 
             if (!list.Movies.Any(mli => mli.MovieId == movieId))
             {
                 var movieListItem = new MovieListItem { MovieListId = list.Id, MovieId = movieId };
                 list.Movies.Add(movieListItem);
-                await _context.SaveChangesAsync();
+                await this.context.SaveChangesAsync();
             }
         }
 
         public async Task<List<MovieList>> GetListsByUserAsync(string userId)
         {
-            return await _context.MovieLists
+            return await this.context.MovieLists
                 .Where(ml => ml.OwnerId == userId)
                 .ToListAsync();
         }
 
         public async Task<MovieList> GetMovieListByIdAsync(int id)
         {
-            return await _context.MovieLists
+            return await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .ThenInclude(mli => mli.Movie)
                 .FirstOrDefaultAsync(ml => ml.Id == id);
@@ -59,7 +63,7 @@ namespace PanoramaApp.Services
         {
             foreach (var update in updates)
             {
-                var movie = await _context.Movies
+                var movie = await this.context.Movies
                     .FirstOrDefaultAsync(m => m.Id == update.Id);
 
                 if (movie != null)
@@ -68,20 +72,22 @@ namespace PanoramaApp.Services
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
         }
+
         public async Task<List<Movie>> GetMoviesFromListAsync(string listName, string userId)
         {
-            var movieList = await _context.MovieLists
+            var movieList = await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .ThenInclude(mli => mli.Movie)
                 .FirstOrDefaultAsync(ml => ml.Name == listName && ml.OwnerId == userId);
 
             return movieList?.Movies.Select(mli => mli.Movie).ToList() ?? new List<Movie>();
         }
+
         public async Task<List<MovieList>> GetMovieListsForUserAsync(string userId)
         {
-            return await _context.MovieLists
+            return await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .Include(ml => ml.SharedWithGroups)
                 .Where(ml => ml.OwnerId == userId ||
@@ -91,16 +97,15 @@ namespace PanoramaApp.Services
 
         public async Task<MovieList> GetFavoritesListAsync(string userId)
         {
-            return await _context.MovieLists
+            return await this.context.MovieLists
                 .Include(ml => ml.Movies)
                     .ThenInclude(mli => mli.Movie)
                 .FirstOrDefaultAsync(ml => ml.Name == "My Favorites" && ml.OwnerId == userId);
-
         }
 
         public async Task DeleteMovieListAsync(int id)
         {
-            var movieList = await _context.MovieLists
+            var movieList = await this.context.MovieLists
                 .Include(ml => ml.Movies)
                 .FirstOrDefaultAsync(ml => ml.Id == id);
 
@@ -109,9 +114,10 @@ namespace PanoramaApp.Services
                 throw new ArgumentException($"MovieList with ID {id} not found.");
             }
 
-            _context.MovieLists.Remove(movieList);
-            await _context.SaveChangesAsync();
+            this.context.MovieLists.Remove(movieList);
+            await this.context.SaveChangesAsync();
         }
+
         public async Task CreateMovieListAsync(string name, string userId, bool isShared)
         {
             var movieList = new MovieList
@@ -121,20 +127,21 @@ namespace PanoramaApp.Services
                 IsShared = isShared,
             };
 
-            _context.MovieLists.Add(movieList);
-            await _context.SaveChangesAsync();
+            this.context.MovieLists.Add(movieList);
+            await this.context.SaveChangesAsync();
         }
 
         public async Task<MovieList> GetLastCreatedMovieListAsync(string userId)
         {
-            return await _context.MovieLists
+            return await this.context.MovieLists
                 .Where(ml => ml.OwnerId == userId)
                 .OrderByDescending(ml => ml.Id) // Anta att ID:t ökar med varje ny lista
                 .FirstOrDefaultAsync();
         }
+
         public async Task<List<SelectListItem>> GetAvailableMoviesForListAsync(int listId)
         {
-            var movieList = await GetMovieListByIdAsync(listId);
+            var movieList = await this.GetMovieListByIdAsync(listId);
 
             if (movieList == null)
             {
@@ -143,20 +150,20 @@ namespace PanoramaApp.Services
 
             var existingMovieIds = movieList.Movies.Select(mli => mli.MovieId).ToList();
 
-            var movies = await _context.Movies
+            var movies = await this.context.Movies
                 .Where(m => !existingMovieIds.Contains(m.Id))
                 .ToListAsync();
 
             return movies.Select(m => new SelectListItem
             {
                 Value = m.Id.ToString(),
-                Text = m.Title
+                Text = m.Title,
             }).ToList();
         }
 
         public async Task AddMoviesToListAsync(int listId, List<int> movieIds)
         {
-            var movieList = await GetMovieListByIdAsync(listId);
+            var movieList = await this.GetMovieListByIdAsync(listId);
 
             if (movieList == null || movieIds == null || !movieIds.Any())
             {
@@ -165,7 +172,7 @@ namespace PanoramaApp.Services
 
             foreach (var movieId in movieIds)
             {
-                var movie = await _context.Movies.FindAsync(movieId);
+                var movie = await this.context.Movies.FindAsync(movieId);
 
                 if (movie != null)
                 {
@@ -173,14 +180,14 @@ namespace PanoramaApp.Services
                     {
                         MovieListId = listId,
                         MovieId = movieId,
-                        Movie = movie
+                        Movie = movie,
                     };
 
                     movieList.Movies.Add(movieListItem);
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
         }
     }
 }

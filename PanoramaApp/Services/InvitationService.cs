@@ -1,32 +1,36 @@
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data;
-using PanoramaApp.Interfaces;
-using PanoramaApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+// <copyright file="InvitationService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace PanoramaApp.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+
     public class InvitationService : IInvitationService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
 
         public InvitationService(ApplicationDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task<List<GroupInvitation>> GetPendingInvitationsAsync(string userId)
         {
-            return await _context.GroupInvitations
+            return await this.context.GroupInvitations
                 .Where(i => i.InvitedUserId == userId && !i.IsAccepted)
                 .ToListAsync();
         }
 
         public async Task AcceptInvitationAsync(int invitationId, string userId)
         {
-            var invitation = await _context.GroupInvitations
+            var invitation = await this.context.GroupInvitations
                 .Include(i => i.Group)
                 .FirstOrDefaultAsync(i => i.Id == invitationId);
 
@@ -36,9 +40,9 @@ namespace PanoramaApp.Services
             }
 
             invitation.IsAccepted = true;
-            _context.GroupInvitations.Update(invitation);
+            this.context.GroupInvitations.Update(invitation);
 
-            var isAlreadyMember = await _context.GroupMembers
+            var isAlreadyMember = await this.context.GroupMembers
                 .AnyAsync(m => m.GroupId == invitation.GroupId && m.UserId == userId);
 
             if (!isAlreadyMember)
@@ -49,10 +53,10 @@ namespace PanoramaApp.Services
                     UserId = userId,
                 };
 
-                _context.GroupMembers.Add(newMember);
+                this.context.GroupMembers.Add(newMember);
             }
 
-            await _context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
         }
 
         public async Task SendInvitationAsync(int groupId, string invitedUserId, string invitedByUserId)
@@ -66,8 +70,8 @@ namespace PanoramaApp.Services
                 InvitationDate = DateTime.UtcNow,
             };
 
-            _context.GroupInvitations.Add(newInvitation);
-            await _context.SaveChangesAsync();
+            this.context.GroupInvitations.Add(newInvitation);
+            await this.context.SaveChangesAsync();
         }
     }
 }

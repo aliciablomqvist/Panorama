@@ -16,13 +16,13 @@ namespace PanoramaApp.Models
 
         public Movie Movie { get; set; }
 
-        public List<(DateTime Date, Movie Movie)> entries = new ();
+        public List<(DateTime Date, Movie Movie)> EntriesValue = new ();
 
         public void AddMovie(Movie movie, DateTime date)
         {
-            this.entries.Add((date, movie));
+            this.EntriesValue.Add((date, movie));
         }
 
-        public List<(DateTime Date, Movie Movie)> Entries => this.entries;
+        public List<(DateTime Date, Movie Movie)> Entries => this.EntriesValue;
     }
 }

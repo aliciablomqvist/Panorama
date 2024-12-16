@@ -2,30 +2,30 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Interfaces;
-using PanoramaApp.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace PanoramaApp.Pages.Groups
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+
     public class GroupChatModel : PageModel
     {
-        private readonly IGroupChatService _chatService;
-        private readonly IGroupService _groupService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IGroupChatService chatService;
+        private readonly IGroupService groupService;
+        private readonly UserManager<IdentityUser> userManager;
 
         public GroupChatModel(IGroupChatService chatService, IGroupService groupService, UserManager<IdentityUser> userManager)
         {
-            _chatService = chatService;
-            _groupService = groupService;
-            _userManager = userManager;
+            this.chatService = chatService;
+            this.groupService = groupService;
+            this.userManager = userManager;
         }
 
-        public List<ChatMessage> Messages { get; set; } = new();
+        public List<ChatMessage> Messages { get; set; } = new ();
 
         [BindProperty]
         public string MessageText { get; set; } = string.Empty;
@@ -35,42 +35,42 @@ namespace PanoramaApp.Pages.Groups
 
         public async Task<IActionResult> OnGetAsync(int groupId)
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return Unauthorized();
+                return this.Unauthorized();
             }
 
             // Kontrollera medlemskap i gruppen
-            var isMember = await _groupService.IsUserMemberOfGroupAsync(user.Id, groupId);
+            var isMember = await this.groupService.IsUserMemberOfGroupAsync(user.Id, groupId);
             if (!isMember)
             {
-                return Forbid();
+                return this.Forbid();
             }
 
-            GroupId = groupId;
-            Messages = await _chatService.GetMessagesForGroupAsync(groupId);
+            this.GroupId = groupId;
+            this.Messages = await this.chatService.GetMessagesForGroupAsync(groupId);
 
-            return Page();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return Unauthorized();
+                return this.Unauthorized();
             }
 
-            if (string.IsNullOrWhiteSpace(MessageText))
+            if (string.IsNullOrWhiteSpace(this.MessageText))
             {
-                ModelState.AddModelError("MessageText", "Message cannot be empty.");
-                return Page();
+                this.ModelState.AddModelError("MessageText", "Message cannot be empty.");
+                return this.Page();
             }
 
-            await _chatService.SendMessageAsync(MessageText, user.Id, user.UserName, GroupId);
+            await this.chatService.SendMessageAsync(this.MessageText, user.Id, user.UserName, this.GroupId);
 
-            return RedirectToPage(new { GroupId });
+            return this.RedirectToPage(new { this.GroupId });
         }
     }
 }

@@ -2,61 +2,62 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Interfaces;
-using PanoramaApp.Models;
-using System.Threading.Tasks;
-
 namespace PanoramaApp.Pages.Groups
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+
     public class VoteFilmsModel : PageModel
     {
-        private readonly IGroupService _groupService;
-        private readonly IVoteService _voteService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IGroupService groupService;
+        private readonly IVoteService voteService;
+        private readonly UserManager<IdentityUser> userManager;
 
         public VoteFilmsModel(IGroupService groupService, IVoteService voteService, UserManager<IdentityUser> userManager)
         {
-            _groupService = groupService;
-            _voteService = voteService;
-            _userManager = userManager;
+            this.groupService = groupService;
+            this.voteService = voteService;
+            this.userManager = userManager;
         }
 
         public Group Group { get; private set; }
+
         public int GroupId { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int groupId)
         {
-            Group = await _groupService.GetGroupByIdAsync(groupId);
+            this.Group = await this.groupService.GetGroupByIdAsync(groupId);
 
-            if (Group == null)
+            if (this.Group == null)
             {
-                return RedirectToPage("/Error");
+                return this.RedirectToPage("/Error");
             }
 
-            GroupId = groupId;
-            return Page();
+            this.GroupId = groupId;
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostVoteAsync(int groupId, int movieId)
         {
-            var userId = _userManager.GetUserId(User);
+            var userId = this.userManager.GetUserId(this.User);
 
             if (string.IsNullOrEmpty(userId))
             {
-                return Challenge();
+                return this.Challenge();
             }
 
-            await _voteService.AddVoteAsync(groupId, movieId, userId);
+            await this.voteService.AddVoteAsync(groupId, movieId, userId);
 
-            return RedirectToPage(new { groupId });
+            return this.RedirectToPage(new { groupId });
         }
 
         public async Task<int> GetVotesForMovieAsync(int movieId)
         {
-            return await _voteService.GetVotesForMovieAsync(movieId);
+            return await this.voteService.GetVotesForMovieAsync(movieId);
         }
     }
 }

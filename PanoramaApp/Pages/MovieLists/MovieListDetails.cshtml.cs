@@ -8,40 +8,40 @@ namespace PanoramaApp.Pages.MovieLists
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
     using PanoramaApp.Data;
-    using PanoramaApp.Models;
     using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
 
     public class MovieListDetailsModel : PageModel
     {
-        private readonly IMovieListService _movieListService;
+        private readonly IMovieListService movieListService;
 
         public MovieListDetailsModel(IMovieListService movieListService)
         {
-            _movieListService = movieListService;
+            this.movieListService = movieListService;
         }
 
         public MovieList MovieList { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            MovieList = await _movieListService.GetMovieListByIdAsync(id);
+            this.MovieList = await this.movieListService.GetMovieListByIdAsync(id);
 
-            if (MovieList == null)
+            if (this.MovieList == null)
             {
-                return RedirectToPage("/Error");
+                return this.RedirectToPage("/Error");
             }
 
-            return Page();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
         {
             if (updates == null || !updates.Any())
             {
-                return BadRequest("Invalid data received.");
+                return this.BadRequest("Invalid data received.");
             }
 
-            await _movieListService.UpdateMoviePrioritiesAsync(updates);
+            await this.movieListService.UpdateMoviePrioritiesAsync(updates);
             return new JsonResult(new { success = true });
         }
     }

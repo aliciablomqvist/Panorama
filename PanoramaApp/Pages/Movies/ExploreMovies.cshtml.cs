@@ -7,9 +7,9 @@ namespace PanoramaApp.Pages.Movies
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.EntityFrameworkCore;
     using PanoramaApp.Data;
+    using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
     using PanoramaApp.Services;
-    using PanoramaApp.Interfaces;
 
     /// <summary>
     /// Represents a movie exploration page in the application.
@@ -17,18 +17,18 @@ namespace PanoramaApp.Pages.Movies
     /// </summary>
     public class ExploreMoviesModel : PageModel
     {
-        private readonly IMovieService _movieService;
+        private readonly IMovieService movieService;
 
         public ExploreMoviesModel(IMovieService movieService)
         {
-            _movieService = movieService;
+            this.movieService = movieService;
         }
 
         public List<Movie> Movies { get; set; } = new List<Movie>();
 
         public async Task OnGetAsync()
         {
-            Movies = await _movieService.GetMoviesAsync();
+            this.Movies = await this.movieService.GetMoviesAsync();
         }
     }
 }

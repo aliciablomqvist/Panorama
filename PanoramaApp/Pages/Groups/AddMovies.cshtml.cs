@@ -1,60 +1,61 @@
-// <copyright file="AddMoviesModel.cshtml.cs" company="PlaceholderCompany">
+// <copyright file="AddMovies.cshtml.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PanoramaApp.Interfaces;
-using PanoramaApp.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace PanoramaApp.Pages.Groups
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using PanoramaApp.Interfaces;
+    using PanoramaApp.Models;
+
     public class AddMoviesModel : PageModel
     {
-        private readonly IGroupService _groupService;
-        private readonly IMovieService _movieService;
+        private readonly IGroupService groupService;
+        private readonly IMovieService movieService;
 
         public AddMoviesModel(IGroupService groupService, IMovieService movieService)
         {
-            _groupService = groupService;
-            _movieService = movieService;
+            this.groupService = groupService;
+            this.movieService = movieService;
         }
 
         public Group Group { get; set; } = default!;
-        public List<Movie> AvailableMovies { get; set; } = new();
+
+        public List<Movie> AvailableMovies { get; set; } = new ();
 
         [BindProperty]
         public int GroupId { get; set; }
 
         [BindProperty]
-        public List<int> SelectedMovies { get; set; } = new();
+        public List<int> SelectedMovies { get; set; } = new ();
 
         public async Task<IActionResult> OnGetAsync(int groupId)
         {
-            var group = await _groupService.GetSpecificGroupByIdAsync(groupId);
+            var group = await this.groupService.GetSpecificGroupByIdAsync(groupId);
             if (group == null)
             {
-                return RedirectToPage("/Error");
+                return this.RedirectToPage("/Error");
             }
 
-            Group = group;
-            AvailableMovies = await _movieService.GetAvailableMoviesForGroupAsync(groupId);
+            this.Group = group;
+            this.AvailableMovies = await this.movieService.GetAvailableMoviesForGroupAsync(groupId);
 
-            return Page();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAddMoviesAsync()
         {
-            var group = await _groupService.GetSpecificGroupByIdAsync(GroupId);
+            var group = await this.groupService.GetSpecificGroupByIdAsync(this.GroupId);
             if (group == null)
             {
-                return RedirectToPage("/Error");
+                return this.RedirectToPage("/Error");
             }
 
-            await _movieService.AssignMoviesToGroupAsync(GroupId, SelectedMovies);
+            await this.movieService.AssignMoviesToGroupAsync(this.GroupId, this.SelectedMovies);
 
-            return RedirectToPage("/Groups/ViewGroups");
+            return this.RedirectToPage("/Groups/ViewGroups");
         }
     }
 }
