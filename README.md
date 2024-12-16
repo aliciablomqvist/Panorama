@@ -104,6 +104,6 @@ dotnet run
 
 ### Data Source
 
-*   **TMDB API**: Movie data and recommendations are powered by [The Movie Database (TMDB)](https://www.themoviedb.org/).
+*   **TMDB API**: Movie data and recommendations are powered by an API from [The Movie Database (TMDB)](https://www.themoviedb.org/).
 
 * * *
