@@ -32,6 +32,7 @@ namespace PanoramaApp.Services
         /// <param name="userId">The user identifier.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="groupId">The group identifier.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SendMessageAsync(string messageText, string userId, string userName, int groupId)
         {
             var chatMessage = new ChatMessage
@@ -51,7 +52,7 @@ namespace PanoramaApp.Services
         /// Gets the messages for group asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<ChatMessage>> GetMessagesForGroupAsync(int groupId)
         {
             return await this.context.ChatMessages

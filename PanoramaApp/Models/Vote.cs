@@ -5,7 +5,7 @@
 namespace PanoramaApp.Models
 {
     /// <summary>
-    /// Model for Voting
+    /// Model for Voting.
     /// </summary>
     public class Vote
     {

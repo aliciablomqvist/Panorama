@@ -11,7 +11,7 @@ namespace PanoramaApp.Interfaces
     using PanoramaApp.Models;
 
     /// <summary>
-    /// Interface for recommendations
+    /// Interface for recommendations.
     /// </summary>
     public interface IRecommendationService
     {
@@ -19,7 +19,7 @@ namespace PanoramaApp.Interfaces
         /// Gets the recommended movies asynchronous.
         /// </summary>
         /// <param name="user">The user.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<Movie>> GetRecommendedMoviesAsync(ClaimsPrincipal user);
     }
 }

@@ -30,7 +30,7 @@ namespace PanoramaApp.Services
         /// <summary>
         /// Gets the current user asynchronous.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IdentityUser> GetCurrentUserAsync()
         {
             return await this.userManager.GetUserAsync(ClaimsPrincipal.Current);
@@ -39,7 +39,7 @@ namespace PanoramaApp.Services
         /// <summary>
         /// Gets all users asynchronous.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<IdentityUser>> GetAllUsersAsync()
         {
             return await Task.Run(() => this.userManager.Users.ToList());
@@ -49,7 +49,7 @@ namespace PanoramaApp.Services
         /// Gets the user by identifier asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IdentityUser> GetUserByIdAsync(string userId)
         {
             return await this.userManager.FindByIdAsync(userId);

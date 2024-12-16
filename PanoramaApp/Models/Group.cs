@@ -7,7 +7,7 @@ namespace PanoramaApp.Models
     using Microsoft.AspNetCore.Identity;
 
     /// <summary>
-    /// Model for groups
+    /// Model for groups.
     /// </summary>
     public class Group
     {

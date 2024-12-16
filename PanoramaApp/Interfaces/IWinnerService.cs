@@ -9,7 +9,7 @@ namespace PanoramaApp.Interfaces
     using PanoramaApp.Models;
 
     /// <summary>
-    /// Interface for Winning movie
+    /// Interface for Winning movie.
     /// </summary>
     public interface IWinnerService
     {
@@ -17,7 +17,7 @@ namespace PanoramaApp.Interfaces
         /// Gets the winning movie asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<(Movie? WinningMovie, int VoteCount)> GetWinningMovieAsync(int groupId);
     }
 }

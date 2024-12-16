@@ -53,6 +53,7 @@ namespace PanoramaApp.Pages.Groups
         /// Called when [get asynchronous].
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task OnGetAsync(int id)
         {
             var (winningMovie, voteCount) = await this.winnerService.GetWinningMovieAsync(id);

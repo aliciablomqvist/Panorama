@@ -32,6 +32,7 @@ namespace PanoramaApp.Services
         /// </summary>
         /// <param name="movieList">The movie list.</param>
         /// <param name="groupIds">The group ids.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task AddMovieListToGroupsAsync(MovieList movieList, List<int> groupIds)
         {
             var groups = await this.context.Groups
@@ -50,7 +51,7 @@ namespace PanoramaApp.Services
         /// Gets the group by identifier asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Group> GetGroupByIdAsync(int groupId)
         {
             return await this.context.Groups
@@ -63,7 +64,7 @@ namespace PanoramaApp.Services
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Group> GetGroupWithMoviesAsync(int groupId, string userId)
         {
             var groups = await this.context.Groups
@@ -79,7 +80,7 @@ namespace PanoramaApp.Services
         /// Gets the groups for user asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<Group>> GetGroupsForUserAsync(string userId)
         {
             return await this.context.Groups
@@ -92,7 +93,7 @@ namespace PanoramaApp.Services
         /// Gets the detailed groups for user asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<Group>> GetDetailedGroupsForUserAsync(string userId)
         {
             return await this.context.Groups
@@ -123,7 +124,7 @@ namespace PanoramaApp.Services
         /// <param name="name">The name.</param>
         /// <param name="ownerId">The owner identifier.</param>
         /// <param name="userIds">The user ids.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Group> CreateGroupAsync(string name, string ownerId, List<string> userIds)
         {
             var newGroup = new Group
@@ -151,7 +152,7 @@ namespace PanoramaApp.Services
         /// Gets the user groups asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<Group>> GetUserGroupsAsync(string userId)
         {
             return await this.context.Groups
@@ -164,7 +165,7 @@ namespace PanoramaApp.Services
         /// Gets the specific group by identifier asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Group?> GetSpecificGroupByIdAsync(int groupId)
         {
             return await this.context.Groups.FirstOrDefaultAsync(g => g.Id == groupId);

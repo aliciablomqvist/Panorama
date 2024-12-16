@@ -7,7 +7,7 @@ namespace PanoramaApp.Hubs
     using Microsoft.AspNetCore.SignalR;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.SignalR.Hub" />
     public class ChatHub : Hub
@@ -17,6 +17,7 @@ namespace PanoramaApp.Hubs
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="message">The message.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SendMessage(string user, string message)
         {
             await this.Clients.All.SendAsync("ReceiveMessage", user, message);
@@ -26,6 +27,7 @@ namespace PanoramaApp.Hubs
         /// Joins the group.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task JoinGroup(int groupId)
         {
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, groupId.ToString());
@@ -35,6 +37,7 @@ namespace PanoramaApp.Hubs
         /// Leaves the group.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task LeaveGroup(int groupId)
         {
             await this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, groupId.ToString());

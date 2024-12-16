@@ -27,7 +27,7 @@ namespace PanoramaApp.Pages.MovieLists
         /// Called when [get asynchronous].
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync(int id)
         {
             this.MovieList = await this.movieListService.GetMovieListByIdAsync(id);
@@ -44,7 +44,7 @@ namespace PanoramaApp.Pages.MovieLists
         /// Called when [post save priorities asynchronous].
         /// </summary>
         /// <param name="updates">The updates.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostSavePrioritiesAsync([FromBody] List<MoviePriorityUpdate> updates)
         {
             if (updates == null || !updates.Any())

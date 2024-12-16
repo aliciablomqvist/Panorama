@@ -11,20 +11,20 @@ namespace PanoramaApp.Interfaces
     using PanoramaApp.Services;
 
     /// <summary>
-    /// Interface for movie calendars
+    /// Interface for movie calendars.
     /// </summary>
     public interface IMovieCalendarService
     {
         /// <summary>
         /// Gets all movies asynchronous.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<Movie>> GetAllMoviesAsync();
 
         /// <summary>
         /// Gets the scheduled movies asynchronous.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<MovieCalendar>> GetScheduledMoviesAsync();
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace PanoramaApp.Interfaces
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
         /// <param name="scheduledDate">The scheduled date.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task ScheduleMovieAsync(int movieId, DateTime scheduledDate);
     }
 }

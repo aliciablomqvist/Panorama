@@ -44,6 +44,7 @@ namespace PanoramaApp.Pages.Groups
         /// <summary>
         /// Called when [get asynchronous].
         /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task OnGetAsync()
         {
             var currentUser = await this.userService.GetCurrentUserAsync();
@@ -58,7 +59,7 @@ namespace PanoramaApp.Pages.Groups
         /// Called when [post accept asynchronous].
         /// </summary>
         /// <param name="invitationId">The invitation identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAcceptAsync(int invitationId)
         {
             var currentUser = await this.userService.GetCurrentUserAsync();
@@ -71,7 +72,7 @@ namespace PanoramaApp.Pages.Groups
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
         /// <param name="invitedUserId">The invited user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostInviteAsync(int groupId, string invitedUserId)
         {
             var currentUser = await this.userService.GetCurrentUserAsync();

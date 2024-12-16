@@ -45,7 +45,7 @@ namespace PanoramaApp.Pages.Groups
         /// Called when [get asynchronous].
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync(int groupId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -70,7 +70,7 @@ namespace PanoramaApp.Pages.Groups
         /// <summary>
         /// Called when [post asynchronous].
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);

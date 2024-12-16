@@ -26,7 +26,7 @@ namespace PanoramaApp.Services
         /// <summary>
         /// Gets all movies asynchronous.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<Movie>> GetAllMoviesAsync()
         {
             return await this.context.Movies.ToListAsync();
@@ -35,7 +35,7 @@ namespace PanoramaApp.Services
         /// <summary>
         /// Gets the scheduled movies asynchronous.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<MovieCalendar>> GetScheduledMoviesAsync()
         {
             return await this.context.MovieCalendars
@@ -49,6 +49,7 @@ namespace PanoramaApp.Services
         /// <param name="movieId">The movie identifier.</param>
         /// <param name="scheduledDate">The scheduled date.</param>
         /// <exception cref="System.ArgumentException">The movie does not exist.</exception>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task ScheduleMovieAsync(int movieId, DateTime scheduledDate)
         {
             var movie = await this.context.Movies.FirstOrDefaultAsync(m => m.Id == movieId);

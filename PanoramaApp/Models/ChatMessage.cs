@@ -7,7 +7,7 @@ namespace PanoramaApp.Models
     using Microsoft.AspNetCore.Identity;
 
     /// <summary>
-    /// Model for chat messages within groups
+    /// Model for chat messages within groups.
     /// </summary>
     public class ChatMessage
     {

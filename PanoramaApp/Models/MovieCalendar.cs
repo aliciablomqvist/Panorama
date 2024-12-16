@@ -7,7 +7,7 @@ namespace PanoramaApp.Models
     using Microsoft.AspNetCore.Identity;
 
     /// <summary>
-    /// Model for movie calendars
+    /// Model for movie calendars.
     /// </summary>
     public class MovieCalendar
     {

@@ -7,7 +7,7 @@ namespace PanoramaApp.Models
     using PanoramaApp.Services;
 
     /// <summary>
-    /// Model for User statistics
+    /// Model for User statistics.
     /// </summary>
     /// <seealso cref="PanoramaApp.Models.Statistics" />
     public class UserStatistics : Statistics

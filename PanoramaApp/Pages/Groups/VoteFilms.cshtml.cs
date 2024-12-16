@@ -54,7 +54,7 @@ namespace PanoramaApp.Pages.Groups
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostVoteAsync(int groupId, int movieId)
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -73,7 +73,7 @@ namespace PanoramaApp.Pages.Groups
         /// Gets the votes for movie asynchronous.
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<int> GetVotesForMovieAsync(int movieId)
         {
             return await this.voteService.GetVotesForMovieAsync(movieId);

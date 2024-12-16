@@ -10,7 +10,7 @@ namespace PanoramaApp.Interfaces
     using PanoramaApp.Models;
 
     /// <summary>
-    /// Interface for reviews
+    /// Interface for reviews.
     /// </summary>
     public interface IReviewService
     {
@@ -18,7 +18,7 @@ namespace PanoramaApp.Interfaces
         /// Gets the reviews for movie asynchronous.
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<IList<Review>> GetReviewsForMovieAsync(int movieId);
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace PanoramaApp.Interfaces
         /// <param name="userId">The user identifier.</param>
         /// <param name="content">The content.</param>
         /// <param name="rating">The rating.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task AddReviewAsync(int movieId, string userId, string content, int rating);
     }
 }

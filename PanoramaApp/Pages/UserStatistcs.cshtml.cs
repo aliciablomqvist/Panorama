@@ -15,7 +15,7 @@ namespace PanoramaApp.Pages
     using PanoramaApp.Services;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Mvc.RazorPages.PageModel" />
     public class UserStatisticsModel : PageModel
@@ -39,6 +39,7 @@ namespace PanoramaApp.Pages
         /// <summary>
         /// Called when [get asynchronous].
         /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task OnGetAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);

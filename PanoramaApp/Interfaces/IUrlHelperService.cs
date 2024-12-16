@@ -10,7 +10,7 @@ namespace PanoramaApp.Interfaces
     using PanoramaApp.Models;
 
     /// <summary>
-    /// Interface for Url's
+    /// Interface for Url's.
     /// </summary>
     public interface IUrlHelperService
     {

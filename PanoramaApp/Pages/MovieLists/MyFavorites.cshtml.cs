@@ -16,7 +16,6 @@ namespace PanoramaApp.Pages.MovieLists
     using PanoramaApp.Models;
     using PanoramaApp.Services;
 
-
     public class MyFavoritesModel : PageModel
     {
         private readonly IMovieListService movieListService;
@@ -44,7 +43,7 @@ namespace PanoramaApp.Pages.MovieLists
         /// <summary>
         /// Called when [get asynchronous].
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync()
         {
             var userId = this.userManager.GetUserId(this.User);

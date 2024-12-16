@@ -39,6 +39,7 @@ namespace PanoramaApp.Pages.Groups
         /// <summary>
         /// Called when [get asynchronous].
         /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task OnGetAsync()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

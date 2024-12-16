@@ -22,7 +22,7 @@ namespace PanoramaApp.Services
         /// <summary>
         /// Gets the movies asynchronous.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<Movie>> GetMoviesAsync()
         {
             return await this.context.Movies
@@ -34,7 +34,7 @@ namespace PanoramaApp.Services
         /// Gets the movie by identifier asynchronous.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
             return await this.context.Movies
@@ -46,7 +46,7 @@ namespace PanoramaApp.Services
         /// Gets the available movies for group asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<Movie>> GetAvailableMoviesForGroupAsync(int groupId)
         {
             var assignedMovieIds = await this.context.Movies
@@ -64,6 +64,7 @@ namespace PanoramaApp.Services
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
         /// <param name="movieIds">The movie ids.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task AssignMoviesToGroupAsync(int groupId, List<int> movieIds)
         {
             var movies = await this.context.Movies

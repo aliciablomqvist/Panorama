@@ -29,7 +29,7 @@ namespace PanoramaApp.Services
         /// Gets the recommendations asynchronous.
         /// </summary>
         /// <param name="tmdbId">The TMDB identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<Movie>> GetRecommendationsAsync(int tmdbId)
         {
             var url = $"{BaseUrl}movie/{tmdbId}/recommendations?api_key={this.apiKey}&language=en-US";
@@ -52,9 +52,8 @@ namespace PanoramaApp.Services
             return new List<Movie>();
         }
 
-
         /// <summary>
-        /// DTO-classes
+        /// DTO-classes.
         /// </summary>
         public class TmdbResponse
         {

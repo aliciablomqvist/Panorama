@@ -34,7 +34,7 @@ namespace PanoramaApp.Services
         /// Gets the winning movie asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<(Movie? WinningMovie, int VoteCount)> GetWinningMovieAsync(int groupId)
         {
             var user = await this.userService.GetCurrentUserAsync();

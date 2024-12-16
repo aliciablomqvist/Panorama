@@ -15,7 +15,7 @@ namespace PanoramaApp.Services
     using PanoramaApp.Models;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="PanoramaApp.Interfaces.IInvitationService" />
     public class InvitationService : IInvitationService
@@ -35,7 +35,7 @@ namespace PanoramaApp.Services
         /// Gets the pending invitations asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<List<GroupInvitation>> GetPendingInvitationsAsync(string userId)
         {
             return await this.context.GroupInvitations
@@ -49,6 +49,7 @@ namespace PanoramaApp.Services
         /// <param name="invitationId">The invitation identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <exception cref="System.InvalidOperationException">Invalid invitation or user.</exception>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task AcceptInvitationAsync(int invitationId, string userId)
         {
             var invitation = await this.context.GroupInvitations
@@ -86,6 +87,7 @@ namespace PanoramaApp.Services
         /// <param name="groupId">The group identifier.</param>
         /// <param name="invitedUserId">The invited user identifier.</param>
         /// <param name="invitedByUserId">The invited by user identifier.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SendInvitationAsync(int groupId, string invitedUserId, string invitedByUserId)
         {
             var newInvitation = new GroupInvitation

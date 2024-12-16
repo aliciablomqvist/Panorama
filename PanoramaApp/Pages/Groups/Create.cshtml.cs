@@ -41,6 +41,7 @@ namespace PanoramaApp.Pages.Groups
         /// <summary>
         /// Called when [get asynchronous].
         /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task OnGetAsync()
         {
             this.Users = await this.userService.GetAllUsersAsync();
@@ -49,7 +50,7 @@ namespace PanoramaApp.Pages.Groups
         /// <summary>
         /// Called when [post asynchronous].
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!this.ModelState.IsValid)

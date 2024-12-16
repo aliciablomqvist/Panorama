@@ -5,7 +5,7 @@
 namespace PanoramaApp.Models
 {
     /// <summary>
-    /// Model for group statistics
+    /// Model for group statistics.
     /// </summary>
     /// <seealso cref="PanoramaApp.Models.Statistics" />
     public class GroupStatistics : Statistics

@@ -11,7 +11,7 @@ namespace PanoramaApp.Services
     using PanoramaApp.Interfaces;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="PanoramaApp.Interfaces.IStatisticsService" />
     public class StatisticsService : IStatisticsService
@@ -27,7 +27,7 @@ namespace PanoramaApp.Services
         /// Gets the user statistics asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<UserStatisticsDto> GetUserStatisticsAsync(string userId)
         {
             var watchedMovies = await this.context.MovieLists
@@ -59,7 +59,7 @@ namespace PanoramaApp.Services
         /// Gets the group statistics asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<GroupStatisticsDto> GetGroupStatisticsAsync(int groupId)
         {
             var groupMembers = await this.context.GroupMembers

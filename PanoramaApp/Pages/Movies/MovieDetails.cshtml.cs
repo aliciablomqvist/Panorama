@@ -17,7 +17,7 @@ namespace PanoramaApp.Pages.Movies
     using PanoramaApp.Services;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Mvc.RazorPages.PageModel" />
     public class MovieDetailsModel : PageModel
@@ -60,7 +60,7 @@ namespace PanoramaApp.Pages.Movies
         /// Called when [get asynchronous].
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync(int id)
         {
             this.Movie = await this.movieService.GetMovieByIdAsync(id);
@@ -78,7 +78,7 @@ namespace PanoramaApp.Pages.Movies
         /// Called when [post add to favorites asynchronous].
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAddToFavoritesAsync(int movieId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -96,7 +96,7 @@ namespace PanoramaApp.Pages.Movies
         /// Called when [post mark as watched asynchronous].
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostMarkAsWatchedAsync(int movieId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -114,7 +114,7 @@ namespace PanoramaApp.Pages.Movies
         /// Called when [post add review asynchronous].
         /// </summary>
         /// <param name="movieId">The movie identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAddReviewAsync(int movieId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

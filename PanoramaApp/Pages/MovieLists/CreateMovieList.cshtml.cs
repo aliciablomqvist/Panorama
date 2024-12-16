@@ -51,6 +51,7 @@ namespace PanoramaApp.Pages.MovieLists
         /// <summary>
         /// Called when [get asynchronous].
         /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task OnGetAsync()
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -60,7 +61,7 @@ namespace PanoramaApp.Pages.MovieLists
         /// <summary>
         /// Called when [post asynchronous].
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);

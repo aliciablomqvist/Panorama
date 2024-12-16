@@ -7,7 +7,7 @@ namespace PanoramaApp.Models
     using Microsoft.AspNetCore.Identity;
 
     /// <summary>
-    /// Model for review
+    /// Model for review.
     /// </summary>
     public class Review
     {

@@ -13,7 +13,7 @@ namespace PanoramaApp.Pages.Movies
     using PanoramaApp.Models;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Mvc.RazorPages.PageModel" />
     public class MovieCalendarModel : PageModel
@@ -66,7 +66,7 @@ namespace PanoramaApp.Pages.Movies
         /// <summary>
         /// Called when [get asynchronous].
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync()
         {
             this.Movies = await this.movieCalendarService.GetAllMoviesAsync();
@@ -77,7 +77,7 @@ namespace PanoramaApp.Pages.Movies
         /// <summary>
         /// Called when [post schedule movie asynchronous].
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostScheduleMovieAsync()
         {
             try
@@ -88,7 +88,7 @@ namespace PanoramaApp.Pages.Movies
             catch (ArgumentException ex)
             {
                 this.ModelState.AddModelError(string.Empty, ex.Message);
-                return await this.OnGetAsync(); 
+                return await this.OnGetAsync();
             }
         }
     }

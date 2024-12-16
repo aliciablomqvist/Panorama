@@ -12,7 +12,7 @@ namespace PanoramaApp.Interfaces
     using PanoramaApp.Services;
 
     /// <summary>
-    /// Interface for statistics, both user and group
+    /// Interface for statistics, both user and group.
     /// </summary>
     public interface IStatisticsService
     {
@@ -20,14 +20,14 @@ namespace PanoramaApp.Interfaces
         /// Gets the user statistics asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<UserStatisticsDto> GetUserStatisticsAsync(string userId);
 
         /// <summary>
         /// Gets the group statistics asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<GroupStatisticsDto> GetGroupStatisticsAsync(int groupId);
     }
 }

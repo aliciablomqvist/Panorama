@@ -10,28 +10,28 @@ namespace PanoramaApp.Interfaces
     using PanoramaApp.Models;
 
     /// <summary>
-    /// Interface for Movies,
+    /// Interface for Movies,.
     /// </summary>
     public interface IMovieService
     {
         /// <summary>
         /// Gets the movies asynchronous.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<Movie>> GetMoviesAsync();
 
         /// <summary>
         /// Gets the movie by identifier asynchronous.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<Movie> GetMovieByIdAsync(int id);
 
         /// <summary>
         /// Gets the available movies for group asynchronous.
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<Movie>> GetAvailableMoviesForGroupAsync(int groupId);
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace PanoramaApp.Interfaces
         /// </summary>
         /// <param name="groupId">The group identifier.</param>
         /// <param name="movieIds">The movie ids.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task AssignMoviesToGroupAsync(int groupId, List<int> movieIds);
     }
 }

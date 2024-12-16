@@ -42,7 +42,7 @@ namespace PanoramaApp.Pages.MovieLists
         /// Called when [get asynchronous].
         /// </summary>
         /// <param name="listId">The list identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnGetAsync(int listId)
         {
             this.MovieList = await this.movieListService.GetMovieListByIdAsync(listId);
@@ -61,7 +61,7 @@ namespace PanoramaApp.Pages.MovieLists
         /// Called when [post asynchronous].
         /// </summary>
         /// <param name="listId">The list identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync(int listId)
         {
             await this.movieListService.AddMoviesToListAsync(listId, this.SelectedMovieIds);

@@ -10,7 +10,7 @@ namespace PanoramaApp.Interfaces
     using PanoramaApp.Models;
 
     /// <summary>
-    /// Interface for invitations to groups
+    /// Interface for invitations to groups.
     /// </summary>
     public interface IInvitationService
     {
@@ -18,7 +18,7 @@ namespace PanoramaApp.Interfaces
         /// Gets the pending invitations asynchronous.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task<List<GroupInvitation>> GetPendingInvitationsAsync(string userId);
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace PanoramaApp.Interfaces
         /// </summary>
         /// <param name="invitationId">The invitation identifier.</param>
         /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task AcceptInvitationAsync(int invitationId, string userId);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace PanoramaApp.Interfaces
         /// <param name="groupId">The group identifier.</param>
         /// <param name="invitedUserId">The invited user identifier.</param>
         /// <param name="invitedByUserId">The invited by user identifier.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task SendInvitationAsync(int groupId, string invitedUserId, string invitedByUserId);
     }
 }

@@ -5,7 +5,7 @@
 namespace PanoramaApp.Models
 {
     /// <summary>
-    /// Model for movies
+    /// Model for movies.
     /// </summary>
     public class Movie
     {
