@@ -4,6 +4,10 @@
 
 namespace PanoramaApp.Models
 {
+    /// <summary>
+    /// Model for group statistics
+    /// </summary>
+    /// <seealso cref="PanoramaApp.Models.Statistics" />
     public class GroupStatistics : Statistics
     {
         public string GroupName { get; set; } = string.Empty;

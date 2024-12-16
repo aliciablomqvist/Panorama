@@ -4,6 +4,9 @@
 
 namespace PanoramaApp.Models
 {
+    /// <summary>
+    /// Model for movies
+    /// </summary>
     public class Movie
     {
         public int Id { get; set; }

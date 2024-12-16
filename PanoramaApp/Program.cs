@@ -37,7 +37,7 @@ builder.Services.AddScoped<IInvitationService, InvitationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 
-// Loggning
+// Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 

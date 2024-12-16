@@ -9,14 +9,20 @@ namespace PanoramaApp.Data
     using Microsoft.EntityFrameworkCore;
 
     using PanoramaApp.Models;
-
+    /// <summary>
+    /// Represents the application's database context.
+    /// Inherits from <see cref="IdentityDbContext{TUser}"/> to provide identity functionality for user management.
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
+        /// </summary>
+        /// <param name="options">The options.</param>
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-
         public DbSet<Group> Groups { get; set; }
 
         public DbSet<Vote> Votes { get; set; }
@@ -35,9 +41,10 @@ namespace PanoramaApp.Data
 
         public DbSet<MovieCalendar> MovieCalendars { get; set; }
 
-        public virtual DbSet<ChatMessage> ChatMessages { get; set; } // Vad ska denna vara?
+        public virtual DbSet<ChatMessage> ChatMessages { get; set; } 
 
         public DbSet<GroupChatContext> GroupChatContexts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

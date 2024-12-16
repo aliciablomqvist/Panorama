@@ -4,6 +4,9 @@
 
 namespace PanoramaApp.Models
 {
+    /// <summary>
+    /// Model for Voting
+    /// </summary>
     public class Vote
     {
         public int Id { get; set; }

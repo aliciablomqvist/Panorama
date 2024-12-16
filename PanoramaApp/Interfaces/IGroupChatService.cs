@@ -9,6 +9,9 @@ namespace PanoramaApp.Interfaces
 
     using PanoramaApp.Models;
 
+    /// <summary>
+    /// Interface for group chat operations
+    /// </summary>
     public interface IGroupChatService
     {
         /// <summary>

@@ -6,6 +6,9 @@ namespace PanoramaApp.Models
 {
     using Microsoft.AspNetCore.Identity;
 
+    /// <summary>
+    /// Model for the context for group chats
+    /// </summary>
     public class GroupChatContext
     {
         public int Id { get; set; }

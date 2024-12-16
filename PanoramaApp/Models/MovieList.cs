@@ -6,6 +6,9 @@ namespace PanoramaApp.Models
 {
     using Microsoft.AspNetCore.Identity;
 
+    /// <summary>
+    /// Model for a movie lists
+    /// </summary>
     public class MovieList
     {
         public int Id { get; set; }

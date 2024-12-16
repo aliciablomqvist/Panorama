@@ -9,8 +9,16 @@ namespace PanoramaApp.Interfaces
 
     using PanoramaApp.Models;
 
+    /// <summary>
+    /// Interface for Url's
+    /// </summary>
     public interface IUrlHelperService
     {
+        /// <summary>
+        /// Converts to embed URL.
+        /// </summary>
+        /// <param name="youtubeUrl">The youtube URL.</param>
+        /// <returns></returns>
         string ConvertToEmbedUrl(string youtubeUrl);
     }
 }

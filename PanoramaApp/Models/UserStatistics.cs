@@ -6,6 +6,10 @@ namespace PanoramaApp.Models
 {
     using PanoramaApp.Services;
 
+    /// <summary>
+    /// Model for User statistics
+    /// </summary>
+    /// <seealso cref="PanoramaApp.Models.Statistics" />
     public class UserStatistics : Statistics
     {
         public string UserName { get; set; } = string.Empty;

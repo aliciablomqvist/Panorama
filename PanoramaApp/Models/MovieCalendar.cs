@@ -6,6 +6,9 @@ namespace PanoramaApp.Models
 {
     using Microsoft.AspNetCore.Identity;
 
+    /// <summary>
+    /// Model for movie calendars
+    /// </summary>
     public class MovieCalendar
     {
         public int Id { get; set; }

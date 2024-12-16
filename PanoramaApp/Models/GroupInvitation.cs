@@ -6,6 +6,9 @@ namespace PanoramaApp.Models
 {
     using Microsoft.AspNetCore.Identity;
 
+    /// <summary>
+    /// Model for invitations to groups
+    /// </summary>
     public class GroupInvitation
     {
         public int Id { get; set; }

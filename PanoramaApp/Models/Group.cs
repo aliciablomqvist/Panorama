@@ -6,6 +6,9 @@ namespace PanoramaApp.Models
 {
     using Microsoft.AspNetCore.Identity;
 
+    /// <summary>
+    /// Model for groups
+    /// </summary>
     public class Group
     {
         public int Id { get; set; }
