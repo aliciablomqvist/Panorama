@@ -1,6 +1,6 @@
 # Panorama - Movie Management and Social Sharing Platform
 
-Panorama is a dynamic platform for managing, sharing, and discovering movies within groups. Designed for movie enthusiasts, it provides features such as personalized movie lists, group chats, voting systems, and integrations with the TMDB API for recommendations and movie details.
+Panorama is a dynamic platform for managing, sharing, and discovering movies within groups. Designed for movie enthusiasts, it provides features such as personalized movie lists, group chats, voting systems, and integrations with the TMDB API for recommendations and movie details. 
 
 * * *
 
