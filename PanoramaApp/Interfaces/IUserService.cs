@@ -8,5 +8,7 @@ namespace PanoramaApp.Interfaces
     {
         Task<IdentityUser> GetCurrentUserAsync();
         Task<List<IdentityUser>> GetAllUsersAsync();
+
+                Task<IdentityUser> GetUserByIdAsync(string userId);
     }
 }

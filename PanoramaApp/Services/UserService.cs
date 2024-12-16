@@ -26,6 +26,9 @@ namespace PanoramaApp.Services
         {
             return await Task.Run(() => _userManager.Users.ToList());
         }
-
+        public async Task<IdentityUser> GetUserByIdAsync(string userId)
+        {
+            return await _userManager.FindByIdAsync(userId);
+        }
     }
 }

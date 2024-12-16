@@ -17,14 +17,6 @@ namespace PanoramaApp.Services
             _context = context;
         }
 
-
-        public async Task<List<Group>> GetUserGroupsAsync(string userId)
-        {
-            return await _context.Groups
-                .Where(g => g.Members.Any(m => m.UserId == userId))
-                .ToListAsync();
-        }
-
         public async Task AddMovieListToGroupsAsync(MovieList movieList, List<int> groupIds)
         {
             var groups = await _context.Groups
@@ -78,6 +70,37 @@ namespace PanoramaApp.Services
         {
             return await _context.GroupMembers
                 .AnyAsync(m => m.GroupId == groupId && m.UserId == userId);
+        }
+
+        public async Task<Group> CreateGroupAsync(string name, string ownerId, List<string> userIds)
+        {
+            var newGroup = new Group
+            {
+                Name = name,
+                OwnerId = ownerId
+            };
+
+            _context.Groups.Add(newGroup);
+            await _context.SaveChangesAsync();
+
+            var groupMembers = userIds.Select(userId => new GroupMember
+            {
+                GroupId = newGroup.Id,
+                UserId = userId
+            });
+
+            _context.GroupMembers.AddRange(groupMembers);
+            await _context.SaveChangesAsync();
+
+            return newGroup;
+        }
+
+        public async Task<List<Group>> GetUserGroupsAsync(string userId)
+        {
+            return await _context.Groups
+                .Include(g => g.Members)
+                .Where(g => g.Members.Any(m => m.UserId == userId))
+                .ToListAsync();
         }
     }
 }

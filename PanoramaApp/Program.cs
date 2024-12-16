@@ -36,7 +36,7 @@ builder.Services.AddScoped<IVoteService, VoteService>();
 builder.Services.AddScoped<IWinnerService, WinnerService>();
 builder.Services.AddScoped<IInvitationService, InvitationService>();
 builder.Services.AddScoped<IUserService, UserService>();
-
+builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 
 // Loggning
 builder.Logging.ClearProviders();

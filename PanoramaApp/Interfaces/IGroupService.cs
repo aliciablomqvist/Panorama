@@ -14,7 +14,7 @@ namespace PanoramaApp.Interfaces
         Task<Group> GetGroupByIdAsync(int groupId);
 
         Task<Group> GetGroupWithMoviesAsync(int groupId, string userId);
-        Task<bool> IsUserMemberOfGroupAsync(string userId, int groupId);
-
+        Task<bool> IsUserMemberOfGroupAsync(string userId, int groupId); 
+        Task<Group> CreateGroupAsync(string name, string ownerId, List<string> userIds);
     }
 }
