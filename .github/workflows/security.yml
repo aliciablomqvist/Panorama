@@ -12,13 +12,29 @@ jobs:
   security-check:
     name: CodeQL Analysis
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v2
 
+    # Setup .NET environment
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '8.0'
+
+    # Initialize CodeQL
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: csharp
 
+    # Restore dependencies and build the project
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build the Project
+      run: dotnet build
+
+    # Perform CodeQL Analysis
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
