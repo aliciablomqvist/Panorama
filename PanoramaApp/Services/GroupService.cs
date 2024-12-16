@@ -102,6 +102,10 @@ namespace PanoramaApp.Services
                 .Where(g => g.Members.Any(m => m.UserId == userId))
                 .ToListAsync();
         }
+        public async Task<Group?> GetSpecificGroupByIdAsync(int groupId)
+        {
+            return await _context.Groups.FirstOrDefaultAsync(g => g.Id == groupId);
+        }
     }
 }
  

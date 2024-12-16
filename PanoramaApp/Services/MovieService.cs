@@ -28,5 +28,31 @@ namespace PanoramaApp.Services
                  .Include(m => m.MovieListItems)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
+        public async Task<List<Movie>> GetAvailableMoviesForGroupAsync(int groupId)
+        {
+            var assignedMovieIds = await _context.Movies
+                .Where(m => m.GroupId == groupId)
+                .Select(m => m.Id)
+                .ToListAsync();
+
+            return await _context.Movies
+                .Where(m => !assignedMovieIds.Contains(m.Id))
+                .ToListAsync();
+        }
+
+        public async Task AssignMoviesToGroupAsync(int groupId, List<int> movieIds)
+        {
+            var movies = await _context.Movies
+                .Where(m => movieIds.Contains(m.Id))
+                .ToListAsync();
+
+            foreach (var movie in movies)
+            {
+                movie.GroupId = groupId;
+            }
+
+            _context.Movies.UpdateRange(movies);
+            await _context.SaveChangesAsync();
+        }
     }
     }

@@ -1,74 +1,60 @@
 // <copyright file="AddMoviesModel.cshtml.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using PanoramaApp.Data;
+using PanoramaApp.Interfaces;
 using PanoramaApp.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PanoramaApp.Pages.Groups
 {
     public class AddMoviesModel : PageModel
-{
-    private readonly ApplicationDbContext context;
-
-    public AddMoviesModel(ApplicationDbContext context)
     {
-        this.context = context;
-    }
+        private readonly IGroupService _groupService;
+        private readonly IMovieService _movieService;
 
-    public Group Group { get; set; } = default!;
-
-    public List<Movie> AvailableMovies { get; set; } = new List<Movie>();
-
-    [BindProperty]
-    public int GroupId { get; set; }
-
-    [BindProperty]
-    public List<int> SelectedMovies { get; set; } = new List<int>();
-
-    public async Task OnGetAsync(int groupId)
-    {
-        this.Group = await this.context.Groups.FirstOrDefaultAsync(g => g.Id == groupId);
-
-        if (this.Group != null)
+        public AddMoviesModel(IGroupService groupService, IMovieService movieService)
         {
-            var assignedMovieIds = await this.context.Movies
-                .Where(m => m.GroupId == groupId)
-                .Select(m => m.Id)
-                .ToListAsync();
-
-            this.AvailableMovies = await this.context.Movies
-                .Where(m => !assignedMovieIds.Contains(m.Id))
-                .ToListAsync();
-        }
-    }
-
-    public async Task<IActionResult> OnPostAddMoviesAsync()
-    {
-        var group = await this.context.Groups.FirstOrDefaultAsync(g => g.Id == this.GroupId);
-        if (group == null)
-        {
-            return this.RedirectToPage("/Error");
+            _groupService = groupService;
+            _movieService = movieService;
         }
 
-        foreach (var movieId in this.SelectedMovies)
+        public Group Group { get; set; } = default!;
+        public List<Movie> AvailableMovies { get; set; } = new();
+
+        [BindProperty]
+        public int GroupId { get; set; }
+
+        [BindProperty]
+        public List<int> SelectedMovies { get; set; } = new();
+
+        public async Task<IActionResult> OnGetAsync(int groupId)
         {
-            var movie = await this.context.Movies.FirstOrDefaultAsync(m => m.Id == movieId);
-            if (movie != null)
+            var group = await _groupService.GetSpecificGroupByIdAsync(groupId);
+            if (group == null)
             {
-                movie.GroupId = group.Id;
-                this.context.Movies.Update(movie);
+                return RedirectToPage("/Error");
             }
+
+            Group = group;
+            AvailableMovies = await _movieService.GetAvailableMoviesForGroupAsync(groupId);
+
+            return Page();
         }
 
-        await this.context.SaveChangesAsync();
-        return this.RedirectToPage("/Groups/ViewGroups");
+        public async Task<IActionResult> OnPostAddMoviesAsync()
+        {
+            var group = await _groupService.GetSpecificGroupByIdAsync(GroupId);
+            if (group == null)
+            {
+                return RedirectToPage("/Error");
+            }
+
+            await _movieService.AssignMoviesToGroupAsync(GroupId, SelectedMovies);
+
+            return RedirectToPage("/Groups/ViewGroups");
+        }
     }
-}
 }
