@@ -3,8 +3,156 @@
   "WorkspaceRootPath": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\models\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\models\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\create.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\groups\\create.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\groupchat.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\groups\\groupchat.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\groupstatistics.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\groups\\groupstatistics.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\invitations.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\groups\\invitations.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\viewgroups.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\groups\\viewgroups.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\viewwinner.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\groups\\viewwinner.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\votefilms.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\groups\\votefilms.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movielists\\addtomovielist.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movielists\\addtomovielist.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movielists\\createmovielist.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movielists\\createmovielist.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movielists\\movielistdetails.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movielists\\movielistdetails.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movielists\\myfavorites.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movielists\\myfavorites.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movielists\\sharelist.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movielists\\sharelist.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movielists\\viewmovielists.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movielists\\viewmovielists.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movielists\\watchedmovies.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movielists\\watchedmovies.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movies\\moviedetails.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movies\\moviedetails.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movies\\moviecalendar.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movies\\moviecalendar.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\movies\\exploremovies.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\movies\\exploremovies.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\userstatistcs.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\userstatistcs.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\groupchatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\groupchatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\groupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\groupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\invitationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\invitationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\moviecalendarservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\moviecalendarservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\movielistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\movielistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\movieprioritizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\movieprioritizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\movieservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\movieservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\moviesorter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\moviesorter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\reviewservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\reviewservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\statisticservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\statisticservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\tmdbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\tmdbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\urlhelperservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\urlhelperservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\voteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\voteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\services\\winnerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\services\\winnerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\interfaces\\igroupchatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\interfaces\\igroupchatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\dto\\userstatistics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\dto\\userstatistics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\dto\\groupstatistics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\dto\\groupstatistics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -13,10 +161,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\groups\\addmovies.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\groups\\addmovies.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|c:\\users\\stefan\\documents\\github\\panorama\\panoramaapp\\pages\\userstatistcs.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{339E779B-7B8A-4013-8D11-5F963EC23E96}|PanoramaApp\\PanoramaApp.csproj|solutionrelative:panoramaapp\\pages\\userstatistcs.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,19 +175,500 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Vote.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Models\\Vote.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Models\\Vote.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Models\\Vote.cs*",
+              "RelativeToolTip": "PanoramaApp\\Models\\Vote.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:18:35.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Create.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\Create.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\Create.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\Create.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\Create.cshtml.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAowDEAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:18:17.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GroupChat.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\GroupChat.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\GroupChat.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\GroupChat.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\GroupChat.cshtml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEYAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:18:04.882Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GroupStatistics.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\GroupStatistics.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\GroupStatistics.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\GroupStatistics.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\GroupStatistics.cshtml.cs",
+              "ViewState": "AQIAACMAAAAAAAAAAAAgwCcAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:17:53.455Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Invitations.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\Invitations.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\Invitations.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\Invitations.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\Invitations.cshtml.cs",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAiwEUAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:17:19.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ViewGroups.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\ViewGroups.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\ViewGroups.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\ViewGroups.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\ViewGroups.cshtml.cs",
+              "ViewState": "AQIAABwAAAAAAAAAAAAQwCQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:17:02.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ViewWinner.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\ViewWinner.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\ViewWinner.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\ViewWinner.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\ViewWinner.cshtml.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAxwCEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:16:47.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "VoteFilms.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\VoteFilms.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\VoteFilms.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\VoteFilms.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\VoteFilms.cshtml.cs",
+              "ViewState": "AQIAADEAAAAAAAAAAAAkwEwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:16:33.588Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AddToMovieList.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\AddToMovieList.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\MovieLists\\AddToMovieList.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\AddToMovieList.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\MovieLists\\AddToMovieList.cshtml.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAAwDwAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:16:16.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CreateMovieList.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\CreateMovieList.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\MovieLists\\CreateMovieList.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\CreateMovieList.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\MovieLists\\CreateMovieList.cshtml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADMAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:16:01.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MovieListDetails.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\MovieListDetails.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\MovieLists\\MovieListDetails.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\MovieListDetails.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\MovieLists\\MovieListDetails.cshtml.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABkAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:15:48.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MyFavorites.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\MyFavorites.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\MovieLists\\MyFavorites.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\MyFavorites.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\MovieLists\\MyFavorites.cshtml.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAQwCwAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:15:26.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ShareList.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\ShareList.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\MovieLists\\ShareList.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\ShareList.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\MovieLists\\ShareList.cshtml.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAzwCsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:15:12.945Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ViewMovieLists.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\ViewMovieLists.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\MovieLists\\ViewMovieLists.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\ViewMovieLists.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\MovieLists\\ViewMovieLists.cshtml.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAQwDcAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:14:51.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "WatchedMovies.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\WatchedMovies.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\MovieLists\\WatchedMovies.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\MovieLists\\WatchedMovies.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\MovieLists\\WatchedMovies.cshtml.cs",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAAwCkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:14:40.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "MovieDetails.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Movies\\MovieDetails.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Movies\\MovieDetails.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Movies\\MovieDetails.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Movies\\MovieDetails.cshtml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:13:56.983Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "MovieCalendar.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Movies\\MovieCalendar.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Movies\\MovieCalendar.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Movies\\MovieCalendar.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Movies\\MovieCalendar.cshtml.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAFoAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:13:09.665Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ExploreMovies.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Movies\\ExploreMovies.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Movies\\ExploreMovies.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Movies\\ExploreMovies.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\Movies\\ExploreMovies.cshtml.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAAwCgAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:12:54.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "GroupService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\GroupService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\GroupService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\GroupService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\GroupService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAKcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:11:35.676Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "InvitationService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\InvitationService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\InvitationService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\InvitationService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\InvitationService.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAUwBEAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:11:13.455Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "MovieCalendarService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MovieCalendarService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\MovieCalendarService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MovieCalendarService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\MovieCalendarService.cs",
+              "ViewState": "AQIAACwAAAAAAAAAAAAgwDMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:11:03.779Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "MovieListService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MovieListService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\MovieListService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MovieListService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\MovieListService.cs",
+              "ViewState": "AQIAAO4AAAAAAAAAAAAYwOMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:10:23.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "GroupChatService.cs",
               "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\GroupChatService.cs",
               "RelativeDocumentMoniker": "PanoramaApp\\Services\\GroupChatService.cs",
-              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\GroupChatService.cs*",
-              "RelativeToolTip": "PanoramaApp\\Services\\GroupChatService.cs*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC8AAAAVAAAA",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\GroupChatService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\GroupChatService.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAYwDYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-16T15:52:54.364Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 18,
+              "Title": "UserStatistcs.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\UserStatistcs.cshtml.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\UserStatistcs.cshtml.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\UserStatistcs.cshtml.cs",
+              "RelativeToolTip": "PanoramaApp\\Pages\\UserStatistcs.cshtml.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAzwBEAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T15:50:44.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "MoviePrioritizer.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MoviePrioritizer.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\MoviePrioritizer.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MoviePrioritizer.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\MoviePrioritizer.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAAwC0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:10:11.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "MovieService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MovieService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\MovieService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MovieService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\MovieService.cs",
+              "ViewState": "AQIAADoAAAAAAAAAAAAkwEIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:10:00.062Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "MovieSorter.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MovieSorter.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\MovieSorter.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\MovieSorter.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\MovieSorter.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:09:54.821Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ReviewService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\ReviewService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\ReviewService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\ReviewService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\ReviewService.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAQwC4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:09:38.483Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "StatisticService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\StatisticService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\StatisticService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\StatisticService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\StatisticService.cs",
+              "ViewState": "AQIAACQAAAAAAAAAAAAYwD8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:08:56.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "TmdbService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\TmdbService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\TmdbService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\TmdbService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\TmdbService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADgAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:08:13.327Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "UrlHelperService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\UrlHelperService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\UrlHelperService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\UrlHelperService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\UrlHelperService.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:07:53.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\UserService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\UserService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:07:38.39Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "VoteService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\VoteService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\VoteService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\VoteService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\VoteService.cs",
+              "ViewState": "AQIAADUAAAAAAAAAAAAiwEAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:07:21.607Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "WinnerService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\WinnerService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Services\\WinnerService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Services\\WinnerService.cs",
+              "RelativeToolTip": "PanoramaApp\\Services\\WinnerService.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:07:05.48Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "IGroupChatService.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Interfaces\\IGroupChatService.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Interfaces\\IGroupChatService.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Interfaces\\IGroupChatService.cs",
+              "RelativeToolTip": "PanoramaApp\\Interfaces\\IGroupChatService.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAUwBwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:06:33.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Hubs\\ChatHub.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\Hubs\\ChatHub.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Hubs\\ChatHub.cs",
+              "RelativeToolTip": "PanoramaApp\\Hubs\\ChatHub.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAAwCUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:06:03.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "UserStatistics.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\DTO\\UserStatistics.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\DTO\\UserStatistics.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\DTO\\UserStatistics.cs",
+              "RelativeToolTip": "PanoramaApp\\DTO\\UserStatistics.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAAYwCYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:05:41.749Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "GroupStatistics.cs",
+              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\DTO\\GroupStatistics.cs",
+              "RelativeDocumentMoniker": "PanoramaApp\\DTO\\GroupStatistics.cs",
+              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\DTO\\GroupStatistics.cs",
+              "RelativeToolTip": "PanoramaApp\\DTO\\GroupStatistics.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T17:04:23.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\Create.cshtml",
               "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\Create.cshtml",
@@ -51,12 +676,11 @@
               "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\Create.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-16T15:52:01.861Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-16T15:52:01.861Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 39,
               "Title": "AddMovies.cshtml",
               "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\Groups\\AddMovies.cshtml",
               "RelativeDocumentMoniker": "PanoramaApp\\Pages\\Groups\\AddMovies.cshtml",
@@ -64,21 +688,7 @@
               "RelativeToolTip": "PanoramaApp\\Pages\\Groups\\AddMovies.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-16T15:52:00.546Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserStatistcs.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\UserStatistcs.cshtml.cs",
-              "RelativeDocumentMoniker": "PanoramaApp\\Pages\\UserStatistcs.cshtml.cs",
-              "ToolTip": "C:\\Users\\Stefan\\Documents\\GitHub\\Panorama\\PanoramaApp\\Pages\\UserStatistcs.cshtml.cs",
-              "RelativeToolTip": "PanoramaApp\\Pages\\UserStatistcs.cshtml.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T15:50:44.168Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-16T15:52:00.546Z"
             }
           ]
         }

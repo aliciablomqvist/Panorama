@@ -16,6 +16,10 @@ namespace PanoramaApp.Pages.MovieLists
     {
         private readonly IMovieListService movieListService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareListModel"/> class.
+        /// </summary>
+        /// <param name="movieListService">The movie list service.</param>
         public ShareListModel(IMovieListService movieListService)
         {
             this.movieListService = movieListService;
@@ -25,6 +29,11 @@ namespace PanoramaApp.Pages.MovieLists
 
         public string ShareableLink { get; private set; }
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
+        /// <param name="listId">The list identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync(int listId)
         {
             this.MovieList = await this.movieListService.GetMovieListByIdAsync(listId);
@@ -33,8 +42,6 @@ namespace PanoramaApp.Pages.MovieLists
             {
                 return this.NotFound();
             }
-
-            // Generera en delbar länk direkt med Url.Page
             this.ShareableLink = this.Url.Page(
                 "/Movies/MovieListDetails",
                 null,

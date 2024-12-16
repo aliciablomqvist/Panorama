@@ -16,6 +16,12 @@ namespace PanoramaApp.Services
 
     public static class MovieSorter
     {
+        /// <summary>
+        /// Sorts the by list.
+        /// </summary>
+        /// <param name="movies">The movies.</param>
+        /// <param name="sortBy">The sort by.</param>
+        /// <returns></returns>
         public static List<Movie> SortByList(List<Movie> movies, string sortBy)
         {
             return sortBy switch

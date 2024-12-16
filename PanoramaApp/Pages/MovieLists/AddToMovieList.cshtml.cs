@@ -20,6 +20,11 @@ namespace PanoramaApp.Pages.MovieLists
         private readonly IMovieListService movieListService;
         private readonly UserManager<IdentityUser> userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddMovieModel"/> class.
+        /// </summary>
+        /// <param name="movieListService">The movie list service.</param>
+        /// <param name="userManager">The user manager.</param>
         public AddMovieModel(IMovieListService movieListService, UserManager<IdentityUser> userManager)
         {
             this.movieListService = movieListService;
@@ -33,6 +38,11 @@ namespace PanoramaApp.Pages.MovieLists
 
         public List<SelectListItem> MovieOptions { get; private set; } = new ();
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
+        /// <param name="listId">The list identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync(int listId)
         {
             this.MovieList = await this.movieListService.GetMovieListByIdAsync(listId);
@@ -47,6 +57,11 @@ namespace PanoramaApp.Pages.MovieLists
             return this.Page();
         }
 
+        /// <summary>
+        /// Called when [post asynchronous].
+        /// </summary>
+        /// <param name="listId">The list identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync(int listId)
         {
             await this.movieListService.AddMoviesToListAsync(listId, this.SelectedMovieIds);

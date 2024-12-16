@@ -22,6 +22,11 @@ namespace PanoramaApp.Services
             this.context = context;
         }
 
+        /// <summary>
+        /// Gets the reviews for movie asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns></returns>
         public async Task<IList<Review>> GetReviewsForMovieAsync(int movieId)
         {
             return await this.context.Reviews
@@ -31,6 +36,14 @@ namespace PanoramaApp.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Adds the review asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="rating">The rating.</param>
+        /// <exception cref="System.ArgumentException">The movie does not exist.</exception>
         public async Task AddReviewAsync(int movieId, string userId, string content, int rating)
         {
             var movieExists = await this.context.Movies.AnyAsync(m => m.Id == movieId);

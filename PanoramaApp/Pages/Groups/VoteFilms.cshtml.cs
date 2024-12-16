@@ -19,6 +19,12 @@ namespace PanoramaApp.Pages.Groups
         private readonly IVoteService voteService;
         private readonly UserManager<IdentityUser> userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VoteFilmsModel"/> class.
+        /// </summary>
+        /// <param name="groupService">The group service.</param>
+        /// <param name="voteService">The vote service.</param>
+        /// <param name="userManager">The user manager.</param>
         public VoteFilmsModel(IGroupService groupService, IVoteService voteService, UserManager<IdentityUser> userManager)
         {
             this.groupService = groupService;
@@ -43,6 +49,12 @@ namespace PanoramaApp.Pages.Groups
             return this.Page();
         }
 
+        /// <summary>
+        /// Called when [post vote asynchronous].
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostVoteAsync(int groupId, int movieId)
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -57,6 +69,11 @@ namespace PanoramaApp.Pages.Groups
             return this.RedirectToPage(new { groupId });
         }
 
+        /// <summary>
+        /// Gets the votes for movie asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns></returns>
         public async Task<int> GetVotesForMovieAsync(int movieId)
         {
             return await this.voteService.GetVotesForMovieAsync(movieId);

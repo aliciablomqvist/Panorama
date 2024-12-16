@@ -16,6 +16,11 @@ namespace PanoramaApp.Services
 
     public class UrlHelperService : IUrlHelperService
     {
+        /// <summary>
+        /// Converts to embed URL.
+        /// </summary>
+        /// <param name="youtubeUrl">The youtube URL.</param>
+        /// <returns></returns>
         public string ConvertToEmbedUrl(string youtubeUrl)
         {
             if (string.IsNullOrEmpty(youtubeUrl))

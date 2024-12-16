@@ -19,13 +19,26 @@ namespace PanoramaApp.Pages.Groups
     {
         private readonly ApplicationDbContext context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewGroupsModel"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public ViewGroupsModel(ApplicationDbContext context)
         {
             this.context = context;
         }
 
+        /// <summary>
+        /// Gets or sets the groups.
+        /// </summary>
+        /// <value>
+        /// The groups.
+        /// </value>
         public List<Group> Groups { get; set; } = new List<Group>();
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
         public async Task OnGetAsync()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -20,6 +20,12 @@ namespace PanoramaApp.Pages.Groups
         private readonly IGroupService groupService;
         private readonly UserManager<IdentityUser> userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupChatModel"/> class.
+        /// </summary>
+        /// <param name="chatService">The chat service.</param>
+        /// <param name="groupService">The group service.</param>
+        /// <param name="userManager">The user manager.</param>
         public GroupChatModel(IGroupChatService chatService, IGroupService groupService, UserManager<IdentityUser> userManager)
         {
             this.chatService = chatService;
@@ -35,6 +41,11 @@ namespace PanoramaApp.Pages.Groups
         [BindProperty(SupportsGet = true)]
         public int GroupId { get; set; }
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync(int groupId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -56,6 +67,10 @@ namespace PanoramaApp.Pages.Groups
             return this.Page();
         }
 
+        /// <summary>
+        /// Called when [post asynchronous].
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);

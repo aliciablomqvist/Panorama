@@ -22,12 +22,23 @@ namespace PanoramaApp.Pages.MovieLists
         private readonly IMovieListService movieListService;
         private readonly UserManager<IdentityUser> userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WatchedModel"/> class.
+        /// </summary>
+        /// <param name="movieListService">The movie list service.</param>
+        /// <param name="userManager">The user manager.</param>
         public WatchedModel(IMovieListService movieListService, UserManager<IdentityUser> userManager)
         {
             this.movieListService = movieListService;
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// Gets the watched movies.
+        /// </summary>
+        /// <value>
+        /// The watched movies.
+        /// </value>
         public List<Movie> WatchedMovies { get; private set; } = new List<Movie>();
 
         public async Task<IActionResult> OnGetAsync()

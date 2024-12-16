@@ -16,19 +16,35 @@ namespace PanoramaApp.Pages.MovieLists
     using PanoramaApp.Models;
     using PanoramaApp.Services;
 
+
     public class MyFavoritesModel : PageModel
     {
         private readonly IMovieListService movieListService;
         private readonly UserManager<IdentityUser> userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyFavoritesModel"/> class.
+        /// </summary>
+        /// <param name="movieListService">The movie list service.</param>
+        /// <param name="userManager">The user manager.</param>
         public MyFavoritesModel(IMovieListService movieListService, UserManager<IdentityUser> userManager)
         {
             this.movieListService = movieListService;
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// Gets the movie list.
+        /// </summary>
+        /// <value>
+        /// The movie list.
+        /// </value>
         public MovieList MovieList { get; private set; }
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync()
         {
             var userId = this.userManager.GetUserId(this.User);

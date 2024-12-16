@@ -20,6 +20,12 @@ namespace PanoramaApp.Pages.Groups
         private readonly IGroupService groupService;
         private readonly IUserService userService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvitationsModel"/> class.
+        /// </summary>
+        /// <param name="invitationService">The invitation service.</param>
+        /// <param name="groupService">The group service.</param>
+        /// <param name="userService">The user service.</param>
         public InvitationsModel(IInvitationService invitationService, IGroupService groupService, IUserService userService)
         {
             this.invitationService = invitationService;
@@ -35,6 +41,9 @@ namespace PanoramaApp.Pages.Groups
 
         public string CurrentUserId { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
         public async Task OnGetAsync()
         {
             var currentUser = await this.userService.GetCurrentUserAsync();
@@ -45,6 +54,11 @@ namespace PanoramaApp.Pages.Groups
             this.Users = await this.userService.GetAllUsersAsync();
         }
 
+        /// <summary>
+        /// Called when [post accept asynchronous].
+        /// </summary>
+        /// <param name="invitationId">The invitation identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAcceptAsync(int invitationId)
         {
             var currentUser = await this.userService.GetCurrentUserAsync();
@@ -52,6 +66,12 @@ namespace PanoramaApp.Pages.Groups
             return this.RedirectToPage();
         }
 
+        /// <summary>
+        /// Called when [post invite asynchronous].
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <param name="invitedUserId">The invited user identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostInviteAsync(int groupId, string invitedUserId)
         {
             var currentUser = await this.userService.GetCurrentUserAsync();

@@ -24,6 +24,12 @@ namespace PanoramaApp.Pages.MovieLists
         private readonly IGroupService groupService;
         private readonly UserManager<IdentityUser> userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateMovieListModel"/> class.
+        /// </summary>
+        /// <param name="movieListService">The movie list service.</param>
+        /// <param name="groupService">The group service.</param>
+        /// <param name="userManager">The user manager.</param>
         public CreateMovieListModel(
             IMovieListService movieListService,
             IGroupService groupService,
@@ -42,12 +48,19 @@ namespace PanoramaApp.Pages.MovieLists
 
         public List<Group> UserGroups { get; private set; } = new ();
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
         public async Task OnGetAsync()
         {
             var userId = this.userManager.GetUserId(this.User);
             this.UserGroups = await this.groupService.GetUserGroupsAsync(userId);
         }
 
+        /// <summary>
+        /// Called when [post asynchronous].
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);

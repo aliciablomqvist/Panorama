@@ -20,13 +20,26 @@ namespace PanoramaApp.Pages.Movies
     {
         private readonly IMovieService movieService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExploreMoviesModel"/> class.
+        /// </summary>
+        /// <param name="movieService">The movie service.</param>
         public ExploreMoviesModel(IMovieService movieService)
         {
             this.movieService = movieService;
         }
 
+        /// <summary>
+        /// Gets or sets the movies.
+        /// </summary>
+        /// <value>
+        /// The movies.
+        /// </value>
         public List<Movie> Movies { get; set; } = new List<Movie>();
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
         public async Task OnGetAsync()
         {
             this.Movies = await this.movieService.GetMoviesAsync();

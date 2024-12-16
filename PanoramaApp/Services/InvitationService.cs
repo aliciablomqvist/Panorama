@@ -14,15 +14,28 @@ namespace PanoramaApp.Services
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="PanoramaApp.Interfaces.IInvitationService" />
     public class InvitationService : IInvitationService
     {
         private readonly ApplicationDbContext context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvitationService"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public InvitationService(ApplicationDbContext context)
         {
             this.context = context;
         }
 
+        /// <summary>
+        /// Gets the pending invitations asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<List<GroupInvitation>> GetPendingInvitationsAsync(string userId)
         {
             return await this.context.GroupInvitations
@@ -30,6 +43,12 @@ namespace PanoramaApp.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Accepts the invitation asynchronous.
+        /// </summary>
+        /// <param name="invitationId">The invitation identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <exception cref="System.InvalidOperationException">Invalid invitation or user.</exception>
         public async Task AcceptInvitationAsync(int invitationId, string userId)
         {
             var invitation = await this.context.GroupInvitations
@@ -61,6 +80,12 @@ namespace PanoramaApp.Services
             await this.context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Sends the invitation asynchronous.
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <param name="invitedUserId">The invited user identifier.</param>
+        /// <param name="invitedByUserId">The invited by user identifier.</param>
         public async Task SendInvitationAsync(int groupId, string invitedUserId, string invitedByUserId)
         {
             var newInvitation = new GroupInvitation

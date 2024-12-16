@@ -25,6 +25,13 @@ namespace PanoramaApp.Services
             this.context = context;
         }
 
+        /// <summary>
+        /// Sends the message asynchronous.
+        /// </summary>
+        /// <param name="messageText">The message text.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="groupId">The group identifier.</param>
         public async Task SendMessageAsync(string messageText, string userId, string userName, int groupId)
         {
             var chatMessage = new ChatMessage
@@ -40,6 +47,11 @@ namespace PanoramaApp.Services
             await this.context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets the messages for group asynchronous.
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <returns></returns>
         public async Task<List<ChatMessage>> GetMessagesForGroupAsync(int groupId)
         {
             return await this.context.ChatMessages

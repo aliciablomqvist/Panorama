@@ -23,6 +23,12 @@ namespace PanoramaApp.Pages.MovieLists
         private readonly IGroupService groupService;
         private readonly ILogger<ViewMovieListsModel> logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewMovieListsModel"/> class.
+        /// </summary>
+        /// <param name="movieListService">The movie list service.</param>
+        /// <param name="groupService">The group service.</param>
+        /// <param name="logger">The logger.</param>
         public ViewMovieListsModel(
             IMovieListService movieListService,
             IGroupService groupService,
@@ -37,6 +43,9 @@ namespace PanoramaApp.Pages.MovieLists
 
         public List<Group> Groups { get; private set; } = new ();
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
         public async Task OnGetAsync()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -45,7 +54,6 @@ namespace PanoramaApp.Pages.MovieLists
 
             try
             {
-                // Hämta filmlistor
                 this.MovieLists = await this.movieListService.GetMovieListsForUserAsync(userId);
 
                 if (this.MovieLists.Count == 0)
@@ -57,7 +65,6 @@ namespace PanoramaApp.Pages.MovieLists
                     this.logger.LogInformation("Fetched {Count} MovieLists for user {UserId}", this.MovieLists.Count, userId);
                 }
 
-                // Hämta grupper
                 this.Groups = await this.groupService.GetGroupsForUserAsync(userId);
 
                 if (this.Groups.Count == 0)

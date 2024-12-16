@@ -16,16 +16,29 @@ namespace PanoramaApp.Pages.Groups
     {
         private readonly IStatisticsService statisticsService;
 
+        /// <summary>
+        /// Gets or sets the statistics.
+        /// </summary>
+        /// <value>
+        /// The statistics.
+        /// </value>
         public GroupStatisticsDto Statistics { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int GroupId { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupStatisticsModel"/> class.
+        /// </summary>
+        /// <param name="statisticsService">The statistics service.</param>
         public GroupStatisticsModel(IStatisticsService statisticsService)
         {
             this.statisticsService = statisticsService;
         }
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
         public async Task OnGetAsync()
         {
             if (this.GroupId > 0)

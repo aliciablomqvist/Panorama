@@ -19,6 +19,11 @@ namespace PanoramaApp.Pages.Groups
         private readonly IGroupService groupService;
         private readonly IUserService userService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateGroupModel"/> class.
+        /// </summary>
+        /// <param name="groupService">The group service.</param>
+        /// <param name="userService">The user service.</param>
         public CreateGroupModel(IGroupService groupService, IUserService userService)
         {
             this.groupService = groupService;
@@ -33,11 +38,18 @@ namespace PanoramaApp.Pages.Groups
         [BindProperty]
         public List<string> SelectedUsers { get; set; } = new ();
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
         public async Task OnGetAsync()
         {
             this.Users = await this.userService.GetAllUsersAsync();
         }
 
+        /// <summary>
+        /// Called when [post asynchronous].
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!this.ModelState.IsValid)

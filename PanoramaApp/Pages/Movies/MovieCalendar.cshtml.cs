@@ -12,25 +12,61 @@ namespace PanoramaApp.Pages.Movies
     using PanoramaApp.Interfaces;
     using PanoramaApp.Models;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.RazorPages.PageModel" />
     public class MovieCalendarModel : PageModel
     {
         private readonly IMovieCalendarService movieCalendarService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MovieCalendarModel"/> class.
+        /// </summary>
+        /// <param name="movieCalendarService">The movie calendar service.</param>
         public MovieCalendarModel(IMovieCalendarService movieCalendarService)
         {
             this.movieCalendarService = movieCalendarService;
         }
 
+        /// <summary>
+        /// Gets or sets the movies.
+        /// </summary>
+        /// <value>
+        /// The movies.
+        /// </value>
         public List<Movie> Movies { get; set; } = new List<Movie>();
 
+        /// <summary>
+        /// Gets or sets the scheduled movies.
+        /// </summary>
+        /// <value>
+        /// The scheduled movies.
+        /// </value>
         public List<MovieCalendar> ScheduledMovies { get; set; } = new List<MovieCalendar>();
 
+        /// <summary>
+        /// Gets or sets the movie identifier.
+        /// </summary>
+        /// <value>
+        /// The movie identifier.
+        /// </value>
         [BindProperty]
         public int MovieId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the scheduled date.
+        /// </summary>
+        /// <value>
+        /// The scheduled date.
+        /// </value>
         [BindProperty]
         public DateTime ScheduledDate { get; set; }
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync()
         {
             this.Movies = await this.movieCalendarService.GetAllMoviesAsync();
@@ -38,6 +74,10 @@ namespace PanoramaApp.Pages.Movies
             return this.Page();
         }
 
+        /// <summary>
+        /// Called when [post schedule movie asynchronous].
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostScheduleMovieAsync()
         {
             try
@@ -48,7 +88,7 @@ namespace PanoramaApp.Pages.Movies
             catch (ArgumentException ex)
             {
                 this.ModelState.AddModelError(string.Empty, ex.Message);
-                return await this.OnGetAsync(); // Återställ sidan med data
+                return await this.OnGetAsync(); 
             }
         }
     }

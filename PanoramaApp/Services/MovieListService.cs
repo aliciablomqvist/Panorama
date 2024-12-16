@@ -25,6 +25,12 @@ namespace PanoramaApp.Services
             this.context = context;
         }
 
+        /// <summary>
+        /// Adds to list asynchronous.
+        /// </summary>
+        /// <param name="listName">Name of the list.</param>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <param name="userId">The user identifier.</param>
         public async Task AddToListAsync(string listName, int movieId, string userId)
         {
             var list = await this.context.MovieLists
@@ -46,6 +52,11 @@ namespace PanoramaApp.Services
             }
         }
 
+        /// <summary>
+        /// Gets the lists by user asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<List<MovieList>> GetListsByUserAsync(string userId)
         {
             return await this.context.MovieLists
@@ -53,6 +64,11 @@ namespace PanoramaApp.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Gets the movie list by identifier asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public async Task<MovieList> GetMovieListByIdAsync(int id)
         {
             return await this.context.MovieLists
@@ -61,6 +77,10 @@ namespace PanoramaApp.Services
                 .FirstOrDefaultAsync(ml => ml.Id == id);
         }
 
+        /// <summary>
+        /// Updates the movie priorities asynchronous.
+        /// </summary>
+        /// <param name="updates">The updates.</param>
         public async Task UpdateMoviePrioritiesAsync(List<MoviePriorityUpdate> updates)
         {
             foreach (var update in updates)
@@ -77,6 +97,12 @@ namespace PanoramaApp.Services
             await this.context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets the movies from list asynchronous.
+        /// </summary>
+        /// <param name="listName">Name of the list.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<List<Movie>> GetMoviesFromListAsync(string listName, string userId)
         {
             var movieList = await this.context.MovieLists
@@ -87,6 +113,11 @@ namespace PanoramaApp.Services
             return movieList?.Movies.Select(mli => mli.Movie).ToList() ?? new List<Movie>();
         }
 
+        /// <summary>
+        /// Gets the movie lists for user asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<List<MovieList>> GetMovieListsForUserAsync(string userId)
         {
             return await this.context.MovieLists
@@ -97,6 +128,11 @@ namespace PanoramaApp.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Gets the favorites list asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<MovieList> GetFavoritesListAsync(string userId)
         {
             return await this.context.MovieLists
@@ -105,6 +141,11 @@ namespace PanoramaApp.Services
                 .FirstOrDefaultAsync(ml => ml.Name == "My Favorites" && ml.OwnerId == userId);
         }
 
+        /// <summary>
+        /// Deletes the movie list asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <exception cref="System.ArgumentException">MovieList with ID {id} not found.</exception>
         public async Task DeleteMovieListAsync(int id)
         {
             var movieList = await this.context.MovieLists
@@ -120,6 +161,12 @@ namespace PanoramaApp.Services
             await this.context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Creates the movie list asynchronous.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="isShared">if set to <c>true</c> [is shared].</param>
         public async Task CreateMovieListAsync(string name, string userId, bool isShared)
         {
             var movieList = new MovieList
@@ -133,14 +180,24 @@ namespace PanoramaApp.Services
             await this.context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets the last created movie list asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<MovieList> GetLastCreatedMovieListAsync(string userId)
         {
             return await this.context.MovieLists
                 .Where(ml => ml.OwnerId == userId)
-                .OrderByDescending(ml => ml.Id) // Anta att ID:t ökar med varje ny lista
+                .OrderByDescending(ml => ml.Id) 
                 .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Gets the available movies for list asynchronous.
+        /// </summary>
+        /// <param name="listId">The list identifier.</param>
+        /// <returns></returns>
         public async Task<List<SelectListItem>> GetAvailableMoviesForListAsync(int listId)
         {
             var movieList = await this.GetMovieListByIdAsync(listId);
@@ -163,6 +220,11 @@ namespace PanoramaApp.Services
             }).ToList();
         }
 
+        /// <summary>
+        /// Adds the movies to list asynchronous.
+        /// </summary>
+        /// <param name="listId">The list identifier.</param>
+        /// <param name="movieIds">The movie ids.</param>
         public async Task AddMoviesToListAsync(int listId, List<int> movieIds)
         {
             var movieList = await this.GetMovieListByIdAsync(listId);

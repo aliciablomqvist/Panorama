@@ -14,6 +14,10 @@ namespace PanoramaApp.Pages
     using PanoramaApp.Interfaces;
     using PanoramaApp.Services;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.RazorPages.PageModel" />
     public class UserStatisticsModel : PageModel
     {
         private readonly IStatisticsService statisticsService;
@@ -21,12 +25,20 @@ namespace PanoramaApp.Pages
 
         public UserStatisticsDto Statistics { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserStatisticsModel"/> class.
+        /// </summary>
+        /// <param name="statisticsService">The statistics service.</param>
+        /// <param name="userManager">The user manager.</param>
         public UserStatisticsModel(IStatisticsService statisticsService, UserManager<IdentityUser> userManager)
         {
             this.statisticsService = statisticsService;
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
         public async Task OnGetAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);

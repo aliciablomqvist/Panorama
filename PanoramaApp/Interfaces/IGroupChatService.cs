@@ -11,8 +11,21 @@ namespace PanoramaApp.Interfaces
 
     public interface IGroupChatService
     {
+        /// <summary>
+        /// Sends the message asynchronous.
+        /// </summary>
+        /// <param name="messageText">The message text.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="groupId">The group identifier.</param>
+        /// <returns></returns>
         Task SendMessageAsync(string messageText, string userId, string userName, int groupId);
 
+        /// <summary>
+        /// Gets the messages for group asynchronous.
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <returns></returns>
         Task<List<ChatMessage>> GetMessagesForGroupAsync(int groupId);
     }
 }

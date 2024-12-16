@@ -14,12 +14,22 @@ namespace PanoramaApp.Services
         private readonly string apiKey;
         private const string BaseUrl = "https://api.themoviedb.org/3/";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TmdbService"/> class.
+        /// </summary>
+        /// <param name="httpClient">The HTTP client.</param>
+        /// <param name="configuration">The configuration.</param>
         public TmdbService(HttpClient httpClient, IConfiguration configuration)
         {
             this.httpClient = httpClient;
             this.apiKey = configuration["Tmdb:ApiKey"];
         }
 
+        /// <summary>
+        /// Gets the recommendations asynchronous.
+        /// </summary>
+        /// <param name="tmdbId">The TMDB identifier.</param>
+        /// <returns></returns>
         public async Task<List<Movie>> GetRecommendationsAsync(int tmdbId)
         {
             var url = $"{BaseUrl}movie/{tmdbId}/recommendations?api_key={this.apiKey}&language=en-US";
@@ -39,11 +49,13 @@ namespace PanoramaApp.Services
                 }).ToList() ?? new List<Movie>();
             }
 
-            // Om API-anropet misslyckas, returnera en tom lista
             return new List<Movie>();
         }
 
-        // DTO-klasser för att hantera TMDb:s JSON-respons
+
+        /// <summary>
+        /// DTO-classes
+        /// </summary>
         public class TmdbResponse
         {
             public List<TmdbMovieResponse> Results { get; set; }

@@ -10,6 +10,10 @@ namespace PanoramaApp.Services
     using PanoramaApp.DTO;
     using PanoramaApp.Interfaces;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="PanoramaApp.Interfaces.IStatisticsService" />
     public class StatisticsService : IStatisticsService
     {
         private readonly ApplicationDbContext context;
@@ -19,6 +23,11 @@ namespace PanoramaApp.Services
             this.context = context;
         }
 
+        /// <summary>
+        /// Gets the user statistics asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<UserStatisticsDto> GetUserStatisticsAsync(string userId)
         {
             var watchedMovies = await this.context.MovieLists
@@ -46,9 +55,13 @@ namespace PanoramaApp.Services
             };
         }
 
+        /// <summary>
+        /// Gets the group statistics asynchronous.
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <returns></returns>
         public async Task<GroupStatisticsDto> GetGroupStatisticsAsync(int groupId)
         {
-            // Hämta gruppmedlemmar
             var groupMembers = await this.context.GroupMembers
                 .Where(gm => gm.GroupId == groupId)
                 .Select(gm => gm.UserId)
@@ -64,7 +77,6 @@ namespace PanoramaApp.Services
                 };
             }
 
-            // Hämta alla filmer från "Watched" och "Favorites" för alla gruppmedlemmar
             var watchedMovies = await this.context.MovieLists
                 .Where(ml => ml.Name == "Watched" && groupMembers.Contains(ml.OwnerId))
                 .SelectMany(ml => ml.Movies.Select(mli => mli.Movie))
@@ -87,7 +99,6 @@ namespace PanoramaApp.Services
                 };
             }
 
-            // Beräkna statistik
             var mostWatchedGenre = allMovies
                 .GroupBy(m => m.Genre)
                 .OrderByDescending(g => g.Count())

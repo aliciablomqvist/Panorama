@@ -17,11 +17,21 @@ namespace PanoramaApp.Services
     {
         private readonly ApplicationDbContext context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VoteService"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public VoteService(ApplicationDbContext context)
         {
             this.context = context;
         }
 
+        /// <summary>
+        /// Adds the vote asynchronous.
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <param name="userId">The user identifier.</param>
         public async Task AddVoteAsync(int groupId, int movieId, string userId)
         {
             var vote = new Vote
@@ -35,6 +45,11 @@ namespace PanoramaApp.Services
             await this.context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets the votes for movie asynchronous.
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns></returns>
         public async Task<int> GetVotesForMovieAsync(int movieId)
         {
             return await this.context.Votes
@@ -42,6 +57,11 @@ namespace PanoramaApp.Services
                 .CountAsync();
         }
 
+        /// <summary>
+        /// Gets the vote counts for group asynchronous.
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <returns></returns>
         public async Task<Dictionary<int, int>> GetVoteCountsForGroupAsync(int groupId)
         {
             var votes = await this.context.Votes

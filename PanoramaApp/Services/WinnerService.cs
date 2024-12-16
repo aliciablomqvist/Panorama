@@ -17,6 +17,12 @@ namespace PanoramaApp.Services
 
         private readonly IUserService userService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WinnerService"/> class.
+        /// </summary>
+        /// <param name="groupService">The group service.</param>
+        /// <param name="voteService">The vote service.</param>
+        /// <param name="userService">The user service.</param>
         public WinnerService(IGroupService groupService, IVoteService voteService, IUserService userService)
         {
             this.groupService = groupService;
@@ -24,6 +30,11 @@ namespace PanoramaApp.Services
             this.userService = userService;
         }
 
+        /// <summary>
+        /// Gets the winning movie asynchronous.
+        /// </summary>
+        /// <param name="groupId">The group identifier.</param>
+        /// <returns></returns>
         public async Task<(Movie? WinningMovie, int VoteCount)> GetWinningMovieAsync(int groupId)
         {
             var user = await this.userService.GetCurrentUserAsync();

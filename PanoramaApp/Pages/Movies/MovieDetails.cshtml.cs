@@ -16,6 +16,10 @@ namespace PanoramaApp.Pages.Movies
     using PanoramaApp.Models;
     using PanoramaApp.Services;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.RazorPages.PageModel" />
     public class MovieDetailsModel : PageModel
     {
         private readonly IMovieService movieService;
@@ -23,6 +27,13 @@ namespace PanoramaApp.Pages.Movies
         private readonly IReviewService reviewService;
         private readonly IUrlHelperService urlHelperService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MovieDetailsModel"/> class.
+        /// </summary>
+        /// <param name="movieService">The movie service.</param>
+        /// <param name="movieListService">The movie list service.</param>
+        /// <param name="reviewService">The review service.</param>
+        /// <param name="urlHelperService">The URL helper service.</param>
         public MovieDetailsModel(
             IMovieService movieService,
             IMovieListService movieListService,
@@ -45,9 +56,13 @@ namespace PanoramaApp.Pages.Movies
         [BindProperty]
         public int ReviewRating { get; set; }
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            // Hämta filmens detaljer
             this.Movie = await this.movieService.GetMovieByIdAsync(id);
 
             if (this.Movie == null)
@@ -55,11 +70,15 @@ namespace PanoramaApp.Pages.Movies
                 return this.NotFound();
             }
 
-            // Hämta recensioner
             this.Reviews = await this.reviewService.GetReviewsForMovieAsync(id);
             return this.Page();
         }
 
+        /// <summary>
+        /// Called when [post add to favorites asynchronous].
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAddToFavoritesAsync(int movieId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -73,6 +92,11 @@ namespace PanoramaApp.Pages.Movies
             return this.RedirectToPage(new { id = movieId });
         }
 
+        /// <summary>
+        /// Called when [post mark as watched asynchronous].
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostMarkAsWatchedAsync(int movieId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -86,6 +110,11 @@ namespace PanoramaApp.Pages.Movies
             return this.RedirectToPage(new { id = movieId });
         }
 
+        /// <summary>
+        /// Called when [post add review asynchronous].
+        /// </summary>
+        /// <param name="movieId">The movie identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAddReviewAsync(int movieId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -99,6 +128,11 @@ namespace PanoramaApp.Pages.Movies
             return this.RedirectToPage(new { id = movieId });
         }
 
+        /// <summary>
+        /// Converts to embed URL.
+        /// </summary>
+        /// <param name="youtubeUrl">The youtube URL.</param>
+        /// <returns></returns>
         public string ConvertToEmbedUrl(string youtubeUrl)
         {
             return this.urlHelperService.ConvertToEmbedUrl(youtubeUrl);
